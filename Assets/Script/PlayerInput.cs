@@ -15,7 +15,7 @@ public class PlayerInput : MonoBehaviour
 	void Update()
 	{
 		Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-		if (!player.downSideJump)
+		if (!player.downSideJumpEnabled)
 			directionalInput.y = 0;
 		player.SetDirectionalInput(directionalInput);
 

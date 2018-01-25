@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
 	public float KnockbackTime = .3f;
 
 	[Header("Advanced Movement")]
-	public bool wallJump;
+	public bool wallJumpEnabled;
 	public Vector2 wallJumpClimb;
 	public Vector2 wallJumpOff;
 	public Vector2 wallLeap;
@@ -33,8 +33,8 @@ public class Player : MonoBehaviour
 	float timeToWallUnstick;
 
 	[Space]
-	public bool downSideJump;           // for obstacle with "Through" Tag 
-	public bool variableHeightJump;
+	public bool downSideJumpEnabled;           // for obstacle with "Through" Tag 
+	public bool variableHeightJumpEnabled;
 	public float minJumpHeight = 1;
 
 	[Space]
@@ -198,7 +198,7 @@ public class Player : MonoBehaviour
 	{
 		CalculateVelocity();
 		
-		if (wallJump)
+		if (wallJumpEnabled)
 			HandleWallSliding();
 
 		controller.Move(velocity * Time.deltaTime, directionalInput);
@@ -235,7 +235,7 @@ public class Player : MonoBehaviour
 
 	private void Jump()
 	{
-		if (wallJump)
+		if (wallJumpEnabled)
 		{
 			if (wallSliding)
 			{
@@ -275,7 +275,7 @@ public class Player : MonoBehaviour
 
 	public void OnJumpInputUp()
 	{
-		if (variableHeightJump && velocity.y > minJumpVelocity)
+		if (variableHeightJumpEnabled && velocity.y > minJumpVelocity)
 		{
 			velocity.y = minJumpVelocity;
 		}
