@@ -5,9 +5,14 @@ using UnityEditor;
 using System;
 
 [RequireComponent(typeof(Controller2D))]
+[RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
-	private enum PlayerState { IDLE, WALKING, JUMPING_UP, JUMPING_DOWN, SUPER_JUMP, ROLLING, HIT, GAME_OVER }
+    /// <summary>
+    /// State of player character.
+    /// State with higher value has higher priority.
+    /// </summary>
+	private enum PlayerState { NONE, IDLE, WALKING, ATTACK, JUMPING_DOWN, JUMPING_UP, ROLLING, SUPER_JUMP, HIT, GAME_OVER }
 	private const float EPSILON = 0.1f;
 
 	[Header("Player Condition")]
@@ -48,31 +53,14 @@ public class Player : MonoBehaviour
 	float velocityXSmoothing;
 
 	Controller2D controller;
-	public Vector2 directionalInput;
 	bool wallSliding;
 	public int wallDirX;
 
 	float endKnockbackTime;
 
-	private PlayerState state = PlayerState.IDLE; // Do not assign to state variable directly. Use State property instead.
+	private PlayerState state = PlayerState.IDLE;
+    private PlayerState nextState = PlayerState.IDLE;
 	private Animator animator;
-	private PlayerState State
-	{
-		get
-		{
-			return state;
-		}
-
-		set
-		{
-			if (state != value)
-			{
-				state = value;
-				UpdateAnimationState(value);
-			}
-		}
-	}
-	private bool jumpButtonPressed = false;
 
 	private SpriteRenderer spriteRenderer;
 	private bool headingLeft = true;
@@ -91,6 +79,8 @@ public class Player : MonoBehaviour
 			}
 		}
 	}
+
+    PlayerInput input;
 
 	private void UpdateAnimationState(PlayerState state)
 	{
@@ -127,50 +117,96 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	private PlayerState GetNextState()
+    /// <summary>
+    /// Handle user input.
+    /// </summary>
+    /// <returns>Next state by user input.</returns>
+    private PlayerState HandleInput()
+    {
+        PlayerState nextState = PlayerState.NONE;
+
+        #region Action
+        switch (state)
+        {
+            case PlayerState.IDLE:
+            case PlayerState.WALKING:
+                if (input.ActionInputDown)
+                {
+                    if (isSmallForm)
+                    {
+                        Jump();
+                        nextState = PlayerState.JUMPING_UP;
+                    }
+                    else
+                    {
+                        Attack();
+                        nextState = PlayerState.ATTACK;
+                    }
+                }
+                break;
+        }
+        #endregion
+
+        #region Directional input
+        switch (state)
+        {
+            case PlayerState.IDLE:
+                if (input.HorizontalInput != 0.0f)
+                    nextState = PlayerState.WALKING;
+                controller.Move(velocity * Time.deltaTime, input.DirectionalInput);
+                break;
+            case PlayerState.WALKING:
+            case PlayerState.JUMPING_UP:
+            case PlayerState.JUMPING_DOWN:
+            case PlayerState.SUPER_JUMP:
+            case PlayerState.ROLLING:
+                controller.Move(velocity * Time.deltaTime, input.DirectionalInput);
+                break;
+            default:
+                controller.Move(velocity * Time.deltaTime, Vector2.zero);
+                break;
+        }
+        #endregion
+
+        return nextState;
+    }
+
+	private PlayerState GetNextStateByEnvironment()
 	{
-		switch (State)
+		switch (state)
 		{
 			case PlayerState.IDLE:
-				if (jumpButtonPressed)
-				{
-					Jump();
-					return PlayerState.JUMPING_UP;
-				}
-				else if (directionalInput.x != 0.0f)
-					return PlayerState.WALKING;
+				if (!controller.collisions.below)
+                    return PlayerState.JUMPING_DOWN;
 				else
 					return PlayerState.IDLE;
 			case PlayerState.WALKING:
-				if (jumpButtonPressed)
-				{
-					Jump();
-					return PlayerState.JUMPING_UP;
-				}
-				else if (Math.Abs(velocity.x) < EPSILON)
-					return PlayerState.IDLE;
+                if (!controller.collisions.below)
+                    return PlayerState.JUMPING_DOWN;
+                else if (Math.Abs(velocity.x) > EPSILON)
+                    return PlayerState.WALKING;
+                else
+                    return PlayerState.IDLE;
+            case PlayerState.JUMPING_UP:
+                if (velocity.y < 0f)
+                    return PlayerState.JUMPING_DOWN;
+                else
+                    return PlayerState.JUMPING_UP;
+            case PlayerState.JUMPING_DOWN:
+				if (!controller.collisions.below)
+                    return PlayerState.JUMPING_DOWN;
+                else
+                    return PlayerState.IDLE;
+            case PlayerState.SUPER_JUMP:
+                if (velocity.y < 0f)
+                    return PlayerState.ROLLING;
+                else
+                    return PlayerState.SUPER_JUMP;
+            case PlayerState.ROLLING:
+				if (!controller.collisions.below)
+                    return PlayerState.ROLLING;
 				else
-					return PlayerState.WALKING;
-			case PlayerState.JUMPING_UP:
-				if (velocity.y > 0)
-					return PlayerState.JUMPING_UP;
-				else
-					return PlayerState.JUMPING_DOWN;
-			case PlayerState.JUMPING_DOWN:
-				if (Math.Abs(velocity.y) < EPSILON)
-					return PlayerState.IDLE;
-				else
-					return PlayerState.JUMPING_DOWN;
-			case PlayerState.SUPER_JUMP:
-				if (velocity.y > 0)
-					return PlayerState.SUPER_JUMP;
-				else
-					return PlayerState.ROLLING;
-			case PlayerState.ROLLING:
-				if (Math.Abs(velocity.y) < EPSILON)
-					return PlayerState.IDLE;
-				else
-					return PlayerState.ROLLING;
+                return PlayerState.IDLE;
 			case PlayerState.HIT:
 				if (endKnockbackTime > Time.time)
 					return PlayerState.HIT;
@@ -188,6 +224,7 @@ public class Player : MonoBehaviour
 		controller = GetComponent<Controller2D>();
 		animator = GetComponent<Animator>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
+        input = GetComponent<PlayerInput>();
 
 		gravity = -(8 * maxJumpHeight) / Mathf.Pow(floatingTime, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * (floatingTime / 2);
@@ -200,37 +237,30 @@ public class Player : MonoBehaviour
 		
 		if (wallJumpEnabled)
 			HandleWallSliding();
+        
+        PlayerState nextStateByInput = HandleInput();
+        PlayerState nextStateByEnvironment = GetNextStateByEnvironment();
+        PlayerState nextState = (nextStateByInput > nextStateByEnvironment ? nextStateByInput : nextStateByEnvironment);
+        
+        if (controller.collisions.above || controller.collisions.below)
+        {
+            if (controller.collisions.slidingDownMaxSlope)
+            {
+                velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
+            }
+            else
+            {
+                velocity.y = 0;
+            }
+        }
 
-		controller.Move(velocity * Time.deltaTime, directionalInput);
+        HeadingLeft = velocity.x < 0f;
 
-		if (controller.collisions.above || controller.collisions.below)
-		{
-			if (controller.collisions.slidingDownMaxSlope)
-			{
-				velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
-			}
-			else
-			{
-				velocity.y = 0;
-			}
-		}
-
-		State = GetNextState();
-		jumpButtonPressed = false;
-	}
-
-	public void SetDirectionalInput(Vector2 input)
-	{
-		directionalInput = input;
-		if (Math.Abs(input.x) > EPSILON)
-		{
-			HeadingLeft = input.x < 0.0f;
-		}
-	}
-
-	public void OnJumpInputDown()
-	{
-		jumpButtonPressed = true;
+        if (state != nextState)
+        {
+            state = nextState;
+            UpdateAnimationState(state);
+        }
 	}
 
 	private void Jump()
@@ -239,12 +269,12 @@ public class Player : MonoBehaviour
 		{
 			if (wallSliding)
 			{
-				if (wallDirX == directionalInput.x)
+				if (wallDirX == input.HorizontalInput)
 				{
 					velocity.x = -wallDirX * wallJumpClimb.x;
 					velocity.y = wallJumpClimb.y;
 				}
-				else if (directionalInput.x == 0)
+				else if (input.HorizontalInput == 0)
 				{
 					velocity.x = -wallDirX * wallJumpOff.x;
 					velocity.y = wallJumpOff.y;
@@ -260,7 +290,7 @@ public class Player : MonoBehaviour
 		{
 			if (controller.collisions.slidingDownMaxSlope)
 			{
-				if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x))
+				if (input.HorizontalInput != -Mathf.Sign(controller.collisions.slopeNormal.x))
 				{
 					velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
 					velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
@@ -299,7 +329,7 @@ public class Player : MonoBehaviour
 				velocityXSmoothing = 0;
 				velocity.x = 0;
 
-				if (directionalInput.x != wallDirX && directionalInput.x != 0)
+				if (input.HorizontalInput != wallDirX && input.HorizontalInput != 0)
 				{
 					timeToWallUnstick -= Time.deltaTime;
 				}
@@ -315,12 +345,7 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	public void OnAttackInputDown()
-	{
-
-	}
-
-	public void OnAttackInputUp()
+	public void Attack()
 	{
 
 	}
@@ -339,7 +364,7 @@ public class Player : MonoBehaviour
 
 	void CalculateVelocity()
 	{
-		float targetVelocityX = directionalInput.x * moveSpeed;
+		float targetVelocityX = input.HorizontalInput * moveSpeed;
 		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 		velocity.y += gravity * Time.deltaTime;
 	}

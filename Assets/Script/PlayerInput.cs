@@ -5,7 +5,35 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PlayerInput : MonoBehaviour
 {
-	Player player;
+    public float HorizontalInput
+    {
+        get;
+        private set;
+    }
+    public float VerticalInput
+    {
+        get;
+        private set;
+    }
+    public Vector2 DirectionalInput
+    {
+        get
+        {
+            return new Vector2(HorizontalInput, VerticalInput);
+        }
+    }
+    public bool ActionInputDown
+    {
+        get;
+        private set;
+    }
+    public bool ActionInputUp
+    {
+        get;
+        private set;
+    }
+
+    Player player;
 
 	void Start()
 	{
@@ -14,20 +42,12 @@ public class PlayerInput : MonoBehaviour
 
 	void Update()
 	{
-		Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-		if (!player.downSideJumpEnabled)
-			directionalInput.y = 0;
-		player.SetDirectionalInput(directionalInput);
+        HorizontalInput = Input.GetAxisRaw("Horizontal");
+        VerticalInput = player.downSideJumpEnabled ? Input.GetAxisRaw("Vertical") : 0.0f;
+        ActionInputDown = Input.GetKeyDown(KeyCode.Space);
+        ActionInputUp = Input.GetKeyUp(KeyCode.Space);
 
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			player.OnJumpInputDown();
-		}
-		if (Input.GetKeyUp(KeyCode.Space))
-		{
-			player.OnJumpInputUp();
-		}
-
+#if DEBUG
 		if (Input.GetKeyDown(KeyCode.Q))
 		{
 			player.OnPlayerDamaged(10, 1);
@@ -36,5 +56,6 @@ public class PlayerInput : MonoBehaviour
 		{
 			player.OnPlayerDamaged(10, -1);
 		}
+#endif
 	}
 }
