@@ -1,0 +1,365 @@
+fileFormatVersion: 2
+guid: 1bd65314c4fcea641a3015a3504e5fdb
+timeCreated: 1517248852
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: juliett-walking-1
+    21300002: juliett-walking-2
+    21300004: juliett-walking-3
+    21300006: juliett-walking-4
+    21300008: juliett-all r complete_4
+    21300010: juliett-walking-5
+    21300012: juliett-walking-6
+    21300014: juliett-game-over
+    21300016: juliett-all r complete_13
+    21300018: juliett-hit
+    21300020: juliett-attack-4
+    21300022: juliett-attack-3
+    21300024: juliett-attack-2
+    21300026: juliett-attack-1
+    21300028: juliett-all r complete_19
+    21300030: juliett-all r complete_20
+    21300032: juliett-all r complete_21
+    21300034: juliett-all r complete_22
+    21300036: juliett-jumping-down-1
+    21300038: juliett-jumping-down-2
+    21300040: juliett-all r complete_27
+    21300042: juliett-all r complete_28
+    21300044: juliett-idle
+    21300046: juliett-uppercut-3
+    21300048: juliett-uppercut-2
+    21300050: juliett-uppercut-1
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: juliett-walking-1
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 3563
+        width: 707
+        height: 1227
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-walking-2
+      rect:
+        serializedVersion: 2
+        x: 1164
+        y: 3597
+        width: 980
+        height: 1196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-walking-3
+      rect:
+        serializedVersion: 2
+        x: 2295
+        y: 3570
+        width: 899
+        height: 1230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-walking-4
+      rect:
+        serializedVersion: 2
+        x: 3591
+        y: 3563
+        width: 656
+        height: 1230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-walking-5
+      rect:
+        serializedVersion: 2
+        x: 4606
+        y: 3597
+        width: 984
+        height: 1196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-walking-6
+      rect:
+        serializedVersion: 2
+        x: 5860
+        y: 3566
+        width: 824
+        height: 1231
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-game-over
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 1967
+        width: 1012
+        height: 694
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-hit
+      rect:
+        serializedVersion: 2
+        x: 1567
+        y: 1868
+        width: 830
+        height: 1346
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-attack-4
+      rect:
+        serializedVersion: 2
+        x: 2639
+        y: 1914
+        width: 808
+        height: 1218
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-attack-3
+      rect:
+        serializedVersion: 2
+        x: 3697
+        y: 1948
+        width: 734
+        height: 1212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-attack-2
+      rect:
+        serializedVersion: 2
+        x: 4472
+        y: 1974
+        width: 1039
+        height: 1230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-attack-1
+      rect:
+        serializedVersion: 2
+        x: 5789
+        y: 1970
+        width: 820
+        height: 1282
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-jumping-down-1
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 105
+        width: 807
+        height: 1622
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-jumping-down-2
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 105
+        width: 806
+        height: 1623
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-idle
+      rect:
+        serializedVersion: 2
+        x: 2430
+        y: 309
+        width: 754
+        height: 1285
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-uppercut-3
+      rect:
+        serializedVersion: 2
+        x: 3662
+        y: 313
+        width: 691
+        height: 1343
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-uppercut-2
+      rect:
+        serializedVersion: 2
+        x: 4831
+        y: 309
+        width: 643
+        height: 1244
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: juliett-uppercut-1
+      rect:
+        serializedVersion: 2
+        x: 5785
+        y: 309
+        width: 735
+        height: 1012
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

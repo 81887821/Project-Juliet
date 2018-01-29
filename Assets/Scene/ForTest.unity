@@ -1802,19 +1802,18 @@ MonoBehaviour:
   bigFormSpeedMul: 1.5
   Knockback: {x: 15, y: 4}
   KnockbackTime: 0.3
-  wallJump: 0
+  wallJumpEnabled: 0
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
   wallSlideSpeedMax: 3
   wallStickTime: 0.25
-  downSideJump: 1
-  variableHeightJump: 0
+  downSideJumpEnabled: 0
+  variableHeightJumpEnabled: 0
   minJumpHeight: 1
   accelerationTimeAirborne: 0.1
   accelerationTimeGrounded: 0.1
   velocity: {x: 0, y: 0, z: 0}
-  directionalInput: {x: 0, y: 0}
   wallDirX: 0
 --- !u!114 &895563992
 MonoBehaviour:
@@ -1848,7 +1847,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 4.2800016}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 3.82, y: 8.559999}
     newSize: {x: 3.82, y: 8.559999}
     adaptiveTilingThreshold: 0.5
@@ -1892,7 +1891,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300018, guid: f1f38069063876244a266f24e07e08b7, type: 3}
+  m_Sprite: {fileID: 21300016, guid: 5bd3637ba0fa0a442805cbff5412f93b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0

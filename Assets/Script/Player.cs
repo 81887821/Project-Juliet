@@ -67,40 +67,40 @@ public class Player : MonoBehaviour
 
     PlayerInput input;
 
-	private void UpdateAnimationState(PlayerState state)
-	{
-		int layer = isSmallForm ? 0 : 1;
+    private void UpdateAnimationState(PlayerState state)
+    {
+        string prefix = isSmallForm ? "Julia" : "Juliett";
 
-		switch (state)
-		{
-			case PlayerState.IDLE:
-				animator.Play("Idle", layer);
-				break;
-			case PlayerState.JUMPING_UP:
-				animator.Play("JumpUp", layer);
-				break;
-			case PlayerState.JUMPING_DOWN:
-				animator.Play("JumpDownPrepare", layer);
-				break;
-			case PlayerState.WALKING:
-				animator.Play("Walk", layer);
-				break;
-			case PlayerState.SUPER_JUMP:
-				animator.Play("SuperJumpPrepare", layer);
-				break;
-			case PlayerState.ROLLING:
-				animator.Play("Rolling", layer);
-				break;
-			case PlayerState.HIT:
-				animator.Play("Hit", layer);
-				break;
-			case PlayerState.GAME_OVER:
-				animator.Play("GameOver", layer);
-				break;
-			default:
-				throw new Exception("Undefined state " + state);
-		}
-	}
+        switch (state)
+        {
+            case PlayerState.IDLE:
+                animator.Play(prefix + "Idle");
+                break;
+            case PlayerState.JUMPING_UP:
+                animator.Play(prefix + "JumpUp");
+                break;
+            case PlayerState.JUMPING_DOWN:
+                animator.Play(prefix + "JumpDownPrepare");
+                break;
+            case PlayerState.WALKING:
+                animator.Play(prefix + "Walk");
+                break;
+            case PlayerState.SUPER_JUMP:
+                animator.Play(prefix + "SuperJumpPrepare");
+                break;
+            case PlayerState.ROLLING:
+                animator.Play(prefix + "Rolling");
+                break;
+            case PlayerState.HIT:
+                animator.Play(prefix + "Hit");
+                break;
+            case PlayerState.GAME_OVER:
+                animator.Play(prefix + "GameOver");
+                break;
+            default:
+                throw new Exception("Undefined state " + state);
+        }
+    }
 
     /// <summary>
     /// Handle user input.
