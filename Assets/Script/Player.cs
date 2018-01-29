@@ -64,21 +64,6 @@ public class Player : MonoBehaviour
 
 	private SpriteRenderer spriteRenderer;
 	private bool headingLeft = true;
-	private bool HeadingLeft
-	{
-		get
-		{
-			return headingLeft;
-		}
-		set
-		{
-			if (headingLeft != value)
-			{
-				headingLeft = value;
-				spriteRenderer.flipX = value == false;
-			}
-		}
-	}
 
     PlayerInput input;
 
@@ -206,7 +191,7 @@ public class Player : MonoBehaviour
 				if (!controller.collisions.below)
                     return PlayerState.ROLLING;
 				else
-                return PlayerState.IDLE;
+                    return PlayerState.IDLE;
 			case PlayerState.HIT:
 				if (endKnockbackTime > Time.time)
 					return PlayerState.HIT;
@@ -218,6 +203,19 @@ public class Player : MonoBehaviour
 				throw new Exception("Undefined state " + state);
 		}
 	}
+
+    private void SetDirection()
+    {
+        bool newDirection;
+        
+        newDirection = velocity.x < 0f;
+
+        if (headingLeft != newDirection)
+        {
+            headingLeft = newDirection;
+            spriteRenderer.flipX = headingLeft == false;
+        }
+    }
 
 	void Start()
 	{
@@ -239,8 +237,9 @@ public class Player : MonoBehaviour
 			HandleWallSliding();
         
         PlayerState nextStateByInput = HandleInput();
+        nextState = (nextState > nextStateByInput ? nextState : nextStateByInput);
         PlayerState nextStateByEnvironment = GetNextStateByEnvironment();
-        PlayerState nextState = (nextStateByInput > nextStateByEnvironment ? nextStateByInput : nextStateByEnvironment);
+        nextState = (nextState > nextStateByEnvironment ? nextState : nextStateByEnvironment);
         
         if (controller.collisions.above || controller.collisions.below)
         {
@@ -254,13 +253,15 @@ public class Player : MonoBehaviour
             }
         }
 
-        HeadingLeft = velocity.x < 0f;
+        SetDirection();
 
         if (state != nextState)
         {
             state = nextState;
             UpdateAnimationState(state);
         }
+
+        nextState = PlayerState.NONE;
 	}
 
 	private void Jump()
@@ -352,14 +353,16 @@ public class Player : MonoBehaviour
 
 	public void OnPlayerDamaged(int dmg, int directionX)
 	{
-		if (endKnockbackTime > Time.time)
-			return;
+        if (state != PlayerState.HIT)
+        {
+            endKnockbackTime = Time.time + KnockbackTime;
+            currentHealth -= dmg;
 
-		endKnockbackTime = Time.time + KnockbackTime;
-		currentHealth -= dmg;
+            velocity.x += -directionX * Knockback.x;
+            velocity.y += Knockback.y;
 
-		velocity.x += -directionX * Knockback.x;
-		velocity.y += Knockback.y;
+            nextState = PlayerState.HIT;
+        }
 	}
 
 	void CalculateVelocity()
