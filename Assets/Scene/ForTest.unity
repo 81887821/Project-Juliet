@@ -2274,7 +2274,8 @@ MonoBehaviour:
   currentHealth: 100
   maxJumpHeight: 3
   floatingTime: 0.8
-  moveSpeed: 6
+  juliaMoveSpeed: 6
+  juliettMoveSpeed: 9
   bigFormSpeedMul: 1.5
   Knockback: {x: 15, y: 4}
   KnockbackTime: 0.3
