@@ -8,12 +8,17 @@ using UnityEngine.UI;
 //Setting Buttons should be controlled by Global UI Manager. Keep in Mind.
 
 //Singleton Class
-public class InGameUIManager : MonoBehaviour {
+public class InGameUIManager : MonoBehaviour
+{
     public static InGameUIManager Instance;
 
     //Movement Variables
     [Header("Movement")]
     public Scrollbar movementScrollbar; //joystick for movement
+
+    [Header("Buttons")]
+    public Button ActionButton;
+    public Button TransformationButton;
 
     //Health & Diary Variables
     [Header("Health & Diary Sprite")]

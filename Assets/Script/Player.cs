@@ -121,6 +121,40 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void OnActionButtonClicked()
+    {
+        switch (state)
+        {
+            case PlayerState.IDLE:
+            case PlayerState.WALKING:
+                if (isSmallForm)
+                {
+                    Jump();
+                    nextState = PlayerState.JUMPING_UP;
+                }
+                else
+                {
+                    Attack();
+                    nextState = PlayerState.ATTACK1;
+                    attackMotionEndTime = Time.time + AttackMotionInverval;
+                }
+                break;
+            case PlayerState.ATTACK1:
+            case PlayerState.ATTACK2:
+            case PlayerState.ATTACK3:
+                attackContinue = true;
+                break;
+        }
+    }
+
+    public void OnTransformationButtonClicked()
+    {
+        isSmallForm = !isSmallForm;
+        state = PlayerState.IDLE;
+        nextState = PlayerState.IDLE;
+        UpdateAnimationState(state);
+    }
+
     /// <summary>
     /// Handle user input.
     /// </summary>
@@ -128,36 +162,7 @@ public class Player : MonoBehaviour
     private PlayerState HandleInput()
     {
         PlayerState nextState = PlayerState.NONE;
-
-        #region Action
-        switch (state)
-        {
-            case PlayerState.IDLE:
-            case PlayerState.WALKING:
-                if (input.ActionInputDown)
-                {
-                    if (isSmallForm)
-                    {
-                        Jump();
-                        nextState = PlayerState.JUMPING_UP;
-                    }
-                    else
-                    {
-                        Attack();
-                        nextState = PlayerState.ATTACK1;
-                        attackMotionEndTime = Time.time + AttackMotionInverval;
-                    }
-                }
-                break;
-            case PlayerState.ATTACK1:
-            case PlayerState.ATTACK2:
-            case PlayerState.ATTACK3:
-                if (input.ActionInputDown)
-                    attackContinue = true;
-                break;
-        }
-        #endregion
-
+        
         #region Directional input
         switch (state)
         {

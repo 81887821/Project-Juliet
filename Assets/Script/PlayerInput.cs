@@ -10,42 +10,28 @@ public class PlayerInput : MonoBehaviour
         get;
         private set;
     }
-    public float VerticalInput
-    {
-        get;
-        private set;
-    }
     public Vector2 DirectionalInput
     {
         get
         {
-            return new Vector2(HorizontalInput, VerticalInput);
+            return new Vector2(HorizontalInput, 0f);
         }
     }
-    public bool ActionInputDown
-    {
-        get;
-        private set;
-    }
-    public bool ActionInputUp
-    {
-        get;
-        private set;
-    }
     
-    Player player;
+    private Player player;
+    private InGameUIManager ui;
 
     void Start()
     {
         player = GetComponent<Player>();
+        ui = InGameUIManager.Instance;
+        ui.ActionButton.onClick.AddListener(player.OnActionButtonClicked);
+        ui.TransformationButton.onClick.AddListener(player.OnTransformationButtonClicked);
     }
     
     void Update()
     {
-        HorizontalInput = Input.GetAxisRaw("Horizontal");
-        VerticalInput = player.downSideJumpEnabled ? Input.GetAxisRaw("Vertical") : 0.0f;
-        ActionInputDown = Input.GetKeyDown(KeyCode.Space);
-        ActionInputUp = Input.GetKeyUp(KeyCode.Space);
+        HorizontalInput = ui.movementScrollbar.value * 2 - 1;
 
 #if DEBUG
         if (Input.GetKeyDown(KeyCode.Q))

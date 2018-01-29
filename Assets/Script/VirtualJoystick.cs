@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 //Scrollbar VirtualJoystick
 [RequireComponent(typeof(Scrollbar))]
-public class VirtualJoystick : MonoBehaviour, IPointerUpHandler {
+public class VirtualJoystick : MonoBehaviour, IPointerUpHandler
+{
 
     private Scrollbar sc;
 
