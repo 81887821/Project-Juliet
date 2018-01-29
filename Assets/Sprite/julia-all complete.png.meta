@@ -1,0 +1,387 @@
+fileFormatVersion: 2
+guid: 5bd3637ba0fa0a442805cbff5412f93b
+timeCreated: 1517252536
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: julia-walking-1
+    21300002: julia-walking-2
+    21300004: julia-walking-3
+    21300006: julia-walking-4
+    21300008: julia-hit
+    21300010: julia-jumping-up-1
+    21300012: julia-jumping-up-2
+    21300014: julia-game-over
+    21300016: julia-idle-1
+    21300018: julia-idle-2
+    21300020: julia-jumping-down-1
+    21300022: julia-jumping-down-2
+    21300024: julia-jumping-down-3
+    21300026: julia-super-jump-1
+    21300028: julia-super-jump-2
+    21300030: julia-super-jump-3
+    21300032: julia-rolling-1
+    21300034: julia-rolling-2
+    21300036: julia-rolling-3
+    21300038: julia-rolling-4
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: julia-walking-1
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 4072
+        width: 588
+        height: 830
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-walking-2
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 4071
+        width: 449
+        height: 831
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-walking-3
+      rect:
+        serializedVersion: 2
+        x: 1835
+        y: 4080
+        width: 598
+        height: 826
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-walking-4
+      rect:
+        serializedVersion: 2
+        x: 2804
+        y: 4071
+        width: 449
+        height: 832
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-hit
+      rect:
+        serializedVersion: 2
+        x: 3682
+        y: 4062
+        width: 637
+        height: 802
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-jumping-up-1
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 2666
+        width: 545
+        height: 897
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-jumping-up-2
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 2672
+        width: 499
+        height: 906
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-game-over
+      rect:
+        serializedVersion: 2
+        x: 1862
+        y: 2672
+        width: 727
+        height: 590
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-idle-1
+      rect:
+        serializedVersion: 2
+        x: 3510
+        y: 2673
+        width: 382
+        height: 856
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-idle-2
+      rect:
+        serializedVersion: 2
+        x: 4176
+        y: 2684
+        width: 385
+        height: 855
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-jumping-down-1
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 1471
+        width: 671
+        height: 825
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-jumping-down-2
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 1471
+        width: 598
+        height: 1130
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-jumping-down-3
+      rect:
+        serializedVersion: 2
+        x: 1656
+        y: 1469
+        width: 618
+        height: 1113
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-super-jump-1
+      rect:
+        serializedVersion: 2
+        x: 2372
+        y: 1413
+        width: 613
+        height: 749
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-super-jump-2
+      rect:
+        serializedVersion: 2
+        x: 3295
+        y: 1410
+        width: 580
+        height: 891
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-super-jump-3
+      rect:
+        serializedVersion: 2
+        x: 4170
+        y: 1410
+        width: 547
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-rolling-1
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 361
+        width: 578
+        height: 578
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-rolling-2
+      rect:
+        serializedVersion: 2
+        x: 1246
+        y: 363
+        width: 572
+        height: 576
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-rolling-3
+      rect:
+        serializedVersion: 2
+        x: 2100
+        y: 361
+        width: 577
+        height: 577
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-rolling-4
+      rect:
+        serializedVersion: 2
+        x: 3043
+        y: 361
+        width: 574
+        height: 578
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
