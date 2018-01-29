@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     /// State of player character.
     /// State with higher value has higher priority.
     /// </summary>
-	private enum PlayerState { NONE, IDLE, WALKING, ATTACK, JUMPING_DOWN, JUMPING_UP, ROLLING, SUPER_JUMP, HIT, GAME_OVER }
+	private enum PlayerState { NONE, IDLE, WALKING, ATTACK1, ATTACK2, ATTACK3, ATTACK4, JUMPING_DOWN, JUMPING_UP, ROLLING, SUPER_JUMP, HIT, GAME_OVER }
 	private const float EPSILON = 0.1f;
 
 	[Header("Player Condition")]
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
 
 	public Vector2 Knockback;
 	public float KnockbackTime = .3f;
+    public float AttackMotionInverval = .4f;
 
 	[Header("Advanced Movement")]
 	public bool wallJumpEnabled;
@@ -65,6 +66,9 @@ public class Player : MonoBehaviour
 	private SpriteRenderer spriteRenderer;
 	private bool headingLeft = true;
 
+    private bool attackContinue = false;
+    private float attackMotionEndTime;
+
     PlayerInput input;
 
     private void UpdateAnimationState(PlayerState state)
@@ -80,10 +84,25 @@ public class Player : MonoBehaviour
                 animator.Play(prefix + "JumpUp");
                 break;
             case PlayerState.JUMPING_DOWN:
-                animator.Play(prefix + "JumpDownPrepare");
+                if (isSmallForm)
+                    animator.Play("JuliaJumpDownPrepare");
+                else
+                    animator.Play("JuliettJumpDown");
                 break;
             case PlayerState.WALKING:
                 animator.Play(prefix + "Walk");
+                break;
+            case PlayerState.ATTACK1:
+                animator.Play(prefix + "Attack1");
+                break;
+            case PlayerState.ATTACK2:
+                animator.Play(prefix + "Attack2");
+                break;
+            case PlayerState.ATTACK3:
+                animator.Play(prefix + "Attack3");
+                break;
+            case PlayerState.ATTACK4:
+                animator.Play(prefix + "Attack4");
                 break;
             case PlayerState.SUPER_JUMP:
                 animator.Play(prefix + "SuperJumpPrepare");
@@ -125,9 +144,16 @@ public class Player : MonoBehaviour
                     else
                     {
                         Attack();
-                        nextState = PlayerState.ATTACK;
+                        nextState = PlayerState.ATTACK1;
+                        attackMotionEndTime = Time.time + AttackMotionInverval;
                     }
                 }
+                break;
+            case PlayerState.ATTACK1:
+            case PlayerState.ATTACK2:
+            case PlayerState.ATTACK3:
+                if (input.ActionInputDown)
+                    attackContinue = true;
                 break;
         }
         #endregion
@@ -170,6 +196,24 @@ public class Player : MonoBehaviour
                     return PlayerState.JUMPING_DOWN;
                 else if (Math.Abs(velocity.x) > EPSILON)
                     return PlayerState.WALKING;
+                else
+                    return PlayerState.IDLE;
+            case PlayerState.ATTACK1:
+            case PlayerState.ATTACK2:
+            case PlayerState.ATTACK3:
+                if (attackMotionEndTime > Time.time)
+                    return state;
+                else if (attackContinue)
+                {
+                    attackMotionEndTime = Time.time + AttackMotionInverval;
+                    attackContinue = false;
+                    return state + 1;
+                }
+                else
+                    return PlayerState.IDLE;
+            case PlayerState.ATTACK4:
+                if (attackMotionEndTime > Time.time)
+                    return state;
                 else
                     return PlayerState.IDLE;
             case PlayerState.JUMPING_UP:
