@@ -22,7 +22,8 @@ public class Player : MonoBehaviour
     [Header("Common Movement")]
     public float maxJumpHeight = 3;
     public float floatingTime = .8f;
-    public float moveSpeed = 6;
+    public float juliaMoveSpeed = 6;
+    public float juliettMoveSpeed = 9;
     public float bigFormSpeedMul = 1.5f;
 
     public Vector2 Knockback;
@@ -416,7 +417,7 @@ public class Player : MonoBehaviour
 
     void CalculateVelocity()
     {
-        float targetVelocityX = input.HorizontalInput * moveSpeed;
+        float targetVelocityX = input.HorizontalInput * (isSmallForm ? juliaMoveSpeed : juliettMoveSpeed);
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
     }
