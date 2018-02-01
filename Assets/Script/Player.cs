@@ -70,6 +70,12 @@ public class Player : MonoBehaviour
 
     PlayerInput input;
 
+    private BoxCollider2D boxCollider;
+
+    /// <summary>
+    /// Update animator state using PlayerState and change Player sprite immediately.
+    /// </summary>
+    /// <param name="state"></param>
     private void UpdateAnimationState(PlayerState state)
     {
         string prefix = isSmallForm ? "Julia" : "Juliett";
@@ -118,6 +124,15 @@ public class Player : MonoBehaviour
             default:
                 throw new Exception("Undefined state " + state);
         }
+
+        animator.Update(0f);
+    }
+
+    private void AdjustBoxCollider()
+    {
+        Bounds spriteBounds = spriteRenderer.sprite.bounds;
+        boxCollider.size = spriteBounds.size;
+        boxCollider.offset = spriteBounds.center;
     }
 
     public void OnActionButtonClicked()
@@ -152,6 +167,7 @@ public class Player : MonoBehaviour
         state = PlayerState.IDLE;
         nextState = PlayerState.IDLE;
         UpdateAnimationState(state);
+        AdjustBoxCollider();
     }
 
     /// <summary>
@@ -257,6 +273,7 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         input = GetComponent<PlayerInput>();
+        boxCollider = GetComponent<BoxCollider2D>();
 
         gravity = -(8 * maxJumpHeight) / Mathf.Pow(floatingTime, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * (floatingTime / 2);
@@ -403,7 +420,21 @@ public class Player : MonoBehaviour
 
     void CalculateVelocity()
     {
-        float targetVelocityX = input.HorizontalInput * (isSmallForm ? juliaMoveSpeed : juliettMoveSpeed);
+        float targetVelocityX;
+
+        switch (state)
+        {
+            case PlayerState.ATTACK1:
+            case PlayerState.ATTACK2:
+            case PlayerState.ATTACK3:
+            case PlayerState.ATTACK4:
+                targetVelocityX = 0f;
+                break;
+            default:
+                targetVelocityX = input.HorizontalInput * (isSmallForm ? juliaMoveSpeed : juliettMoveSpeed);
+                break;
+        }
+
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
     }
