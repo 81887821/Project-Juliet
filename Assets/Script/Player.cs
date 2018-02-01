@@ -155,28 +155,21 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Handle user input.
+    /// Handle directional input.
     /// </summary>
-    /// <returns>Next state by user input.</returns>
-    private PlayerState HandleInput()
+    /// <returns>Next state by directional input.</returns>
+    private PlayerState HandleDirectionalInput()
     {
-        PlayerState nextState = PlayerState.NONE;
-        
-        #region Directional input
         switch (state)
         {
             case PlayerState.IDLE:
                 if (input.HorizontalInput != 0.0f)
-                    nextState = PlayerState.WALKING;
-                controller.Move(velocity * Time.deltaTime);
-                break;
+                    return PlayerState.WALKING;
+                else
+                    return PlayerState.NONE;
             default:
-                controller.Move(velocity * Time.deltaTime);
-                break;
+                return PlayerState.NONE;
         }
-        #endregion
-
-        return nextState;
     }
 
     private PlayerState GetNextStateByEnvironment()
@@ -276,9 +269,11 @@ public class Player : MonoBehaviour
         
         if (wallJumpEnabled)
             HandleWallSliding();
-        
-        PlayerState nextStateByInput = HandleInput();
-        nextState = (nextState > nextStateByInput ? nextState : nextStateByInput);
+
+        controller.Move(velocity * Time.deltaTime);
+
+        PlayerState nextStateByDirectionalInput = HandleDirectionalInput();
+        nextState = (nextState > nextStateByDirectionalInput ? nextState : nextStateByDirectionalInput);
         PlayerState nextStateByEnvironment = GetNextStateByEnvironment();
         nextState = (nextState > nextStateByEnvironment ? nextState : nextStateByEnvironment);
         
