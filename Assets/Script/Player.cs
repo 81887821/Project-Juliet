@@ -39,7 +39,6 @@ public class Player : MonoBehaviour
     float timeToWallUnstick;
 
     [Space]
-    public bool downSideJumpEnabled;           // for obstacle with "Through" Tag 
     public bool variableHeightJumpEnabled;
     public float minJumpHeight = 1;
 
@@ -169,17 +168,10 @@ public class Player : MonoBehaviour
             case PlayerState.IDLE:
                 if (input.HorizontalInput != 0.0f)
                     nextState = PlayerState.WALKING;
-                controller.Move(velocity * Time.deltaTime, input.DirectionalInput);
-                break;
-            case PlayerState.WALKING:
-            case PlayerState.JUMPING_UP:
-            case PlayerState.JUMPING_DOWN:
-            case PlayerState.SUPER_JUMP:
-            case PlayerState.ROLLING:
-                controller.Move(velocity * Time.deltaTime, input.DirectionalInput);
+                controller.Move(velocity * Time.deltaTime);
                 break;
             default:
-                controller.Move(velocity * Time.deltaTime, Vector2.zero);
+                controller.Move(velocity * Time.deltaTime);
                 break;
         }
         #endregion
