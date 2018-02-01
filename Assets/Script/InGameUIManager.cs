@@ -94,23 +94,6 @@ public class InGameUIManager : MonoBehaviour
 
     }
 
-    public void OnPressedActionButton()
-    {
-        
-    }
-
-    public void OnPressedTransformationButton()
-    {
-
-    }
-
-    public void OnMovementScrollbarValueChanged()
-    {
-        //-1 ~ 1
-        float axes = movementScrollbar.value * 2 - 1;
-        //Need Custom Input Process for Mobile
-    }
-
     //amount: current number of heart
     public void SetCurrentHeartNum(int amount)
     {
