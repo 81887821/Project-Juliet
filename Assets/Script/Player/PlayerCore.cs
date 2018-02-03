@@ -20,7 +20,6 @@ public class PlayerCore : MonoBehaviour
 
     public Vector2 Knockback = new Vector2(15f, 4f);
     public float KnockbackTime = .3f;
-    public float AttackMotionInverval = .4f;
 
     [Header("Advanced Movement")]
     public bool wallJumpEnabled;

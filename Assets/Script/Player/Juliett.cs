@@ -6,6 +6,7 @@ using UnityEngine;
 public class Juliett : PlayerBase
 {
     private static readonly float[] ATTACK_INVERVAL = { 0.4f, 0.4f, 0.4f, 0.4f };
+    private static readonly Vector3[] ACCELERATION_ON_ATTACK = { Vector3.zero, Vector3.zero, new Vector3(20f, 0f), new Vector3(30f, 0f) };
     private static readonly Vector3 COLLISION_BOX_SHRINK = new Vector3(0.1f, 0.1f);
 
     #region State flags
@@ -126,6 +127,10 @@ public class Juliett : PlayerBase
             case PlayerState.ATTACK3:
             case PlayerState.ATTACK4:
                 stateEndTime = Time.time + ATTACK_INVERVAL[newState - PlayerState.ATTACK1];
+                if (HeadingLeft)
+                    velocity -= ACCELERATION_ON_ATTACK[newState - PlayerState.ATTACK1];
+                else
+                    velocity += ACCELERATION_ON_ATTACK[newState - PlayerState.ATTACK1];
                 horizontalMovementEnabled = false;
                 break;
         }
