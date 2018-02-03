@@ -2411,23 +2411,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSmallForm: 1
   currentHealth: 0
-  maxJumpHeight: 3
-  floatingTime: 0.8
-  juliaMoveSpeed: 6
-  juliettMoveSpeed: 9
-  bigFormSpeedMul: 1.5
   Knockback: {x: 15, y: 4}
   KnockbackTime: 0.3
-  AttackMotionInverval: 0.4
+  specialActionAvailableTime: 0.5
+  maxJumpHeight: 3
+  minJumpHeight: 1
+  floatingTime: 0.8
+  accelerationTimeAirborne: 0.2
+  accelerationTimeGrounded: 0.1
+  juliaMoveSpeed: 6
+  supperJumpMultiplier: 1.5
   wallJumpEnabled: 0
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
   wallSlideSpeedMax: 3
   wallStickTime: 0.25
-  minJumpHeight: 1
-  accelerationTimeAirborne: 0.2
-  accelerationTimeGrounded: 0.1
+  juliettMoveSpeed: 9
+  uppercutDuration: 0.75
 --- !u!114 &895563992
 MonoBehaviour:
   m_ObjectHideFlags: 0

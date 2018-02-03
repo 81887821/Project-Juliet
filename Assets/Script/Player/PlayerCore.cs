@@ -11,17 +11,24 @@ public class PlayerCore : MonoBehaviour
     public bool isSmallForm;
     public int currentHealth;
 
-    [Header("Common Movement")]
-    public float maxJumpHeight = 3;
-    public float floatingTime = .8f;
-    public float juliaMoveSpeed = 6;
-    public float juliettMoveSpeed = 9;
-    public float bigFormSpeedMul = 1.5f;
-
+    [Header("Common Actions")]
     public Vector2 Knockback = new Vector2(15f, 4f);
     public float KnockbackTime = .3f;
 
-    [Header("Advanced Movement")]
+    [Space]
+    public float specialActionAvailableTime = .5f;
+    public float transformationDelayTime = 1f;
+
+    [Header("Julia Actions")]
+    public float maxJumpHeight = 3;
+    public float minJumpHeight = 1;
+    public float floatingTime = .8f;
+    public float accelerationTimeAirborne = .2f;
+    public float accelerationTimeGrounded = .1f;
+    public float juliaMoveSpeed = 6;
+    public float supperJumpMultiplier = 1.5f;
+
+    [Header("Julia Advanced Movement")]
     public bool wallJumpEnabled;
     public Vector2 wallJumpClimb;
     public Vector2 wallJumpOff;
@@ -29,12 +36,10 @@ public class PlayerCore : MonoBehaviour
     public float wallSlideSpeedMax = 3;
     public float wallStickTime = .25f;
 
-    [Space]
-    public float minJumpHeight = 1;
+    [Header("Juliett Actions")]
+    public float juliettMoveSpeed = 9;
+    public float uppercutDuration = 0.75f; // Match this value with JuliettUppercut animation.
 
-    [Space]
-    public float accelerationTimeAirborne = .2f;
-    public float accelerationTimeGrounded = .1f;
 
     public PlayerBase CurrentPlayerCharacter
     {

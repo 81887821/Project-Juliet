@@ -23,6 +23,9 @@ public class Julia : PlayerBase
             case PlayerState.WALKING:
                 nextState = PlayerState.JUMPING_UP;
                 break;
+            case PlayerState.SPECIAL_ACTION_READY:
+                nextState = PlayerState.SUPER_JUMP;
+                break;
         }
     }
 
@@ -36,19 +39,24 @@ public class Julia : PlayerBase
         switch (state)
         {
             case PlayerState.IDLE:
+            case PlayerState.POST_TRANSFORMATION_DELAY:
                 animator.Play("JuliaIdle");
                 break;
             case PlayerState.JUMPING_UP:
                 animator.Play("JuliaJumpUp");
                 break;
             case PlayerState.JUMPING_DOWN:
+            case PlayerState.SPECIAL_JUMPING_DOWN:
                 animator.Play("JuliaJumpDownPrepare");
                 break;
             case PlayerState.WALKING:
                 animator.Play("JuliaWalk");
                 break;
-            case PlayerState.SUPER_JUMP:
+            case PlayerState.SPECIAL_ACTION_READY:
                 animator.Play("JuliaSuperJumpPrepare");
+                break;
+            case PlayerState.SUPER_JUMP:
+                animator.Play("JuliaSuperJump");
                 break;
             case PlayerState.ROLLING:
                 animator.Play("JuliaRolling");
@@ -99,6 +107,68 @@ public class Julia : PlayerBase
             case PlayerState.JUMPING_UP:
                 Jump();
                 break;
+            case PlayerState.SUPER_JUMP:
+                SuperJump();
+                break;
+        }
+    }
+
+    private void Jump()
+    {
+        if (playerCore.wallJumpEnabled)
+        {
+            if (wallSliding)
+            {
+                if (wallDirX == input.HorizontalInput)
+                {
+                    velocity.x = -wallDirX * playerCore.wallJumpClimb.x;
+                    velocity.y = playerCore.wallJumpClimb.y;
+                }
+                else if (input.HorizontalInput == 0)
+                {
+                    velocity.x = -wallDirX * playerCore.wallJumpOff.x;
+                    velocity.y = playerCore.wallJumpOff.y;
+                }
+                else
+                {
+                    velocity.x = -wallDirX * playerCore.wallLeap.x;
+                    velocity.y = playerCore.wallLeap.y;
+                }
+            }
+        }
+        if (controller.collisions.below)
+        {
+            if (controller.collisions.slidingDownMaxSlope)
+            {
+                if (input.HorizontalInput != -Mathf.Sign(controller.collisions.slopeNormal.x))
+                {
+                    velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
+                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
+                }
+            }
+            else
+            {
+                velocity.y = maxJumpVelocity;
+            }
+        }
+    }
+
+    private void SuperJump()
+    {
+        if (controller.collisions.below)
+        {
+            if (controller.collisions.slidingDownMaxSlope)
+            {
+                if (input.HorizontalInput != -Mathf.Sign(controller.collisions.slopeNormal.x))
+                {
+                    velocity.y = maxJumpVelocity * playerCore.supperJumpMultiplier * controller.collisions.slopeNormal.y;
+                    velocity.x = maxJumpVelocity * playerCore.supperJumpMultiplier * controller.collisions.slopeNormal.x;
+                }
+            }
+            else
+            {
+                velocity.y = maxJumpVelocity * playerCore.supperJumpMultiplier;
+            }
         }
     }
 }

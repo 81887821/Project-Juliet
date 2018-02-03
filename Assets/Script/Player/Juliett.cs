@@ -36,6 +36,9 @@ public class Juliett : PlayerBase
             case PlayerState.ATTACK3:
                 attackContinue = true;
                 break;
+            case PlayerState.SPECIAL_ACTION_READY:
+                nextState = PlayerState.UPPERCUT;
+                break;
         }
     }
 
@@ -49,9 +52,11 @@ public class Juliett : PlayerBase
         switch (state)
         {
             case PlayerState.IDLE:
+            case PlayerState.POST_TRANSFORMATION_DELAY:
                 animator.Play("JuliettIdle");
                 break;
             case PlayerState.JUMPING_DOWN:
+            case PlayerState.SPECIAL_JUMPING_DOWN:
                 animator.Play("JuliettJumpDown");
                 break;
             case PlayerState.WALKING:
@@ -68,6 +73,12 @@ public class Juliett : PlayerBase
                 break;
             case PlayerState.ATTACK4:
                 animator.Play("JuliettAttack4");
+                break;
+            case PlayerState.SPECIAL_ACTION_READY:
+                animator.Play("JuliettUppercutPrepare");
+                break;
+            case PlayerState.UPPERCUT:
+                animator.Play("JuliettUppercut");
                 break;
             case PlayerState.HIT:
                 animator.Play("JuliettHit");
@@ -100,6 +111,11 @@ public class Juliett : PlayerBase
                     return state;
                 else
                     return PlayerState.IDLE;
+            case PlayerState.UPPERCUT:
+                if (stateEndTime > Time.time)
+                    return PlayerState.UPPERCUT;
+                else
+                    return PlayerState.IDLE;
             default:
                 return base.GetNextStateByEnvironment();
         }
@@ -118,6 +134,9 @@ public class Juliett : PlayerBase
                 attackContinue = false;
                 horizontalMovementEnabled = true;
                 break;
+            case PlayerState.UPPERCUT:
+                horizontalMovementEnabled = true;
+                break;
         }
 
         switch (newState)
@@ -131,6 +150,10 @@ public class Juliett : PlayerBase
                     velocity -= ACCELERATION_ON_ATTACK[newState - PlayerState.ATTACK1];
                 else
                     velocity += ACCELERATION_ON_ATTACK[newState - PlayerState.ATTACK1];
+                horizontalMovementEnabled = false;
+                break;
+            case PlayerState.UPPERCUT:
+                stateEndTime = Time.time + playerCore.uppercutDuration;
                 horizontalMovementEnabled = false;
                 break;
         }

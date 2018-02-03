@@ -21,8 +21,16 @@ public abstract class PlayerBase : MonoBehaviour
         IDLE, WALKING, // For both
         ATTACK1, ATTACK2, ATTACK3, ATTACK4, // For Juliett
         JUMPING_DOWN, // For both
+        /// <summary>
+        /// Jumping down state right after transformation.
+        /// Next action can be special action.
+        /// State for both Julia and Juliett.
+        /// </summary>
+        SPECIAL_JUMPING_DOWN,
+        SPECIAL_ACTION_READY, // For both
+        UPPERCUT, // For Juliett
         JUMPING_UP, ROLLING, SUPER_JUMP, // For Julia
-        HIT, GAME_OVER // For both
+        POST_TRANSFORMATION_DELAY, HIT, GAME_OVER // For both
     }
     protected const float EPSILON = 0.1f;
 
@@ -51,6 +59,10 @@ public abstract class PlayerBase : MonoBehaviour
     protected PlayerState nextState = PlayerState.IDLE;
 
     #region State flags
+    /// <summary>
+    /// If movementEnable is set to false, player character will not move even though horizontalMovementEnabled is true.
+    /// </summary>
+    protected bool movementEnable = true;
     protected bool horizontalMovementEnabled = true;
     protected bool ignoreDamage = false;
     protected bool transformationEnabled = true;
@@ -93,13 +105,13 @@ public abstract class PlayerBase : MonoBehaviour
     #endregion
 
     #region Physics variables
-    private float gravity;
-    private float maxJumpVelocity;
-    private float minJumpVelocity;
+    protected float gravity;
+    protected float maxJumpVelocity;
+    protected float minJumpVelocity;
     protected Vector3 velocity;
-    private float velocityXSmoothing;
-    private int wallDirX;
-    private bool wallSliding = false;
+    protected float velocityXSmoothing;
+    protected int wallDirX;
+    protected bool wallSliding = false;
 
     private float moveSpeed;
     #endregion
@@ -110,6 +122,7 @@ public abstract class PlayerBase : MonoBehaviour
     /// Time variable for states which last fixed amount of time.
     /// </summary>
     protected float stateEndTime;
+    protected float specialActionAvailableTime;
     #endregion
 
     protected virtual void Start()
@@ -131,31 +144,37 @@ public abstract class PlayerBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        CalculateVelocity();
+        if (movementEnable)
+        {
+            CalculateVelocity();
 
-        if (playerCore.wallJumpEnabled)
-            HandleWallSliding();
+            if (playerCore.wallJumpEnabled)
+                HandleWallSliding();
 
-        controller.Move(velocity * Time.deltaTime);
+            controller.Move(velocity * Time.deltaTime);
+        }
 
         PlayerState nextStateByDirectionalInput = HandleDirectionalInput();
         nextState = (nextState > nextStateByDirectionalInput ? nextState : nextStateByDirectionalInput);
         PlayerState nextStateByEnvironment = GetNextStateByEnvironment();
         nextState = (nextState > nextStateByEnvironment ? nextState : nextStateByEnvironment);
 
-        if (controller.collisions.above || controller.collisions.below)
+        if (movementEnable)
         {
-            if (controller.collisions.slidingDownMaxSlope)
+            if (controller.collisions.above || controller.collisions.below)
             {
-                velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
+                if (controller.collisions.slidingDownMaxSlope)
+                {
+                    velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
+                }
+                else
+                {
+                    velocity.y = 0;
+                }
             }
-            else
-            {
-                velocity.y = 0;
-            }
-        }
 
-        UpdateDirection();
+            UpdateDirection();
+        }
 
         if (state != nextState)
         {
@@ -236,6 +255,23 @@ public abstract class PlayerBase : MonoBehaviour
                     return PlayerState.JUMPING_DOWN;
                 else
                     return PlayerState.IDLE;
+            case PlayerState.SPECIAL_JUMPING_DOWN:
+                if (!controller.collisions.below)
+                    return PlayerState.SPECIAL_JUMPING_DOWN;
+                else
+                    return PlayerState.SPECIAL_ACTION_READY;
+            case PlayerState.SPECIAL_ACTION_READY:
+                if (stateEndTime > Time.time)
+                    return PlayerState.SPECIAL_ACTION_READY;
+                else
+                    return PlayerState.IDLE;
+            case PlayerState.POST_TRANSFORMATION_DELAY:
+                if (stateEndTime > Time.time)
+                    return PlayerState.POST_TRANSFORMATION_DELAY;
+                else if (controller.collisions.below)
+                    return PlayerState.SPECIAL_ACTION_READY;
+                else
+                    return PlayerState.SPECIAL_JUMPING_DOWN;
             case PlayerState.HIT:
                 if (stateEndTime > Time.time)
                     return PlayerState.HIT;
@@ -257,6 +293,9 @@ public abstract class PlayerBase : MonoBehaviour
     {
         switch (oldState)
         {
+            case PlayerState.POST_TRANSFORMATION_DELAY:
+                movementEnable = true;
+                break;
             case PlayerState.HIT:
                 ignoreDamage = false;
                 horizontalMovementEnabled = true;
@@ -267,6 +306,13 @@ public abstract class PlayerBase : MonoBehaviour
 
         switch (newState)
         {
+            case PlayerState.SPECIAL_ACTION_READY:
+                stateEndTime = Time.time + playerCore.specialActionAvailableTime;
+                break;
+            case PlayerState.POST_TRANSFORMATION_DELAY:
+                stateEndTime = Time.time + playerCore.transformationDelayTime;
+                movementEnable = false;
+                break;
             case PlayerState.HIT:
                 ignoreDamage = true;
                 horizontalMovementEnabled = false;
@@ -328,46 +374,6 @@ public abstract class PlayerBase : MonoBehaviour
         }
     }
 
-    protected void Jump()
-    {
-        if (playerCore.wallJumpEnabled)
-        {
-            if (wallSliding)
-            {
-                if (wallDirX == input.HorizontalInput)
-                {
-                    velocity.x = -wallDirX * playerCore.wallJumpClimb.x;
-                    velocity.y = playerCore.wallJumpClimb.y;
-                }
-                else if (input.HorizontalInput == 0)
-                {
-                    velocity.x = -wallDirX * playerCore.wallJumpOff.x;
-                    velocity.y = playerCore.wallJumpOff.y;
-                }
-                else
-                {
-                    velocity.x = -wallDirX * playerCore.wallLeap.x;
-                    velocity.y = playerCore.wallLeap.y;
-                }
-            }
-        }
-        if (controller.collisions.below)
-        {
-            if (controller.collisions.slidingDownMaxSlope)
-            {
-                if (input.HorizontalInput != -Mathf.Sign(controller.collisions.slopeNormal.x))
-                {
-                    velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
-                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
-                }
-            }
-            else
-            {
-                velocity.y = maxJumpVelocity;
-            }
-        }
-    }
-
     public virtual bool CanTransform
     {
         get
@@ -402,17 +408,12 @@ public abstract class PlayerBase : MonoBehaviour
         horizontalMovementEnabled = priorCharacter.horizontalMovementEnabled;
         ignoreDamage = priorCharacter.ignoreDamage;
         
-        state = PlayerState.IDLE;
-        nextState = PlayerState.NONE;
+        state = PlayerState.NONE;
+        nextState = PlayerState.POST_TRANSFORMATION_DELAY;
         
-        PlayerState nextStateByDirectionalInput = HandleDirectionalInput();
-        nextState = (nextState > nextStateByDirectionalInput ? nextState : nextStateByDirectionalInput);
-        PlayerState nextStateByEnvironment = GetNextStateByEnvironment();
-        nextState = (nextState > nextStateByEnvironment ? nextState : nextStateByEnvironment);
-
         UpdateDirection();
 
-        HandleStateTransitionSideEffect(PlayerState.NONE, nextState);
+        HandleStateTransitionSideEffect(state, nextState);
         state = nextState;
         UpdateAnimationState(state);
 
