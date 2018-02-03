@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Player))]
+[RequireComponent(typeof(PlayerCore))]
 public class PlayerInput : MonoBehaviour
 {
     public float HorizontalInput
@@ -18,12 +18,12 @@ public class PlayerInput : MonoBehaviour
         }
     }
     
-    private Player player;
+    private PlayerCore player;
     private InGameUIManager ui;
 
     void Start()
     {
-        player = GetComponent<Player>();
+        player = GetComponent<PlayerCore>();
         ui = InGameUIManager.Instance;
         ui.ActionButton.onClick.AddListener(player.OnActionButtonClicked);
         ui.TransformationButton.onClick.AddListener(player.OnTransformationButtonClicked);
@@ -36,11 +36,11 @@ public class PlayerInput : MonoBehaviour
 #if DEBUG
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            player.OnPlayerDamaged(10, 1);
+            player.CurrentPlayerCharacter.OnPlayerDamaged(10, 1);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            player.OnPlayerDamaged(10, -1);
+            player.CurrentPlayerCharacter.OnPlayerDamaged(10, -1);
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
