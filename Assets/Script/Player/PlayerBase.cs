@@ -18,7 +18,7 @@ public abstract class PlayerBase : MonoBehaviour
         /// Special state to represent a method doesn't want to change state.
         /// </summary>
         NONE,
-        IDLE, WALKING, // For both
+        IDLE, SPECIAL_ACTION_READY, WALKING, // For both
         ATTACK1, ATTACK2, ATTACK3, ATTACK4, // For Juliett
         JUMPING_DOWN, // For both
         /// <summary>
@@ -27,7 +27,6 @@ public abstract class PlayerBase : MonoBehaviour
         /// State for both Julia and Juliett.
         /// </summary>
         SPECIAL_JUMPING_DOWN,
-        SPECIAL_ACTION_READY, // For both
         UPPERCUT, // For Juliett
         JUMPING_UP, ROLLING, SUPER_JUMP, // For Julia
         POST_TRANSFORMATION_DELAY, HIT, GAME_OVER // For both
@@ -225,6 +224,7 @@ public abstract class PlayerBase : MonoBehaviour
         switch (state)
         {
             case PlayerState.IDLE:
+            case PlayerState.SPECIAL_ACTION_READY:
                 if (input.HorizontalInput != 0.0f)
                     return PlayerState.WALKING;
                 else
@@ -410,7 +410,7 @@ public abstract class PlayerBase : MonoBehaviour
         
         state = PlayerState.NONE;
         nextState = PlayerState.POST_TRANSFORMATION_DELAY;
-        
+
         UpdateDirection();
 
         HandleStateTransitionSideEffect(state, nextState);
