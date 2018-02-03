@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 
 [RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(Controller2D))]
 public class PlayerCore : MonoBehaviour
 {
     [Header("Player Condition")]
@@ -60,12 +61,14 @@ public class PlayerCore : MonoBehaviour
     private Julia julia;
     private Juliett juliett;
     private BoxCollider2D physicalCollider;
+    private Controller2D controller;
 
     void Start()
     {
         julia = GetComponentInChildren<Julia>();
         juliett = GetComponentInChildren<Juliett>();
         physicalCollider = GetComponent<BoxCollider2D>();
+        controller = GetComponent<Controller2D>();
 
         WaitingPlayerCharacter.IsActive = false;
     }
@@ -87,6 +90,7 @@ public class PlayerCore : MonoBehaviour
             isSmallForm = !isSmallForm;
             physicalCollider.size = CurrentPlayerCharacter.PhysicalCollider.size;
             physicalCollider.offset = CurrentPlayerCharacter.PhysicalCollider.offset;
+            controller.CalculateRaySpacing();
 
             CurrentPlayerCharacter.IsActive = true;
             WaitingPlayerCharacter.IsActive = false;

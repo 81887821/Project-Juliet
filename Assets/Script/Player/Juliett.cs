@@ -6,6 +6,7 @@ using UnityEngine;
 public class Juliett : PlayerBase
 {
     private static readonly float[] ATTACK_INVERVAL = { 0.4f, 0.4f, 0.4f, 0.4f };
+    private static readonly Vector3 COLLISION_BOX_SHRINK = new Vector3(0.1f, 0.1f);
 
     #region State flags
     private bool attackContinue = false;
@@ -127,6 +128,14 @@ public class Juliett : PlayerBase
                 stateEndTime = Time.time + ATTACK_INVERVAL[newState - PlayerState.ATTACK1];
                 horizontalMovementEnabled = false;
                 break;
+        }
+    }
+
+    public override bool CanTransform
+    {
+        get
+        {
+            return base.CanTransform && Physics2D.OverlapBox(physicalCollider.bounds.center, physicalCollider.bounds.size - COLLISION_BOX_SHRINK, 0f, controller.collisionMask) == null;
         }
     }
 }

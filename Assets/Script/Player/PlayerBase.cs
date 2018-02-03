@@ -369,13 +369,7 @@ public abstract class PlayerBase : MonoBehaviour
     {
         get
         {
-            if (!transformationEnabled)
-                return false;
-            /* TODO : Doesnt' work */
-            else if (physicalCollider.IsTouchingLayers(controller.collisionMask))
-                return false;
-            else
-                return true;
+            return transformationEnabled;
         }
     }
 
