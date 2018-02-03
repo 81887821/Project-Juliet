@@ -177,6 +177,7 @@ public abstract class PlayerBase : MonoBehaviour
 
             velocity.x += -directionX * playerCore.Knockback.x;
             velocity.y += playerCore.Knockback.y;
+            HeadingLeft = directionX > 0;
 
             nextState = PlayerState.HIT;
         }
@@ -192,7 +193,8 @@ public abstract class PlayerBase : MonoBehaviour
 
     private void UpdateDirection()
     {
-        HeadingLeft = input.HorizontalInput != 0f ? input.HorizontalInput < 0 : controller.collisions.faceDir == -1;
+        if (input.HorizontalInput != 0f)
+            HeadingLeft = input.HorizontalInput < 0;
     }
 
     /// <summary>
@@ -259,6 +261,7 @@ public abstract class PlayerBase : MonoBehaviour
                 ignoreDamage = false;
                 horizontalMovementEnabled = true;
                 transformationEnabled = true;
+                HeadingLeft = !HeadingLeft;
                 break;
         }
 

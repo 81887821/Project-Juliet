@@ -18,7 +18,7 @@ public class PlayerCore : MonoBehaviour
     public float juliettMoveSpeed = 9;
     public float bigFormSpeedMul = 1.5f;
 
-    public Vector2 Knockback;
+    public Vector2 Knockback = new Vector2(15f, 4f);
     public float KnockbackTime = .3f;
     public float AttackMotionInverval = .4f;
 

@@ -2416,7 +2416,7 @@ MonoBehaviour:
   juliaMoveSpeed: 6
   juliettMoveSpeed: 9
   bigFormSpeedMul: 1.5
-  Knockback: {x: 0, y: 0}
+  Knockback: {x: 15, y: 4}
   KnockbackTime: 0.3
   AttackMotionInverval: 0.4
   wallJumpEnabled: 0
