@@ -303,6 +303,7 @@ public abstract class PlayerBase : MonoBehaviour
                 break;
             case PlayerState.POST_TRANSFORMATION_DELAY:
                 movementEnable = true;
+                transformationEnabled = true;
                 break;
             case PlayerState.HIT:
                 ignoreDamage = false;
@@ -323,6 +324,7 @@ public abstract class PlayerBase : MonoBehaviour
                 break;
             case PlayerState.POST_TRANSFORMATION_DELAY:
                 stateEndTime = Time.time + playerCore.transformationDelayTime;
+                transformationEnabled = false;
                 movementEnable = false;
                 break;
             case PlayerState.HIT:
