@@ -24,6 +24,7 @@ public class Julia : PlayerBase
                 nextState = PlayerState.JUMPING_UP;
                 break;
             case PlayerState.SPECIAL_ACTION_READY:
+            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
                 nextState = PlayerState.SUPER_JUMP;
                 break;
         }
@@ -53,6 +54,7 @@ public class Julia : PlayerBase
                 animator.Play("JuliaWalk");
                 break;
             case PlayerState.SPECIAL_ACTION_READY:
+            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
                 animator.Play("JuliaSuperJumpPrepare");
                 break;
             case PlayerState.SUPER_JUMP:

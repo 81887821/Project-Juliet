@@ -18,7 +18,7 @@ public abstract class PlayerBase : MonoBehaviour
         /// Special state to represent a method doesn't want to change state.
         /// </summary>
         NONE,
-        IDLE, SPECIAL_ACTION_READY, WALKING, // For both
+        IDLE, SPECIAL_ACTION_READY, CANCELABLE_SPECIAL_ACTION_READY, WALKING, // For both
         ATTACK1, ATTACK2, ATTACK3, ATTACK4, // For Juliett
         JUMPING_DOWN, // For both
         /// <summary>
@@ -224,7 +224,7 @@ public abstract class PlayerBase : MonoBehaviour
         switch (state)
         {
             case PlayerState.IDLE:
-            case PlayerState.SPECIAL_ACTION_READY:
+            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
                 if (input.HorizontalInput != 0.0f)
                     return PlayerState.WALKING;
                 else
@@ -264,6 +264,11 @@ public abstract class PlayerBase : MonoBehaviour
                 if (stateEndTime > Time.time)
                     return PlayerState.SPECIAL_ACTION_READY;
                 else
+                    return PlayerState.CANCELABLE_SPECIAL_ACTION_READY;
+            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
+                if (stateEndTime > Time.time)
+                    return PlayerState.CANCELABLE_SPECIAL_ACTION_READY;
+                else
                     return PlayerState.IDLE;
             case PlayerState.POST_TRANSFORMATION_DELAY:
                 if (stateEndTime > Time.time)
@@ -293,6 +298,9 @@ public abstract class PlayerBase : MonoBehaviour
     {
         switch (oldState)
         {
+            case PlayerState.SPECIAL_ACTION_READY:
+                horizontalMovementEnabled = true;
+                break;
             case PlayerState.POST_TRANSFORMATION_DELAY:
                 movementEnable = true;
                 break;
@@ -307,7 +315,11 @@ public abstract class PlayerBase : MonoBehaviour
         switch (newState)
         {
             case PlayerState.SPECIAL_ACTION_READY:
-                stateEndTime = Time.time + playerCore.specialActionAvailableTime;
+                stateEndTime = Time.time + playerCore.totalSpecialActionAvailableTime - playerCore.cancelableSpecialActionAvailableTime;
+                horizontalMovementEnabled = false;
+                break;
+            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
+                stateEndTime = Time.time + playerCore.totalSpecialActionAvailableTime;
                 break;
             case PlayerState.POST_TRANSFORMATION_DELAY:
                 stateEndTime = Time.time + playerCore.transformationDelayTime;

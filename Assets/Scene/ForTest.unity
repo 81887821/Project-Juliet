@@ -2413,7 +2413,9 @@ MonoBehaviour:
   currentHealth: 0
   Knockback: {x: 15, y: 4}
   KnockbackTime: 0.3
-  specialActionAvailableTime: 0.5
+  totalSpecialActionAvailableTime: 0.5
+  cancelableSpecialActionAvailableTime: 0.3
+  transformationDelayTime: 1
   maxJumpHeight: 3
   minJumpHeight: 1
   floatingTime: 0.8

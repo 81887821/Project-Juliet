@@ -16,7 +16,8 @@ public class PlayerCore : MonoBehaviour
     public float KnockbackTime = .3f;
 
     [Space]
-    public float specialActionAvailableTime = .5f;
+    public float totalSpecialActionAvailableTime = .5f;
+    public float cancelableSpecialActionAvailableTime = .3f;
     public float transformationDelayTime = 1f;
 
     [Header("Julia Actions")]
@@ -66,6 +67,13 @@ public class PlayerCore : MonoBehaviour
     private Juliett juliett;
     private BoxCollider2D physicalCollider;
     private Controller2D controller;
+
+#if DEBUG
+    private void Awake()
+    {
+        Debug.Assert(cancelableSpecialActionAvailableTime <= totalSpecialActionAvailableTime, "Cancelable special action available time cannot be larger than total special action available time.");
+    }
+#endif
 
     void Start()
     {

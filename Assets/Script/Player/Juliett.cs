@@ -37,6 +37,7 @@ public class Juliett : PlayerBase
                 attackContinue = true;
                 break;
             case PlayerState.SPECIAL_ACTION_READY:
+            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
                 nextState = PlayerState.UPPERCUT;
                 break;
         }
@@ -75,6 +76,7 @@ public class Juliett : PlayerBase
                 animator.Play("JuliettAttack4");
                 break;
             case PlayerState.SPECIAL_ACTION_READY:
+            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
                 animator.Play("JuliettUppercutPrepare");
                 break;
             case PlayerState.UPPERCUT:
