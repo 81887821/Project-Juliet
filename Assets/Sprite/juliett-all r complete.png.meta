@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1bd65314c4fcea641a3015a3504e5fdb
-timeCreated: 1517409804
+timeCreated: 1517729141
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -347,10 +347,10 @@ TextureImporter:
       name: juliett-uppercut-1
       rect:
         serializedVersion: 2
-        x: 5785
+        x: 5854
         y: 309
-        width: 735
-        height: 1012
+        width: 666
+        height: 908
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
