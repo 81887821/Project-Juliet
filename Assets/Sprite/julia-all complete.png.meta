@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 5bd3637ba0fa0a442805cbff5412f93b
-timeCreated: 1517729107
+timeCreated: 1517730417
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -26,6 +26,7 @@ TextureImporter:
     21300038: julia-rolling-4
     21300040: julia-wall-1
     21300042: julia-wall-2
+    21300044: julia-all complete_2
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -361,6 +362,62 @@ TextureImporter:
         y: 319
         width: 610
         height: 805
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-all complete_2
+      rect:
+        serializedVersion: 2
+        x: 4240
+        y: 1125
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-rolling-2
+      rect:
+        serializedVersion: 2
+        x: 996
+        y: 331
+        width: 577
+        height: 577
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-rolling-3
+      rect:
+        serializedVersion: 2
+        x: 1758
+        y: 380
+        width: 577
+        height: 571
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: julia-rolling-4
+      rect:
+        serializedVersion: 2
+        x: 2460
+        y: 361
+        width: 571
+        height: 578
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
