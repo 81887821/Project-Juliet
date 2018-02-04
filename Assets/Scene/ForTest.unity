@@ -2415,22 +2415,32 @@ MonoBehaviour:
   KnockbackTime: 0.3
   totalSpecialActionAvailableTime: 0.5
   cancelableSpecialActionAvailableTime: 0.3
-  transformationDelayTime: 1
-  maxJumpHeight: 3
+  transformationDelayTime: 0.2
+  maxJumpHeight: 4
   minJumpHeight: 1
   floatingTime: 0.8
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
   juliaMoveSpeed: 6
   supperJumpMultiplier: 1.5
-  wallJumpEnabled: 0
+  wallJumpEnabled: 1
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
   wallSlideSpeedMax: 3
   wallStickTime: 0.25
-  juliettMoveSpeed: 9
+  juliettMoveSpeed: 10
   uppercutDuration: 0.75
+  attackInterval:
+  - 0.3
+  - 0.4
+  - 0.6
+  - 0.6
+  accelerationOnAttack:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 20, y: 0, z: 0}
+  - {x: 35, y: 0, z: 0}
 --- !u!114 &895563992
 MonoBehaviour:
   m_ObjectHideFlags: 0
