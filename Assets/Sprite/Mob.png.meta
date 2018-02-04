@@ -1,14 +1,14 @@
 fileFormatVersion: 2
 guid: 81f0b7a4b079e1b46bdea00152788107
-timeCreated: 1517263489
+timeCreated: 1517675774
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Mob_2
-    21300002: Mob_3
+    21300000: mob-pressed
+    21300002: mob-idle
     21300004: Mob_4
     21300006: Mob_6
-    21300008: Mob_1
+    21300008: mob-hit
     21300010: Mob_3
   externalObjects: {}
   serializedVersion: 4
@@ -96,7 +96,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mob_2
+      name: mob-pressed
       rect:
         serializedVersion: 2
         x: 2430
@@ -110,7 +110,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Mob_1
+      name: mob-hit
       rect:
         serializedVersion: 2
         x: 1823
@@ -124,7 +124,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Mob_3
+      name: mob-idle
       rect:
         serializedVersion: 2
         x: 2994

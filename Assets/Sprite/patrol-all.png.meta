@@ -1,14 +1,14 @@
 fileFormatVersion: 2
 guid: 3f8c24a871c1a894b86b508f3e4b445c
-timeCreated: 1517587118
+timeCreated: 1517676058
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: patrol
-    21300002: patroldie
-    21300004: patrolred1
-    21300006: patrolred2
-    21300008: patrolreddie
+    21300002: patrol-dead
+    21300004: patrol-red-1
+    21300006: patrol-red-2
+    21300008: patrol-red-dead
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -99,7 +99,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: patroldie
+      name: patrol-dead
       rect:
         serializedVersion: 2
         x: 846
@@ -113,7 +113,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: patrolred1
+      name: patrol-red-1
       rect:
         serializedVersion: 2
         x: 69
@@ -127,7 +127,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: patrolred2
+      name: patrol-red-2
       rect:
         serializedVersion: 2
         x: 650
@@ -141,7 +141,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: patrolreddie
+      name: patrol-red-dead
       rect:
         serializedVersion: 2
         x: 1207
