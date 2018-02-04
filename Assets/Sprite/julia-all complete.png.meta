@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 5bd3637ba0fa0a442805cbff5412f93b
-timeCreated: 1517730417
+timeCreated: 1517736377
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -330,10 +330,10 @@ TextureImporter:
       name: julia-rolling-1
       rect:
         serializedVersion: 2
-        x: 302
-        y: 361
-        width: 578
-        height: 578
+        x: 196
+        y: 373
+        width: 582
+        height: 579
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -364,20 +364,6 @@ TextureImporter:
         height: 805
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: julia-all complete_2
-      rect:
-        serializedVersion: 2
-        x: 4240
-        y: 1125
-        width: 9
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
