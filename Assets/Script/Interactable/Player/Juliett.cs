@@ -5,17 +5,21 @@ using UnityEngine;
 
 public class Juliett : PlayerBase
 {
-    // private static readonly float[] playerCore.attackInterval = { 0.4f, 0.4f, 0.4f, 0.4f };
-    // private static readonly Vector3[] playerCore.accelerationOnAttack = { Vector3.zero, Vector3.zero, new Vector3(20f, 0f), new Vector3(30f, 0f) };
     private static readonly Vector3 COLLISION_BOX_SHRINK = new Vector3(0.1f, 0.1f);
 
     #region State flags
     private bool attackContinue = false;
     #endregion
 
+    private GameObject[] normalAttackDetectors = new GameObject[4];
+    private GameObject uppercutDetector;
+
     protected override void Start()
     {
         base.Start();
+        for (int i = 0; i < 4; i++)
+            normalAttackDetectors[i] = transform.Find(string.Format("Attack{0}Detector", i + 1)).gameObject;
+        uppercutDetector = transform.Find("UppercutDetector").gameObject;
     }
 
     protected override void Update()
@@ -125,8 +129,6 @@ public class Juliett : PlayerBase
 
     protected override void HandleStateTransitionSideEffect(PlayerState oldState, PlayerState newState)
     {
-        base.HandleStateTransitionSideEffect(oldState, newState);
-
         switch (oldState)
         {
             case PlayerState.ATTACK1:
@@ -135,11 +137,15 @@ public class Juliett : PlayerBase
             case PlayerState.ATTACK4:
                 attackContinue = false;
                 horizontalMovementEnabled = true;
+                normalAttackDetectors[oldState - PlayerState.ATTACK1].SetActive(false);
                 break;
             case PlayerState.UPPERCUT:
                 horizontalMovementEnabled = true;
+                uppercutDetector.SetActive(false);
                 break;
         }
+
+        base.HandleStateTransitionSideEffect(oldState, newState);
 
         switch (newState)
         {
@@ -153,10 +159,12 @@ public class Juliett : PlayerBase
                 else
                     velocity += playerCore.accelerationOnAttack[newState - PlayerState.ATTACK1];
                 horizontalMovementEnabled = false;
+                normalAttackDetectors[newState - PlayerState.ATTACK1].SetActive(true);
                 break;
             case PlayerState.UPPERCUT:
                 stateEndTime = Time.time + playerCore.uppercutDuration;
                 horizontalMovementEnabled = false;
+                uppercutDetector.SetActive(true);
                 break;
         }
     }
@@ -166,6 +174,25 @@ public class Juliett : PlayerBase
         get
         {
             return base.CanTransform && Physics2D.OverlapBox(PhysicalBounds.center, PhysicalBounds.size - COLLISION_BOX_SHRINK, 0f, controller.collisionMask) == null;
+        }
+    }
+    
+    public override void OnAttack(IInteractable target)
+    {
+        switch (state)
+        {
+            case PlayerState.ATTACK1:
+            case PlayerState.ATTACK2:
+            case PlayerState.ATTACK3:
+            case PlayerState.ATTACK4:
+                target.OnDamaged(this, 1, playerCore.enemyKnockbackOnAttack[state - PlayerState.ATTACK1]);
+                break;
+            case PlayerState.UPPERCUT:
+                target.OnDamaged(this, 1, playerCore.enemyKnockbackOnUppercut);
+                break;
+            default:
+                Debug.LogWarning("Attack detected on non-attacking state : " + state);
+                break;
         }
     }
 }

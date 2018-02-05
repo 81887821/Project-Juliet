@@ -42,6 +42,8 @@ public class PlayerCore : MonoBehaviour
     public float uppercutDuration = 0.75f; // Match this value with JuliettUppercut animation.
     public float[] attackInterval = { 0.4f, 0.4f, 0.4f, 0.4f };
     public Vector3[] accelerationOnAttack = { Vector3.zero, Vector3.zero, new Vector3(20f, 0f), new Vector3(30f, 0f) };
+    public Vector2 enemyKnockbackOnUppercut = new Vector2(5f, 20f);
+    public Vector2[] enemyKnockbackOnAttack = { new Vector2(5f, 4f), new Vector2(5f, 4f), new Vector2(20f, 4f), new Vector2(30f, 4f) };
 
     public PlayerBase CurrentPlayerCharacter
     {

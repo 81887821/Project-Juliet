@@ -5,7 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
-public abstract class PlayerBase : MonoBehaviour
+public abstract class PlayerBase : MonoBehaviour, IInteractable
 {
     /// <summary>
     /// State of player character.
@@ -27,7 +27,7 @@ public abstract class PlayerBase : MonoBehaviour
         /// </summary>
         SPECIAL_JUMPING_DOWN,
         UPPERCUT, // For Juliett
-        JUMPING_UP, ROLLING, SUPER_JUMP, // For Julia
+        ROLLING, SUPER_JUMP, JUMPING_UP, // For Julia
         POST_TRANSFORMATION_DELAY, HIT, GAME_OVER // For both
     }
     protected const float EPSILON = 0.1f;
@@ -47,6 +47,10 @@ public abstract class PlayerBase : MonoBehaviour
     #region Unity components
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
+    #endregion
+
+    #region Children objects
+    protected GameObject damageDetector;
     #endregion
 
     protected PlayerState state = PlayerState.IDLE;
@@ -78,6 +82,7 @@ public abstract class PlayerBase : MonoBehaviour
             enabled = isActive;
             spriteRenderer.enabled = isActive;
             animator.enabled = isActive;
+            damageDetector.SetActive(isActive);
         }
     }
 
@@ -127,6 +132,7 @@ public abstract class PlayerBase : MonoBehaviour
         playerTransform = GetComponentInParent<Transform>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        damageDetector = transform.Find("DamageDetector").gameObject;
 
         gravity = -(8 * playerCore.maxJumpHeight) / Mathf.Pow(playerCore.floatingTime, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * (playerCore.floatingTime / 2);
@@ -147,11 +153,6 @@ public abstract class PlayerBase : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
         }
 
-        PlayerState nextStateByDirectionalInput = HandleDirectionalInput();
-        nextState = (nextState > nextStateByDirectionalInput ? nextState : nextStateByDirectionalInput);
-        PlayerState nextStateByEnvironment = GetNextStateByEnvironment();
-        nextState = (nextState > nextStateByEnvironment ? nextState : nextStateByEnvironment);
-
         if (movementEnable)
         {
             if (controller.collisions.above || controller.collisions.below)
@@ -169,6 +170,16 @@ public abstract class PlayerBase : MonoBehaviour
             UpdateDirection();
         }
 
+        UpdateState();
+    }
+
+    protected void UpdateState()
+    {
+        PlayerState nextStateByDirectionalInput = HandleDirectionalInput();
+        nextState = (nextState > nextStateByDirectionalInput ? nextState : nextStateByDirectionalInput);
+        PlayerState nextStateByEnvironment = GetNextStateByEnvironment();
+        nextState = (nextState > nextStateByEnvironment ? nextState : nextStateByEnvironment);
+
         if (state != nextState)
         {
             HandleStateTransitionSideEffect(state, nextState);
@@ -180,21 +191,7 @@ public abstract class PlayerBase : MonoBehaviour
     }
 
     public abstract void OnActionButtonClicked();
-
-    public void OnPlayerDamaged(int dmg, int directionX)
-    {
-        if (!ignoreDamage)
-        {
-            playerCore.currentHealth -= dmg;
-
-            velocity.x += -directionX * playerCore.Knockback.x;
-            velocity.y += playerCore.Knockback.y;
-            HeadingLeft = directionX > 0;
-
-            nextState = PlayerState.HIT;
-        }
-    }
-
+    
     protected abstract float GetMoveSpeed();
 
     /// <summary>
@@ -427,4 +424,28 @@ public abstract class PlayerBase : MonoBehaviour
 
         nextState = PlayerState.NONE;
     }
+
+    public void OnDamaged(IInteractable attacker, int damage)
+    {
+        OnDamaged(attacker, damage, playerCore.Knockback);
+    }
+    
+    public void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
+    {
+        if (!ignoreDamage)
+        {
+            int direction = attacker.transform.position.x > transform.parent.position.x ? 1 : -1;
+
+            playerCore.currentHealth -= damage;
+
+            velocity.x += -direction * knockback.x;
+            velocity.y += knockback.y;
+            HeadingLeft = direction > 0;
+
+            nextState = PlayerState.HIT;
+            UpdateState();
+        }
+    }
+
+    public abstract void OnAttack(IInteractable target);
 }

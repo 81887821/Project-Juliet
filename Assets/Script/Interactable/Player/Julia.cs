@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class Julia : PlayerBase
 {
+    private GameObject jumpDownAttackDetector;
+    private GameObject rollingAttackDetector;
+
     protected override void Start()
     {
         base.Start();
+        jumpDownAttackDetector = transform.Find("JumpDownAttackDetector").gameObject;
+        rollingAttackDetector = transform.Find("RollingAttackDetector").gameObject;
     }
 
     protected override void Update()
@@ -81,12 +86,12 @@ public class Julia : PlayerBase
         switch (state)
         {
             case PlayerState.JUMPING_UP:
-                if (velocity.y < 0f)
+                if (velocity.y <= 0f)
                     return PlayerState.JUMPING_DOWN;
                 else
                     return PlayerState.JUMPING_UP;
             case PlayerState.SUPER_JUMP:
-                if (velocity.y < 0f)
+                if (velocity.y <= 0f)
                     return PlayerState.ROLLING;
                 else
                     return PlayerState.SUPER_JUMP;
@@ -102,12 +107,28 @@ public class Julia : PlayerBase
 
     protected override void HandleStateTransitionSideEffect(PlayerState oldState, PlayerState newState)
     {
+        switch (oldState)
+        {
+            case PlayerState.JUMPING_DOWN:
+                jumpDownAttackDetector.SetActive(false);
+                break;
+            case PlayerState.ROLLING:
+                rollingAttackDetector.SetActive(false);
+                break;
+        }
+
         base.HandleStateTransitionSideEffect(oldState, newState);
 
         switch (newState)
         {
+            case PlayerState.JUMPING_DOWN:
+                jumpDownAttackDetector.SetActive(true);
+                break;
             case PlayerState.JUMPING_UP:
                 Jump();
+                break;
+            case PlayerState.ROLLING:
+                rollingAttackDetector.SetActive(true);
                 break;
             case PlayerState.SUPER_JUMP:
                 SuperJump();
@@ -116,6 +137,22 @@ public class Julia : PlayerBase
     }
 
     private void Jump()
+    {
+        if (controller.collisions.slidingDownMaxSlope)
+        {
+            if (input.HorizontalInput != -Mathf.Sign(controller.collisions.slopeNormal.x))
+            {
+                velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
+                velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
+            }
+        }
+        else
+        {
+            velocity.y = maxJumpVelocity;
+        }
+    }
+
+    private void WallJump()
     {
         if (playerCore.wallJumpEnabled)
         {
@@ -138,21 +175,6 @@ public class Julia : PlayerBase
                 }
             }
         }
-        if (controller.collisions.below)
-        {
-            if (controller.collisions.slidingDownMaxSlope)
-            {
-                if (input.HorizontalInput != -Mathf.Sign(controller.collisions.slopeNormal.x))
-                {
-                    velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
-                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
-                }
-            }
-            else
-            {
-                velocity.y = maxJumpVelocity;
-            }
-        }
     }
 
     private void SuperJump()
@@ -168,6 +190,24 @@ public class Julia : PlayerBase
         else
         {
             velocity.y = maxJumpVelocity * playerCore.supperJumpMultiplier;
+        }
+    }
+
+    public override void OnAttack(IInteractable target)
+    {
+        switch (state)
+        {
+            case PlayerState.JUMPING_DOWN:
+                target.OnDamaged(this, 1, Vector2.zero);
+                nextState = PlayerState.JUMPING_UP;
+                break;
+            case PlayerState.ROLLING:
+                target.OnDamaged(this, 1, Vector2.zero);
+                nextState = PlayerState.JUMPING_UP;
+                break;
+            default:
+                Debug.LogWarning("Attack detected on non-attacking state : " + state);
+                break;
         }
     }
 }
