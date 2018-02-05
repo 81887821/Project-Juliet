@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 public abstract class PlayerBase : MonoBehaviour
 {
@@ -33,6 +32,11 @@ public abstract class PlayerBase : MonoBehaviour
     }
     protected const float EPSILON = 0.1f;
 
+    #region Variables shown in Unity Editor
+    [Tooltip("Physical bounds of character, relative to parent transform.")]
+    public Bounds PhysicalBounds;
+    #endregion
+
     #region Unity components in parent
     protected PlayerCore playerCore;
     protected PlayerInput input;
@@ -42,16 +46,7 @@ public abstract class PlayerBase : MonoBehaviour
 
     #region Unity components
     protected Animator animator;
-    protected BoxCollider2D physicalCollider;
     protected SpriteRenderer spriteRenderer;
-
-    public BoxCollider2D PhysicalCollider
-    {
-        get
-        {
-            return physicalCollider;
-        }
-    }
     #endregion
 
     protected PlayerState state = PlayerState.IDLE;
@@ -131,7 +126,6 @@ public abstract class PlayerBase : MonoBehaviour
         controller = GetComponentInParent<Controller2D>();
         playerTransform = GetComponentInParent<Transform>();
         animator = GetComponent<Animator>();
-        physicalCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         gravity = -(8 * playerCore.maxJumpHeight) / Mathf.Pow(playerCore.floatingTime, 2);

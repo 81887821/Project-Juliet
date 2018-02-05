@@ -165,7 +165,7 @@ public class Juliett : PlayerBase
     {
         get
         {
-            return base.CanTransform && Physics2D.OverlapBox(physicalCollider.bounds.center, physicalCollider.bounds.size - COLLISION_BOX_SHRINK, 0f, controller.collisionMask) == null;
+            return base.CanTransform && Physics2D.OverlapBox(PhysicalBounds.center, PhysicalBounds.size - COLLISION_BOX_SHRINK, 0f, controller.collisionMask) == null;
         }
     }
 }

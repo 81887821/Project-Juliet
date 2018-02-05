@@ -1758,7 +1758,6 @@ GameObject:
   - component: {fileID: 611940209}
   - component: {fileID: 611940211}
   - component: {fileID: 611940210}
-  - component: {fileID: 611940213}
   - component: {fileID: 611940212}
   m_Layer: 8
   m_Name: Juliett
@@ -1852,31 +1851,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb116e41ccfdd64c8c5a4cae38d4de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &611940213
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 611940208}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 6.4249997}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 7.54, y: 12.849999}
-    newSize: {x: 7.54, y: 12.849999}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3.82, y: 12.849999}
-  m_EdgeRadius: 0
+  PhysicalBounds:
+    m_Center: {x: 0, y: 6.425, z: 0}
+    m_Extent: {x: 1.91, y: 6.425, z: 0}
 --- !u!1 &682090096
 GameObject:
   m_ObjectHideFlags: 0
@@ -2050,7 +2027,6 @@ GameObject:
   - component: {fileID: 836869205}
   - component: {fileID: 836869207}
   - component: {fileID: 836869206}
-  - component: {fileID: 836869209}
   - component: {fileID: 836869208}
   m_Layer: 8
   m_Name: Julia
@@ -2144,31 +2120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d0b7e781b0c994684a8ca2079cb82d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &836869209
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 836869204}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 4.2800016}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 3.82, y: 8.559999}
-    newSize: {x: 3.82, y: 8.559999}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3.82, y: 8.559999}
-  m_EdgeRadius: 0
+  PhysicalBounds:
+    m_Center: {x: 0, y: 4.28, z: 0}
+    m_Extent: {x: 1.91, y: 4.28, z: 0}
 --- !u!1 &837594164
 GameObject:
   m_ObjectHideFlags: 0

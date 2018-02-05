@@ -101,8 +101,8 @@ public class PlayerCore : MonoBehaviour
         if (julia.CanTransform && juliett.CanTransform)
         {
             isSmallForm = !isSmallForm;
-            physicalCollider.size = CurrentPlayerCharacter.PhysicalCollider.size;
-            physicalCollider.offset = CurrentPlayerCharacter.PhysicalCollider.offset;
+            physicalCollider.size = CurrentPlayerCharacter.PhysicalBounds.size;
+            physicalCollider.offset = CurrentPlayerCharacter.PhysicalBounds.center;
             controller.CalculateRaySpacing();
 
             CurrentPlayerCharacter.IsActive = true;
