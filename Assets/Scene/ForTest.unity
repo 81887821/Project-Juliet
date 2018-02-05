@@ -2216,7 +2216,6 @@ GameObject:
   m_Component:
   - component: {fileID: 733057153}
   - component: {fileID: 733057152}
-  - component: {fileID: 733057151}
   - component: {fileID: 733057150}
   - component: {fileID: 733057149}
   m_Layer: 0
@@ -2234,13 +2233,6 @@ AudioListener:
   m_GameObject: {fileID: 733057148}
   m_Enabled: 1
 --- !u!124 &733057150
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 733057148}
-  m_Enabled: 1
---- !u!92 &733057151
 Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -2746,12 +2738,12 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 20, y: 0, z: 0}
   - {x: 35, y: 0, z: 0}
-  enemyKnockbackOnUppercut: {x: 5, y: 20}
+  enemyKnockbackOnUppercut: {x: 5, y: 30}
   enemyKnockbackOnAttack:
   - {x: 5, y: 4}
   - {x: 5, y: 4}
   - {x: 20, y: 4}
-  - {x: 30, y: 4}
+  - {x: 35, y: 4}
 --- !u!114 &895563992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3263,7 +3255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1106814779
 Transform:
   m_ObjectHideFlags: 0
