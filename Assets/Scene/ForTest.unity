@@ -2165,7 +2165,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   coll: {fileID: 0}
-  maxSlopeAngle: 80
 --- !u!50 &895563993
 Rigidbody2D:
   serializedVersion: 4
@@ -3100,7 +3099,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   coll: {fileID: 0}
-  maxSlopeAngle: 80
 --- !u!50 &1491138771
 Rigidbody2D:
   serializedVersion: 4

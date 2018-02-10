@@ -45,14 +45,7 @@ public abstract class Enemy : MonoBehaviour, IInteractable
 
         if (controller.collisions.above || controller.collisions.below)
         {
-            if (controller.collisions.slidingDownMaxSlope)
-            {
-                velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
-            }
-            else
-            {
-                velocity.y = 0;
-            }
+            velocity.y = 0;
         }
     }
 

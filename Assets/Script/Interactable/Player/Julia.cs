@@ -138,18 +138,7 @@ public class Julia : PlayerBase
 
     private void Jump()
     {
-        if (controller.collisions.slidingDownMaxSlope)
-        {
-            if (input.HorizontalInput != -Mathf.Sign(controller.collisions.slopeNormal.x))
-            {
-                velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
-                velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
-            }
-        }
-        else
-        {
-            velocity.y = maxJumpVelocity;
-        }
+        velocity.y = maxJumpVelocity;
     }
 
     private void WallJump()
@@ -179,18 +168,7 @@ public class Julia : PlayerBase
 
     private void SuperJump()
     {
-        if (controller.collisions.slidingDownMaxSlope)
-        {
-            if (input.HorizontalInput != -Mathf.Sign(controller.collisions.slopeNormal.x))
-            {
-                velocity.y = maxJumpVelocity * playerCore.supperJumpMultiplier * controller.collisions.slopeNormal.y;
-                velocity.x = maxJumpVelocity * playerCore.supperJumpMultiplier * controller.collisions.slopeNormal.x;
-            }
-        }
-        else
-        {
-            velocity.y = maxJumpVelocity * playerCore.supperJumpMultiplier;
-        }
+        velocity.y = maxJumpVelocity * playerCore.supperJumpMultiplier;
     }
 
     public override void OnAttack(IInteractable target)
