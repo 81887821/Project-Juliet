@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3f8c24a871c1a894b86b508f3e4b445c
-timeCreated: 1517676058
+timeCreated: 1518264758
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -88,7 +88,7 @@ TextureImporter:
       name: patrol
       rect:
         serializedVersion: 2
-        x: 183
+        x: 1401
         y: 956
         width: 397
         height: 696
@@ -102,9 +102,9 @@ TextureImporter:
       name: patrol-dead
       rect:
         serializedVersion: 2
-        x: 846
+        x: 438
         y: 986
-        width: 696
+        width: 698
         height: 376
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -116,21 +116,7 @@ TextureImporter:
       name: patrol-red-1
       rect:
         serializedVersion: 2
-        x: 69
-        y: 68
-        width: 447
-        height: 802
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: patrol-red-2
-      rect:
-        serializedVersion: 2
-        x: 650
+        x: 1462
         y: 68
         width: 447
         height: 800
@@ -141,10 +127,24 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
+      name: patrol-red-2
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 68
+        width: 449
+        height: 761
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
       name: patrol-red-dead
       rect:
         serializedVersion: 2
-        x: 1207
+        x: 72
         y: 125
         width: 702
         height: 373

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 81f0b7a4b079e1b46bdea00152788107
-timeCreated: 1517675774
+timeCreated: 1518264613
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -99,8 +99,8 @@ TextureImporter:
       name: mob-pressed
       rect:
         serializedVersion: 2
-        x: 2430
-        y: 4
+        x: 826
+        y: 0
         width: 323
         height: 1000
       alignment: 0
@@ -113,7 +113,7 @@ TextureImporter:
       name: mob-hit
       rect:
         serializedVersion: 2
-        x: 1823
+        x: 1431
         y: 0
         width: 324
         height: 1098
@@ -127,7 +127,7 @@ TextureImporter:
       name: mob-idle
       rect:
         serializedVersion: 2
-        x: 2994
+        x: 254
         y: 0
         width: 329
         height: 1079
