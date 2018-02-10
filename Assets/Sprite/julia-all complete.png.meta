@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 5bd3637ba0fa0a442805cbff5412f93b
-timeCreated: 1517736377
+timeCreated: 1518255040
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -162,8 +162,8 @@ TextureImporter:
       name: julia-hit
       rect:
         serializedVersion: 2
-        x: 3682
-        y: 4062
+        x: 3791
+        y: 4064
         width: 637
         height: 802
       alignment: 7
