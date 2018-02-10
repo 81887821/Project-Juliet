@@ -8,6 +8,7 @@ public class AttackDetector : MonoBehaviour
     private IInteractable interactable;
 
     public LayerMask TargetMask;
+    public bool ActiveOnStart = false;
 
     public IInteractable Interactable
     {
@@ -24,7 +25,7 @@ public class AttackDetector : MonoBehaviour
             interactable = GetComponentInParent<IInteractable>();
         if (interactable == null)
             Debug.LogError("Cannot find interactive object.");
-        gameObject.SetActive(false);
+        gameObject.SetActive(ActiveOnStart);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
