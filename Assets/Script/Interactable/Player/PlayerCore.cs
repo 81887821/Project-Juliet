@@ -7,6 +7,12 @@ using System;
 [RequireComponent(typeof(Controller2D))]
 public class PlayerCore : MonoBehaviour
 {
+    public static PlayerCore Instance
+    {
+        get;
+        private set;
+    }
+
     [Header("Player Condition")]
     public bool isSmallForm = true;
     public int currentHealth = 6;
@@ -71,12 +77,21 @@ public class PlayerCore : MonoBehaviour
     private BoxCollider2D physicalCollider;
     private Controller2D controller;
 
-#if DEBUG
     private void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+        {
+            Debug.LogError("Double instantiation : " + this);
+            Destroy(gameObject);
+            return;
+        }
+
+#if DEBUG
         Debug.Assert(cancelableSpecialActionAvailableTime <= totalSpecialActionAvailableTime, "Cancelable special action available time cannot be larger than total special action available time.");
-    }
 #endif
+    }
 
     void Start()
     {

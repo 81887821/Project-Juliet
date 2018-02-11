@@ -290,8 +290,6 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
                 ignoreDamage = false;
                 horizontalMovementEnabled = true;
                 transformationEnabled = true;
-// TODO
-// HeadingLeft = !HeadingLeft;
                 break;
         }
 
