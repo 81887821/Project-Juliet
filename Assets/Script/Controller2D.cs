@@ -40,12 +40,16 @@ public class Controller2D : RaycastController
 
             if (hit)
             {
+#if DEBUG
+                Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
+#endif
                 if (hit.distance == 0)
                 {
-                    continue;
+                    moveAmount.x = 0f;
+                    break;
                 }
                 
-                moveAmount.x = (hit.distance - skinWidth) * Mathf.Sign(moveAmount.x);
+                moveAmount.x = (hit.distance - skinWidth * 2) * Mathf.Sign(moveAmount.x);
                 rayLength = hit.distance;
 
                 if (transform.right.x == Mathf.Sign(moveAmount.x))
@@ -53,6 +57,10 @@ public class Controller2D : RaycastController
                 else
                     collisions.back = true;
             }
+#if DEBUG
+            else
+                Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.white);
+#endif
         }
     }
 
@@ -63,13 +71,16 @@ public class Controller2D : RaycastController
 
         for (int i = 0; i < verticalRayCount; i++)
         {
-
             Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
             rayOrigin += Vector2.right * (verticalRaySpacing * i + moveAmount.x);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
             if (hit)
             {
+#if DEBUG
+                Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
+#endif
+
                 moveAmount.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
 
@@ -80,6 +91,10 @@ public class Controller2D : RaycastController
                 else
                     Debug.LogError("Error : Wrong vertical collisions direction Y : " + directionY);
             }
+#if DEBUG
+            else
+                Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.white);
+#endif
         }
     }
     
