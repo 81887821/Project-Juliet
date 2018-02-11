@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1bd65314c4fcea641a3015a3504e5fdb
-timeCreated: 1517729141
+timeCreated: 1518347810
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -207,9 +207,9 @@ TextureImporter:
       name: juliett-hit
       rect:
         serializedVersion: 2
-        x: 1567
+        x: 1516
         y: 1868
-        width: 830
+        width: 836
         height: 1346
       alignment: 7
       pivot: {x: 0.5, y: 0}
