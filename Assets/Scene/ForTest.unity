@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 56586242}
   - component: {fileID: 56586244}
   - component: {fileID: 56586243}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: JumpDownAttackDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1580,7 +1580,7 @@ GameObject:
   - component: {fileID: 546905889}
   - component: {fileID: 546905891}
   - component: {fileID: 546905890}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Attack3Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1650,7 +1650,7 @@ GameObject:
   - component: {fileID: 608969228}
   - component: {fileID: 608969230}
   - component: {fileID: 608969229}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Attack4Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2000,7 +2000,7 @@ GameObject:
   - component: {fileID: 785265149}
   - component: {fileID: 785265151}
   - component: {fileID: 785265150}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Attack1Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2433,7 +2433,7 @@ GameObject:
   - component: {fileID: 910079934}
   - component: {fileID: 910079936}
   - component: {fileID: 910079935}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Attack2Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3980,7 +3980,7 @@ GameObject:
   - component: {fileID: 1689225471}
   - component: {fileID: 1689225473}
   - component: {fileID: 1689225472}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: UppercutDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4149,7 +4149,7 @@ GameObject:
   - component: {fileID: 1800864341}
   - component: {fileID: 1800864343}
   - component: {fileID: 1800864342}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RollingAttackDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
