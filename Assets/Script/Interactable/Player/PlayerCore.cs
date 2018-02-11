@@ -8,8 +8,8 @@ using System;
 public class PlayerCore : MonoBehaviour
 {
     [Header("Player Condition")]
-    public bool isSmallForm;
-    public int currentHealth;
+    public bool isSmallForm = true;
+    public int currentHealth = 6;
 
     [Header("Common Actions")]
     public Vector2 Knockback = new Vector2(15f, 4f);

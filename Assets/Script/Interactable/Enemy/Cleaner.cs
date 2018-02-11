@@ -7,23 +7,6 @@ public class Cleaner : Enemy
     private float attackEnableTimer;
     private bool attackDisabled;
 
-    protected override bool HeadingLeft
-    {
-        get
-        {
-            return headingLeft;
-        }
-
-        set
-        {
-            if (headingLeft != value)
-            {
-                headingLeft = value;
-                transform.rotation = (headingLeft ? new Quaternion(0f, 0f, 0f, 1f) : new Quaternion(0f, 1f, 0f, 0f));
-            }
-        }
-    }
-
     protected override void Update()
     {
         base.Update();
@@ -45,13 +28,7 @@ public class Cleaner : Enemy
 
     public override void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
     {
-        int direction = attacker.transform.position.x > transform.position.x ? 1 : -1;
-
-        currentHealth -= damage;
-
-        velocity.x += -direction * knockback.x;
-        velocity.y += knockback.y;
-        HeadingLeft = direction > 0;
+        base.OnDamaged(attacker, damage, knockback);
 
         attackDisabled = true;
         attackEnableTimer = Time.time + 1f;
@@ -62,5 +39,10 @@ public class Cleaner : Enemy
         // TODO : Cleaner moving.
         velocity.x = Mathf.SmoothDamp(velocity.x, 60f, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
+    }
+
+    public override void Die()
+    {
+        Destroy(gameObject);
     }
 }

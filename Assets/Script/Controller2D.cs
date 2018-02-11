@@ -6,23 +6,12 @@ public class Controller2D : RaycastController
 {
     public CollisionInfo collisions;
 
-    public override void Start()
-    {
-        base.Start();
-        collisions.faceDir = 1;
-    }
-
-    public void Move(Vector2 moveAmount, bool standingOnPlatform = false)
+    public void Move(Vector2 moveAmount)
     {
         UpdateRaycastOrigins();
 
         collisions.Reset();
         collisions.moveAmountOld = moveAmount;
-
-        if (moveAmount.x != 0)
-        {
-            collisions.faceDir = (int)Mathf.Sign(moveAmount.x);
-        }
 
         HorizontalCollisions(ref moveAmount);
         if (moveAmount.y != 0)
@@ -31,16 +20,11 @@ public class Controller2D : RaycastController
         }
 
         transform.Translate(moveAmount);
-
-        if (standingOnPlatform)
-        {
-            collisions.below = true;
-        }
     }
 
     void HorizontalCollisions(ref Vector2 moveAmount)
     {
-        float directionX = collisions.faceDir;
+        float directionX = transform.right.x * Mathf.Sign(moveAmount.x);
         float rayLength = Mathf.Abs(moveAmount.x) + skinWidth;
 
         if (Mathf.Abs(moveAmount.x) < skinWidth)
@@ -61,11 +45,13 @@ public class Controller2D : RaycastController
                     continue;
                 }
                 
-                moveAmount.x = (hit.distance - skinWidth) * directionX;
+                moveAmount.x = (hit.distance - skinWidth) * Mathf.Sign(moveAmount.x);
                 rayLength = hit.distance;
 
-                collisions.left = directionX == -1;
-                collisions.right = directionX == 1;
+                if (transform.right.x == Mathf.Sign(moveAmount.x))
+                    collisions.front = true;
+                else
+                    collisions.back = true;
             }
         }
     }
@@ -87,8 +73,12 @@ public class Controller2D : RaycastController
                 moveAmount.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
 
-                collisions.below = directionY == -1;
-                collisions.above = directionY == 1;
+                if (directionY == -1)
+                    collisions.below = true;
+                else if (directionY == 1)
+                    collisions.above = true;
+                else
+                    Debug.LogError("Error : Wrong vertical collisions direction Y : " + directionY);
             }
         }
     }
@@ -97,16 +87,14 @@ public class Controller2D : RaycastController
     {
         public bool above;
         public bool below;
-        public bool left;
-        public bool right;
+        public bool front;
+        public bool back;
 
         public Vector2 moveAmountOld;
-        public int faceDir;
 
         public void Reset()
         {
-            above = below = false;
-            left = right = false;
+            above = below = front = back = false;
         }
     }
 }

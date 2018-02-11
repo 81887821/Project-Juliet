@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour, IInteractable
 {
     #region Variables shown in Unity Editor
-    public int currentHealth;
+    public int currentHealth = 6;
 
     public float accelerationTimeGrounded = .1f;
     public float accelerationTimeAirborne = .2f;
@@ -15,12 +15,23 @@ public abstract class Enemy : MonoBehaviour, IInteractable
     #endregion
 
     #region State flags
-    protected bool headingLeft;
+    protected bool headingRight = true;
 
-    protected abstract bool HeadingLeft
+    protected virtual bool HeadingRight
     {
-        get;
-        set;
+        get
+        {
+            return headingRight;
+        }
+        set
+        {
+            if (headingRight != value)
+            {
+                headingRight = value;
+                transform.rotation = (headingRight ? new Quaternion(0f, 0f, 0f, 1f) : new Quaternion(0f, 1f, 0f, 0f));
+                velocity.x = -velocity.x;
+            }
+        }
     }
     #endregion
 
@@ -36,6 +47,7 @@ public abstract class Enemy : MonoBehaviour, IInteractable
     protected virtual void Start()
     {
         controller = GetComponent<Controller2D>();
+        headingRight = transform.rotation == new Quaternion(0f, 0f, 0f, 1f);
     }
 
     protected virtual void Update()
@@ -51,9 +63,25 @@ public abstract class Enemy : MonoBehaviour, IInteractable
 
     public abstract void OnAttack(IInteractable target);
 
-    public abstract void OnDamaged(IInteractable attacker, int damage);
+    public virtual void OnDamaged(IInteractable attacker, int damage)
+    {
+        OnDamaged(attacker, damage, defaultKnockback);
+    }
 
-    public abstract void OnDamaged(IInteractable attacker, int damage, Vector2 knockback);
+    public virtual void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
+    {
+        bool attackerOnRight = attacker.transform.position.x > transform.position.x;
+
+        currentHealth--;
+        if (currentHealth <= 0)
+            Die();
+
+        HeadingRight = attackerOnRight;
+        velocity.x -= knockback.x;
+        velocity.y += knockback.y;
+    }
+
+    public abstract void Die();
 
     /// <summary>
     /// Set velocity for next frame.

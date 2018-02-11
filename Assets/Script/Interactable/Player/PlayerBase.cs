@@ -66,7 +66,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     protected bool transformationEnabled = true;
 
     private bool isActive = true;
-    private bool headingLeft = true;
+    private bool headingRight = true;
     #endregion
 
     #region State flag properties
@@ -86,18 +86,19 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         }
     }
 
-    public bool HeadingLeft
+    public bool HeadingRight
     {
         get
         {
-            return headingLeft;
+            return headingRight;
         }
         set
         {
-            if (horizontalMovementEnabled && headingLeft != value)
+            if (horizontalMovementEnabled && headingRight != value)
             {
-                headingLeft = value;
-                playerTransform.rotation = (headingLeft ? new Quaternion(0f, 0f, 0f, 1f) : new Quaternion(0f, 1f, 0f, 0f));
+                headingRight = value;
+                playerTransform.rotation = (headingRight ? new Quaternion(0f, 0f, 0f, 1f) : new Quaternion(0f, 1f, 0f, 0f));
+                velocity.x = -velocity.x;
             }
         }
     }
@@ -129,7 +130,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         playerCore = GetComponentInParent<PlayerCore>();
         input = GetComponentInParent<PlayerInput>();
         controller = GetComponentInParent<Controller2D>();
-        playerTransform = GetComponentInParent<Transform>();
+        playerTransform = transform.parent;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         damageDetector = transform.Find("DamageDetector").gameObject;
@@ -146,10 +147,6 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         if (movementEnable)
         {
             CalculateVelocity();
-
-            if (playerCore.wallJumpEnabled)
-                HandleWallSliding();
-
             controller.Move(velocity * Time.deltaTime);
         }
 
@@ -195,8 +192,8 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
     private void UpdateDirection()
     {
-        if (input.HorizontalInput != 0f)
-            HeadingLeft = input.HorizontalInput < 0;
+        if (horizontalMovementEnabled && input.HorizontalInput != 0f)
+            HeadingRight = input.HorizontalInput > 0;
     }
 
     /// <summary>
@@ -293,7 +290,8 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
                 ignoreDamage = false;
                 horizontalMovementEnabled = true;
                 transformationEnabled = true;
-                HeadingLeft = !HeadingLeft;
+// TODO
+// HeadingLeft = !HeadingLeft;
                 break;
         }
 
@@ -328,50 +326,17 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     private void CalculateVelocity()
     {
         float targetVelocityX;
+        float direction = headingRight ? 1f : -1f;
 
         if (horizontalMovementEnabled)
-            targetVelocityX = input.HorizontalInput * moveSpeed;
+            targetVelocityX = direction * input.HorizontalInput * moveSpeed;
         else
             targetVelocityX = 0f;
 
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? playerCore.accelerationTimeGrounded : playerCore.accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
     }
-
-    private void HandleWallSliding()
-    {
-        wallDirX = (controller.collisions.left) ? -1 : 1;
-        wallSliding = false;
-        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
-        {
-            wallSliding = true;
-
-            if (velocity.y < -playerCore.wallSlideSpeedMax)
-            {
-                velocity.y = -playerCore.wallSlideSpeedMax;
-            }
-
-            if (timeToWallUnstick > 0)
-            {
-                velocityXSmoothing = 0;
-                velocity.x = 0;
-
-                if (input.HorizontalInput != wallDirX && input.HorizontalInput != 0)
-                {
-                    timeToWallUnstick -= Time.deltaTime;
-                }
-                else
-                {
-                    timeToWallUnstick = playerCore.wallStickTime;
-                }
-            }
-            else
-            {
-                timeToWallUnstick = playerCore.wallStickTime;
-            }
-        }
-    }
-
+    
     public virtual bool CanTransform
     {
         get
@@ -385,27 +350,28 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     /// This method should be called only once, on newly active player character.
     /// 
     /// This method does
-    ///   1. Copy physical variables,
-    ///   2. Transit prior character to NONE state to clean-up state flags,
-    ///   3. Copy state flags,
+    ///   1. Transit prior character to NONE state to clean-up state flags,
+    ///   2. Copy state flags,
+    ///   3. Copy physical variables,
     ///   4. Transit current character to appropriate state,
     ///   5. Play animation and set character direction.
     /// </summary>
     /// <param name="priorCharacter">Player character before transformation.</param>
     public void OnTransformation(PlayerBase priorCharacter)
     {
+        horizontalMovementEnabled = true;
+        HeadingRight = priorCharacter.headingRight;
+
+        priorCharacter.HandleStateTransitionSideEffect(priorCharacter.state, PlayerState.NONE);
+        horizontalMovementEnabled = priorCharacter.horizontalMovementEnabled;
+        ignoreDamage = priorCharacter.ignoreDamage;
+
+        // Velocity must be copied after copy HeadingRight flag to keep direction of velocity.
         velocity = priorCharacter.velocity;
         velocityXSmoothing = priorCharacter.velocityXSmoothing;
         wallDirX = priorCharacter.wallDirX;
         timeToWallUnstick = priorCharacter.timeToWallUnstick;
 
-        horizontalMovementEnabled = true;
-        HeadingLeft = priorCharacter.headingLeft;
-
-        priorCharacter.HandleStateTransitionSideEffect(priorCharacter.state, PlayerState.NONE);
-        horizontalMovementEnabled = priorCharacter.horizontalMovementEnabled;
-        ignoreDamage = priorCharacter.ignoreDamage;
-        
         state = PlayerState.NONE;
         nextState = PlayerState.POST_TRANSFORMATION_DELAY;
 
@@ -427,13 +393,13 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     {
         if (!ignoreDamage)
         {
-            int direction = attacker.transform.position.x > transform.parent.position.x ? 1 : -1;
+            bool attackerOnRight = attacker.transform.position.x > playerTransform.position.x;
 
             playerCore.currentHealth -= damage;
 
-            velocity.x += -direction * knockback.x;
+            HeadingRight = attackerOnRight;
+            velocity.x -= knockback.x;
             velocity.y += knockback.y;
-            HeadingLeft = direction > 0;
 
             nextState = PlayerState.HIT;
             UpdateState();
@@ -441,4 +407,9 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     }
 
     public abstract void OnAttack(IInteractable target);
+
+    public virtual void Die()
+    {
+        Destroy(gameObject);
+    }
 }

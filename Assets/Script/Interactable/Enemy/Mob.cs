@@ -12,22 +12,6 @@ public class Mob : Enemy
     public Sprite MobPressed;
     public Sprite MobHit;
 
-    protected override bool HeadingLeft
-    {
-        get
-        {
-            return headingLeft;
-        }
-        set
-        {
-            if (headingLeft != value)
-            {
-                spriteRenderer.flipX = value;
-                headingLeft = value;
-            }
-        }
-    }
-
     private SpriteRenderer spriteRenderer;
 
     private MobState state = MobState.IDLE;
@@ -97,20 +81,9 @@ public class Mob : Enemy
         throw new InvalidOperationException("Mob cannot attack.");
     }
 
-    public override void OnDamaged(IInteractable attacker, int damage)
-    {
-        OnDamaged(attacker, damage, defaultKnockback);
-    }
-
     public override void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
     {
-        int direction = attacker.transform.position.x > transform.position.x ? 1 : -1;
-
-        currentHealth -= damage;
-
-        velocity.x += -direction * knockback.x;
-        velocity.y += knockback.y;
-        HeadingLeft = direction > 0;
+        base.OnDamaged(attacker, damage, knockback);
 
         if (attacker is Julia)
             nextState = MobState.PRESSED;
@@ -124,5 +97,10 @@ public class Mob : Enemy
     {
         velocity.x = Mathf.SmoothDamp(velocity.x, 0f, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
+    }
+
+    public override void Die()
+    {
+        Destroy(gameObject);
     }
 }

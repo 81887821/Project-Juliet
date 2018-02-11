@@ -27,6 +27,10 @@ public interface IInteractable
     /// </summary>
     /// <param name="target"></param>
     void OnAttack(IInteractable target);
+    /// <summary>
+    /// Kill this interactable object.
+    /// </summary>
+    void Die();
 
     Transform transform
     {

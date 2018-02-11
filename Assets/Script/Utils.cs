@@ -10,4 +10,9 @@ internal static class Utils
     {
         return ((mask.value >> layer) & 1) == 1;
     }
+
+    internal static bool Empty(this LayerMask mask)
+    {
+        return mask.value == 0;
+    }
 }

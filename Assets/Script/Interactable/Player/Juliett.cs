@@ -154,10 +154,7 @@ public class Juliett : PlayerBase
             case PlayerState.ATTACK3:
             case PlayerState.ATTACK4:
                 stateEndTime = Time.time + playerCore.attackInterval[newState - PlayerState.ATTACK1];
-                if (HeadingLeft)
-                    velocity -= playerCore.accelerationOnAttack[newState - PlayerState.ATTACK1];
-                else
-                    velocity += playerCore.accelerationOnAttack[newState - PlayerState.ATTACK1];
+                velocity += playerCore.accelerationOnAttack[newState - PlayerState.ATTACK1];
                 horizontalMovementEnabled = false;
                 normalAttackDetectors[newState - PlayerState.ATTACK1].SetActive(true);
                 break;
@@ -173,7 +170,14 @@ public class Juliett : PlayerBase
     {
         get
         {
-            return base.CanTransform && Physics2D.OverlapBox(PhysicalBounds.center, PhysicalBounds.size - COLLISION_BOX_SHRINK, 0f, controller.collisionMask) == null;
+            Vector3 center = PhysicalBounds.center;
+            center.Scale(transform.lossyScale);
+
+            Vector3 size = PhysicalBounds.size;
+            size.Scale(transform.lossyScale);
+
+            Collider2D collision = Physics2D.OverlapBox(transform.position + center, size - COLLISION_BOX_SHRINK, 0f, controller.collisionMask);
+            return base.CanTransform && collision == null;
         }
     }
     
