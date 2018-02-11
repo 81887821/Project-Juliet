@@ -43,14 +43,16 @@ public class Controller2D : RaycastController
 #if DEBUG
                 Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
 #endif
-                if (hit.distance == 0)
+                if (hit.distance <= skinWidth)
                 {
                     moveAmount.x = 0f;
-                    break;
+                    i = horizontalRayCount; // Break after setting collision flags.
                 }
-                
-                moveAmount.x = (hit.distance - skinWidth * 2) * Mathf.Sign(moveAmount.x);
-                rayLength = hit.distance;
+                else
+                {
+                    moveAmount.x = (hit.distance - skinWidth * 2) * Mathf.Sign(moveAmount.x);
+                    rayLength = hit.distance;
+                }
 
                 if (transform.right.x == Mathf.Sign(moveAmount.x))
                     collisions.front = true;
@@ -81,8 +83,16 @@ public class Controller2D : RaycastController
                 Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
 #endif
 
-                moveAmount.y = (hit.distance - skinWidth) * directionY;
-                rayLength = hit.distance;
+                if (hit.distance <= skinWidth)
+                {
+                    moveAmount.y = 0f;
+                    i = verticalRayCount; // Break after setting collision flags.
+                }
+                else
+                {
+                    moveAmount.y = (hit.distance - skinWidth) * directionY;
+                    rayLength = hit.distance;
+                }
 
                 if (directionY == -1)
                     collisions.below = true;
