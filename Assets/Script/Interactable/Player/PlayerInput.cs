@@ -34,17 +34,21 @@ public class PlayerInput : MonoBehaviour
         HorizontalInput = ui.movementScrollbar.value * 2 - 1;
 
 #if DEBUG
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            ui.movementScrollbar.value = 0f;
+            ui.movementScrollbar.value -= 0.5f;
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            ui.movementScrollbar.value = 1f;
+            ui.movementScrollbar.value += 0.5f;
         }
-        else
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            ui.movementScrollbar.value = 0.5f;
+            ui.movementScrollbar.value += 0.5f;
+        }
+        if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            ui.movementScrollbar.value -= 0.5f;
         }
 
         if (Input.GetKeyDown(KeyCode.A))
