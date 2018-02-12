@@ -281,6 +281,11 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         {
             case PlayerState.SPECIAL_ACTION_READY:
                 horizontalMovementEnabled = true;
+                if (newState != PlayerState.CANCELABLE_SPECIAL_ACTION_READY)
+                    playerCore.OnSpecialActionDisabled();
+                break;
+            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
+                playerCore.OnSpecialActionDisabled();
                 break;
             case PlayerState.POST_TRANSFORMATION_DELAY:
                 movementEnable = true;
@@ -393,7 +398,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         {
             bool attackerOnRight = attacker.transform.position.x > playerTransform.position.x;
 
-            playerCore.currentHealth -= damage;
+            playerCore.CurrentHealth -= damage;
 
             HeadingRight = attackerOnRight;
             velocity.x -= knockback.x;

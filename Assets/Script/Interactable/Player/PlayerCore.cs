@@ -7,6 +7,14 @@ using System;
 [RequireComponent(typeof(Controller2D))]
 public class PlayerCore : MonoBehaviour
 {
+    public delegate void PlayerTransformationHandler(bool isSmallForm);
+    public delegate void ActionChangingHandler(bool canDoSpecialAction);
+    public delegate void PlayerHPChangeHandler(int currentHealth);
+
+    public event PlayerTransformationHandler PlayerTransformed;
+    public event ActionChangingHandler AvailableActionChanged;
+    public event PlayerHPChangeHandler PlayerHPChanged;
+
     public static PlayerCore Instance
     {
         get;
@@ -15,7 +23,7 @@ public class PlayerCore : MonoBehaviour
 
     [Header("Player Condition")]
     public bool isSmallForm = true;
-    public int currentHealth = 6;
+    public int maxHealth = 6;
 
     [Header("Common Actions")]
     public Vector2 Knockback = new Vector2(15f, 4f);
@@ -71,6 +79,20 @@ public class PlayerCore : MonoBehaviour
                 return julia;
         }
     }
+    public int CurrentHealth
+    {
+        get
+        {
+            return currentHealth;
+        }
+        set
+        {
+            currentHealth = value;
+            PlayerHPChanged(value);
+        }
+    }
+
+    private int currentHealth;
 
     private Julia julia;
     private Juliett juliett;
@@ -101,11 +123,7 @@ public class PlayerCore : MonoBehaviour
         controller = GetComponent<Controller2D>();
 
         WaitingPlayerCharacter.IsActive = false;
-    }
-
-    void Update()
-    {
-
+        currentHealth = maxHealth;
     }
 
     public void OnActionButtonClicked()
@@ -125,6 +143,17 @@ public class PlayerCore : MonoBehaviour
             CurrentPlayerCharacter.IsActive = true;
             WaitingPlayerCharacter.IsActive = false;
             CurrentPlayerCharacter.OnTransformation(WaitingPlayerCharacter);
+
+            PlayerTransformed(isSmallForm);
+            AvailableActionChanged(true);
         }
+    }
+
+    /// <summary>
+    /// Method to be called by Julia and Juliett, when speical action is disabled.
+    /// </summary>
+    public void OnSpecialActionDisabled()
+    {
+        AvailableActionChanged(false);
     }
 }

@@ -1,15 +1,15 @@
 fileFormatVersion: 2
 guid: 06a94b88dbf45d44fb5f05514629fc9c
-timeCreated: 1518255167
+timeCreated: 1518445204
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: heart-full
     21300002: heart-half
     21300004: heart-empty
-    21300006: heart_0
-    21300008: heart_1
-    21300010: heart_2
+    21300006: heart-full
+    21300008: heart-half
+    21300010: heart-empty
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -96,7 +96,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: heart_0
+      name: heart-full
       rect:
         serializedVersion: 2
         x: 29
@@ -104,13 +104,13 @@ TextureImporter:
         width: 140
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: heart_1
+      name: heart-half
       rect:
         serializedVersion: 2
         x: 181
@@ -118,13 +118,13 @@ TextureImporter:
         width: 140
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: heart_2
+      name: heart-empty
       rect:
         serializedVersion: 2
         x: 333
@@ -132,7 +132,7 @@ TextureImporter:
         width: 140
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

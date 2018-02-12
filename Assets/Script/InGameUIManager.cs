@@ -20,6 +20,16 @@ public class InGameUIManager : MonoBehaviour
     public Button ActionButton;
     public Button TransformationButton;
 
+    [Header("Transformation Button Images")]
+    public Sprite JuliaToJuliettButtonSprite;
+    public Sprite JuliettToJuliaButtonSprite;
+
+    [Header("Action Button Images")]
+    public Sprite JumpButtonSprite;
+    public Sprite AttackButtonSprite;
+    public Sprite SuperJumpButtonSprite;
+    public Sprite UppercutButtonSprite;
+
     //Health & Diary Variables
     [Header("Health & Diary Sprite")]
     public Sprite blankHeartImage;
@@ -35,7 +45,34 @@ public class InGameUIManager : MonoBehaviour
     private List<Image> heartImageList;
     private List<Image> diaryImageList;
 
+    private bool playerIsSmallForm = true;
+    private bool playerCanDoSpecialAction = false;
 
+    private bool PlayerIsSmallForm
+    {
+        get
+        {
+            return playerIsSmallForm;
+        }
+        set
+        {
+            playerIsSmallForm = value;
+            UpdateButtonImages();
+        }
+    }
+    private bool PlayerCanDoSpecialAction
+    {
+        get
+        {
+            return playerCanDoSpecialAction;
+        }
+        set
+        {
+            playerCanDoSpecialAction = value;
+            UpdateButtonImages();
+        }
+    }
+    
     private void Awake()
     {
         //Basic way to set Singleton Pattern
@@ -72,6 +109,10 @@ public class InGameUIManager : MonoBehaviour
 
         InitUIElements();
 
+        PlayerCore player = PlayerCore.Instance;
+        player.AvailableActionChanged += (canDoSpecialAction) => PlayerCanDoSpecialAction = canDoSpecialAction;
+        player.PlayerTransformed += (isSmallForm) => PlayerIsSmallForm = isSmallForm;
+        player.PlayerHPChanged += SetCurrentHeartNum;
     }
 
     public void InitUIElements()
@@ -131,6 +172,26 @@ public class InGameUIManager : MonoBehaviour
             {
                 diaryImageList[i].color = new Color(1, 1, 1, 0.5f);
             }
+        }
+    }
+
+    private void UpdateButtonImages()
+    {
+        if (PlayerIsSmallForm)
+        {
+            TransformationButton.image.sprite = JuliaToJuliettButtonSprite;
+            if (PlayerCanDoSpecialAction)
+                ActionButton.image.sprite = SuperJumpButtonSprite;
+            else
+                ActionButton.image.sprite = JumpButtonSprite;
+        }
+        else
+        {
+            TransformationButton.image.sprite = JuliettToJuliaButtonSprite;
+            if (PlayerCanDoSpecialAction)
+                ActionButton.image.sprite = UppercutButtonSprite;
+            else
+                ActionButton.image.sprite = AttackButtonSprite;
         }
     }
 }
