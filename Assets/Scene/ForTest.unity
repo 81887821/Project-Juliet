@@ -914,7 +914,7 @@ MonoBehaviour:
   TargetMask:
     serializedVersion: 2
     m_Bits: 256
-  ActiveOnStart: 1
+  ActiveOnStart: 0
 --- !u!114 &314225669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1373,8 +1373,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 360, y: 185}
-  m_SizeDelta: {x: 88.86, y: 88.86}
+  m_AnchoredPosition: {x: 345.8, y: 195.4}
+  m_SizeDelta: {x: 57.2, y: 57.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &541183519
 MonoBehaviour:
@@ -1436,7 +1436,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c389ddc1b3d969e4ca534b1251454c9d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15180ed2132b97041ba3873ae2fd6ba3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1927,7 +1927,7 @@ MonoBehaviour:
   TargetMask:
     serializedVersion: 2
     m_Bits: 256
-  ActiveOnStart: 1
+  ActiveOnStart: 0
 --- !u!61 &659926313
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2656,8 +2656,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: 0, y: 0.0000038146973}
+  m_SizeDelta: {x: 54.16, y: 5.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1017791499
 MonoBehaviour:
@@ -2678,7 +2678,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: cb59855bca8688d438be804cb0be85c2, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4385,8 +4385,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -266.4, y: -152.2}
-  m_SizeDelta: {x: 160, y: 40}
+  m_AnchoredPosition: {x: -245.14, y: -161.9}
+  m_SizeDelta: {x: 202.52, y: 67.16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1930851132
 MonoBehaviour:
@@ -4464,8 +4464,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: debb3e20a96c4214a93936f4150d0c9b, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -4827,7 +4827,7 @@ MonoBehaviour:
   blankHeartImage: {fileID: 21300004, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
   halfHeaertImage: {fileID: 21300002, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
   fullHeartImage: {fileID: 21300000, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
-  diaryImage: {fileID: 0}
+  diaryImage: {fileID: 21300000, guid: bbcc311b91006cb49aed2efab0e44edb, type: 3}
   heartParentObject: {fileID: 1050569399}
   diaryParentObject: {fileID: 1510102268}
 --- !u!1 &2044758246
