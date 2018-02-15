@@ -55,9 +55,9 @@ public class Controller2D : RaycastController
                 }
 
                 if (moveAmount.x >= 0f)
-                    collisions.front = true;
+                    collisions.front += hit.transform.gameObject.layer;
                 else
-                    collisions.back = true;
+                    collisions.back += hit.transform.gameObject.layer;
             }
 #if DEBUG
             else
@@ -95,9 +95,9 @@ public class Controller2D : RaycastController
                 }
 
                 if (directionY == -1)
-                    collisions.below = true;
+                    collisions.below += hit.transform.gameObject.layer;
                 else if (directionY == 1)
-                    collisions.above = true;
+                    collisions.above += hit.transform.gameObject.layer;
                 else
                     Debug.LogError("Error : Wrong vertical collisions direction Y : " + directionY);
             }
@@ -110,16 +110,48 @@ public class Controller2D : RaycastController
     
     public struct CollisionInfo
     {
-        public bool above;
-        public bool below;
-        public bool front;
-        public bool back;
+        public Contacts above;
+        public Contacts below;
+        public Contacts front;
+        public Contacts back;
 
         public Vector2 moveAmountOld;
 
         public void Reset()
         {
-            above = below = front = back = false;
+            above = below = front = back = new Contacts(0);
+        }
+    }
+
+    public struct Contacts
+    {
+        public LayerMask value;
+
+        public Contacts(LayerMask initialValue)
+        {
+            value = initialValue;
+        }
+
+        public bool Contains(int layer)
+        {
+            return value.Contains(layer);
+        }
+
+        public bool Contains(string layerName)
+        {
+            return value.Contains(LayerMask.NameToLayer(layerName));
+        }
+
+        public static Contacts operator +(Contacts contacts, int layer)
+        {
+            if (!contacts.value.Contains(layer))
+                contacts.value += (1 << layer);
+            return contacts;
+        }
+
+        public static implicit operator bool(Contacts contacts)
+        {
+            return !contacts.value.Empty();
         }
     }
 }

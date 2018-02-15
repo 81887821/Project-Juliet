@@ -91,7 +91,7 @@ public class Julia : PlayerBase
         {
             case PlayerState.JUMPING_DOWN:
             case PlayerState.SPECIAL_JUMPING_DOWN:
-                if (!controller.collisions.below && controller.collisions.front)
+                if (!controller.collisions.below && controller.collisions.front.Contains("Obstacle"))
                     return PlayerState.WALL_STICK;
                 else
                     return base.GetNextStateByEnvironment();
