@@ -33,6 +33,9 @@ public abstract class Enemy : MonoBehaviour, IInteractable
                 headingRight = value;
                 transform.rotation = (headingRight ? new Quaternion(0f, 0f, 0f, 1f) : new Quaternion(0f, 1f, 0f, 0f));
                 velocity.x = -velocity.x;
+                Controller2D.Contacts temp = controller.collisions.back;
+                controller.collisions.back = controller.collisions.front;
+                controller.collisions.front = temp;
             }
         }
     }

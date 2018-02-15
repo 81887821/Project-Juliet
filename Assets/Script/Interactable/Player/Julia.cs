@@ -111,10 +111,12 @@ public class Julia : PlayerBase
                 else
                     return PlayerState.SUPER_JUMP;
             case PlayerState.ROLLING:
-                if (!controller.collisions.below)
-                    return PlayerState.ROLLING;
-                else
+                if (controller.collisions.below)
                     return PlayerState.IDLE;
+                else if (controller.collisions.front.Contains("Obstacle"))
+                    return PlayerState.WALL_STICK;
+                else
+                    return PlayerState.ROLLING;
             default:
                 return base.GetNextStateByEnvironment();
         }

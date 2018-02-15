@@ -2457,7 +2457,7 @@ MonoBehaviour:
   supperJumpMultiplier: 1.6
   wallJumpClimb: {x: 3, y: 0}
   wallJumpOff: {x: 3, y: 0}
-  wallLeap: {x: 10, y: 5}
+  wallLeap: {x: 15, y: 15}
   wallGravityRatio: 0.1
   juliettMoveSpeed: 10
   uppercutDuration: 0.5

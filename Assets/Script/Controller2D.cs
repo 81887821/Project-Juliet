@@ -54,7 +54,7 @@ public class Controller2D : RaycastController
                     rayLength = hit.distance;
                 }
 
-                if (moveAmount.x >= 0f)
+                if (collisions.moveAmountOld.x >= 0f)
                     collisions.front += hit.transform.gameObject.layer;
                 else
                     collisions.back += hit.transform.gameObject.layer;
