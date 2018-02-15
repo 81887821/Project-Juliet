@@ -88,10 +88,10 @@ TextureImporter:
       name: patrol
       rect:
         serializedVersion: 2
-        x: 1401
-        y: 956
-        width: 397
-        height: 696
+        x: 1891
+        y: 1289
+        width: 538
+        height: 955
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -102,10 +102,10 @@ TextureImporter:
       name: patrol-dead
       rect:
         serializedVersion: 2
-        x: 438
-        y: 986
-        width: 698
-        height: 376
+        x: 592
+        y: 1331
+        width: 941
+        height: 508
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -116,13 +116,13 @@ TextureImporter:
       name: patrol-red-1
       rect:
         serializedVersion: 2
-        x: 1462
-        y: 68
-        width: 447
-        height: 800
+        x: 1972
+        y: 92
+        width: 607
+        height: 1079
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 141}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -130,13 +130,13 @@ TextureImporter:
       name: patrol-red-2
       rect:
         serializedVersion: 2
-        x: 883
-        y: 68
-        width: 449
-        height: 761
+        x: 1192
+        y: 92
+        width: 605
+        height: 1028
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 88}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -144,10 +144,10 @@ TextureImporter:
       name: patrol-red-dead
       rect:
         serializedVersion: 2
-        x: 72
-        y: 125
-        width: 702
-        height: 373
+        x: 96
+        y: 169
+        width: 950
+        height: 504
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
