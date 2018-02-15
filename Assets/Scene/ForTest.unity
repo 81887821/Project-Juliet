@@ -3059,7 +3059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 30
   accelerationTimeGrounded: 0.1
-  accelerationTimeAirborne: 0.3
+  accelerationTimeAirborne: 0.2
   gravity: -50
   defaultKnockback: {x: 20, y: 4}
   SpeedRelativeToJulia: 0.8
