@@ -48,8 +48,8 @@ public class RaycastController : MonoBehaviour
         float boundsWidth = bounds.size.x;
         float boundsHeight = bounds.size.y;
 
-        horizontalRayCount = Mathf.RoundToInt(boundsHeight / dstBetweenRays);
-        verticalRayCount = Mathf.RoundToInt(boundsWidth / dstBetweenRays);
+        horizontalRayCount = Mathf.FloorToInt(boundsHeight / dstBetweenRays);
+        verticalRayCount = Mathf.FloorToInt(boundsWidth / dstBetweenRays);
 
         horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
         verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);

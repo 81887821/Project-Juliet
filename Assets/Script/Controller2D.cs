@@ -50,11 +50,11 @@ public class Controller2D : RaycastController
                 }
                 else
                 {
-                    moveAmount.x = (hit.distance - skinWidth * 2) * Mathf.Sign(moveAmount.x);
+                    moveAmount.x = (hit.distance - skinWidth) * Mathf.Sign(moveAmount.x);
                     rayLength = hit.distance;
                 }
 
-                if (transform.right.x == Mathf.Sign(moveAmount.x))
+                if (moveAmount.x >= 0f)
                     collisions.front = true;
                 else
                     collisions.back = true;
@@ -74,7 +74,7 @@ public class Controller2D : RaycastController
         for (int i = 0; i < verticalRayCount; i++)
         {
             Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
-            rayOrigin += Vector2.right * (verticalRaySpacing * i + moveAmount.x);
+            rayOrigin += Vector2.right * (verticalRaySpacing * i + transform.right.x * moveAmount.x);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
             if (hit)

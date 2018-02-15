@@ -26,6 +26,7 @@ public class Julia : PlayerBase
         {
             case PlayerState.IDLE:
             case PlayerState.WALKING:
+            case PlayerState.WALL_STICK:
                 nextState = PlayerState.JUMPING_UP;
                 break;
             case PlayerState.SPECIAL_ACTION_READY:
@@ -68,6 +69,9 @@ public class Julia : PlayerBase
             case PlayerState.ROLLING:
                 animator.Play("JuliaRolling");
                 break;
+            case PlayerState.WALL_STICK:
+                animator.Play("JuliaWallStick");
+                break;
             case PlayerState.HIT:
                 animator.Play("JuliaHit");
                 break;
@@ -85,6 +89,17 @@ public class Julia : PlayerBase
     {
         switch (state)
         {
+            case PlayerState.JUMPING_DOWN:
+            case PlayerState.SPECIAL_JUMPING_DOWN:
+                if (!controller.collisions.below && controller.collisions.front)
+                    return PlayerState.WALL_STICK;
+                else
+                    return base.GetNextStateByEnvironment();
+            case PlayerState.WALL_STICK:
+                if (controller.collisions.below)
+                    return PlayerState.IDLE;
+                else
+                    return PlayerState.WALL_STICK;
             case PlayerState.JUMPING_UP:
                 if (velocity.y <= 0f)
                     return PlayerState.JUMPING_DOWN;
@@ -112,6 +127,10 @@ public class Julia : PlayerBase
             case PlayerState.JUMPING_DOWN:
                 jumpDownAttackDetector.SetActive(false);
                 break;
+            case PlayerState.WALL_STICK:
+                horizontalMovementEnabled = true;
+                gravity /= playerCore.wallGravityRatio;
+                break;
             case PlayerState.ROLLING:
                 rollingAttackDetector.SetActive(false);
                 break;
@@ -124,8 +143,16 @@ public class Julia : PlayerBase
             case PlayerState.JUMPING_DOWN:
                 jumpDownAttackDetector.SetActive(true);
                 break;
+            case PlayerState.WALL_STICK:
+                horizontalMovementEnabled = false;
+                velocity.y = 0f;
+                gravity *= playerCore.wallGravityRatio;
+                break;
             case PlayerState.JUMPING_UP:
-                Jump();
+                if (oldState == PlayerState.WALL_STICK)
+                    WallJump();
+                else
+                    Jump();
                 break;
             case PlayerState.ROLLING:
                 rollingAttackDetector.SetActive(true);
@@ -143,26 +170,22 @@ public class Julia : PlayerBase
 
     private void WallJump()
     {
-        if (playerCore.wallJumpEnabled)
+        float wallDirX = HeadingRight ? 1f : -1f;
+        
+        if (input.HorizontalInput == 0)
         {
-            if (wallSliding)
-            {
-                if (wallDirX == input.HorizontalInput)
-                {
-                    velocity.x = -wallDirX * playerCore.wallJumpClimb.x;
-                    velocity.y = playerCore.wallJumpClimb.y;
-                }
-                else if (input.HorizontalInput == 0)
-                {
-                    velocity.x = -wallDirX * playerCore.wallJumpOff.x;
-                    velocity.y = playerCore.wallJumpOff.y;
-                }
-                else
-                {
-                    velocity.x = -wallDirX * playerCore.wallLeap.x;
-                    velocity.y = playerCore.wallLeap.y;
-                }
-            }
+            velocity.x = -playerCore.wallJumpOff.x;
+            velocity.y = playerCore.wallJumpOff.y;
+        }
+        else if (wallDirX == Mathf.Sign(input.HorizontalInput))
+        {
+            velocity.x = -playerCore.wallJumpClimb.x;
+            velocity.y = playerCore.wallJumpClimb.y;
+        }
+        else
+        {
+            velocity.x = -playerCore.wallLeap.x;
+            velocity.y = playerCore.wallLeap.y;
         }
     }
 

@@ -2455,12 +2455,10 @@ MonoBehaviour:
   accelerationTimeGrounded: 0.1
   juliaMoveSpeed: 6
   supperJumpMultiplier: 1.5
-  wallJumpEnabled: 1
-  wallJumpClimb: {x: 0, y: 0}
-  wallJumpOff: {x: 0, y: 0}
-  wallLeap: {x: 0, y: 0}
-  wallSlideSpeedMax: 3
-  wallStickTime: 0.25
+  wallJumpClimb: {x: 3, y: 15}
+  wallJumpOff: {x: 3, y: 0}
+  wallLeap: {x: 10, y: 5}
+  wallGravityRatio: 0.1
   juliettMoveSpeed: 10
   uppercutDuration: 0.75
   attackInterval:

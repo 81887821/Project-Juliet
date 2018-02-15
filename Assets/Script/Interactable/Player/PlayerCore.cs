@@ -44,12 +44,10 @@ public class PlayerCore : MonoBehaviour
     public float supperJumpMultiplier = 1.5f;
 
     [Header("Julia Advanced Movement")]
-    public bool wallJumpEnabled;
     public Vector2 wallJumpClimb;
     public Vector2 wallJumpOff;
     public Vector2 wallLeap;
-    public float wallSlideSpeedMax = 3;
-    public float wallStickTime = .25f;
+    public float wallGravityRatio = .1f;
 
     [Header("Juliett Actions")]
     public float juliettMoveSpeed = 9;

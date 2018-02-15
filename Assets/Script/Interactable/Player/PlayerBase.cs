@@ -27,7 +27,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         /// </summary>
         SPECIAL_JUMPING_DOWN,
         UPPERCUT, // For Juliett
-        ROLLING, SUPER_JUMP, JUMPING_UP, // For Julia
+        WALL_STICK, ROLLING, SUPER_JUMP, JUMPING_UP, // For Julia
         POST_TRANSFORMATION_DELAY, HIT, GAME_OVER // For both
     }
     protected const float EPSILON = 0.1f;
@@ -110,8 +110,6 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     protected float minJumpVelocity;
     protected Vector3 velocity;
     protected float velocityXSmoothing;
-    protected int wallDirX;
-    protected bool wallSliding = false;
 
     private float moveSpeed;
     #endregion
@@ -372,7 +370,6 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         // Velocity must be copied after copy HeadingRight flag to keep direction of velocity.
         velocity = priorCharacter.velocity;
         velocityXSmoothing = priorCharacter.velocityXSmoothing;
-        wallDirX = priorCharacter.wallDirX;
         timeToWallUnstick = priorCharacter.timeToWallUnstick;
 
         state = PlayerState.NONE;
