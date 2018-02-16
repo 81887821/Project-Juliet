@@ -131,8 +131,8 @@ MonoBehaviour:
   currentHealth: 6
   accelerationTimeGrounded: 0.1
   accelerationTimeAirborne: 0.2
-  gravity: -50
-  defaultKnockback: {x: 15, y: 4}
+  gravity: -150
+  defaultKnockback: {x: 45, y: 12}
   SpeedRelativeToJulia: 0.5
 --- !u!114 &114792492955537784
 MonoBehaviour:

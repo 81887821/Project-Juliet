@@ -334,7 +334,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4730630997738880, guid: ebbaec8480651ce438c4e2c3650d0cf0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4730630997738880, guid: ebbaec8480651ce438c4e2c3650d0cf0, type: 2}
       propertyPath: m_LocalPosition.y
@@ -363,6 +363,116 @@ Prefab:
     - target: {fileID: 4730630997738880, guid: ebbaec8480651ce438c4e2c3650d0cf0, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: Knockback.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: Knockback.y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: maxJumpHeight
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: minJumpHeight
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: juliaMoveSpeed
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: wallJumpClimb.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: wallJumpOff.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: wallLeap.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: wallLeap.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: juliettMoveSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: enemyKnockbackOnUppercut.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: enemyKnockbackOnUppercut.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: enemyKnockbackOnAttack.Array.data[0].x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: enemyKnockbackOnAttack.Array.data[1].x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: enemyKnockbackOnAttack.Array.data[2].x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: enemyKnockbackOnAttack.Array.data[3].x
+      value: 105
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: enemyKnockbackOnAttack.Array.data[0].y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: enemyKnockbackOnAttack.Array.data[1].y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: enemyKnockbackOnAttack.Array.data[2].y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: enemyKnockbackOnAttack.Array.data[3].y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: accelerationOnAttack.Array.data[2].x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063636724745248, guid: ebbaec8480651ce438c4e2c3650d0cf0,
+        type: 2}
+      propertyPath: accelerationOnAttack.Array.data[3].x
+      value: 105
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ebbaec8480651ce438c4e2c3650d0cf0, type: 2}
