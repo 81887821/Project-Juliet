@@ -102,7 +102,7 @@ public class PlatformController : RaycastController
 
             if (passenger.moveBeforePlatform == beforeMovePlatform)
             {
-                passengerDictionary[passenger.transform].Move(passenger.velocity, passenger.standingOnPlatform);
+                passengerDictionary[passenger.transform].Move(passenger.velocity, passenger.standingOnPlatform, Space.World);
             }
         }
     }

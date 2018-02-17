@@ -6,7 +6,7 @@ public class Controller2D : RaycastController
 {
     public CollisionInfo collisions;
 
-    public void Move(Vector2 moveAmount, bool standingOnPlatform = false)
+    public void Move(Vector2 moveAmount, bool standingOnPlatform = false, Space moveSpace = Space.Self)
     {
         UpdateRaycastOrigins();
 
@@ -19,7 +19,7 @@ public class Controller2D : RaycastController
             VerticalCollisions(ref moveAmount);
         }
 
-        transform.Translate(moveAmount);
+        transform.Translate(moveAmount, moveSpace);
     }
 
     void HorizontalCollisions(ref Vector2 moveAmount)
