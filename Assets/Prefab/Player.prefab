@@ -331,7 +331,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1924710441360288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.2, y: 33.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4748512083401780}
@@ -710,7 +710,7 @@ MonoBehaviour:
   totalSpecialActionAvailableTime: 0.5
   cancelableSpecialActionAvailableTime: 0.3
   transformationDelayTime: 0.2
-  maxJumpHeight: 14
+  maxJumpHeight: 15
   minJumpHeight: 4
   floatingTime: 0.8
   accelerationTimeAirborne: 0.2
@@ -777,7 +777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3584
   ActiveOnStart: 0
 --- !u!114 &114478954946909762
 MonoBehaviour:
@@ -792,7 +792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3584
   ActiveOnStart: 0
 --- !u!114 &114540226548481340
 MonoBehaviour:
@@ -807,7 +807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3584
   ActiveOnStart: 0
 --- !u!114 &114562884553434556
 MonoBehaviour:
@@ -836,7 +836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3584
   ActiveOnStart: 0
 --- !u!114 &114845827370337074
 MonoBehaviour:
@@ -851,7 +851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3584
   ActiveOnStart: 0
 --- !u!114 &114879839465895816
 MonoBehaviour:
@@ -866,7 +866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3584
   ActiveOnStart: 0
 --- !u!114 &114892176822277270
 MonoBehaviour:
@@ -896,7 +896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3584
   ActiveOnStart: 0
 --- !u!114 &114988238635765674
 MonoBehaviour:
