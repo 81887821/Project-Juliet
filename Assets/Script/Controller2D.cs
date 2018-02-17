@@ -6,7 +6,7 @@ public class Controller2D : RaycastController
 {
     public CollisionInfo collisions;
 
-    public void Move(Vector2 moveAmount)
+    public void Move(Vector2 moveAmount, bool standingOnPlatform = false)
     {
         UpdateRaycastOrigins();
 

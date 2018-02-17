@@ -9,7 +9,7 @@ public class PlatformController : RaycastController
 {
     public LayerMask passengerMask = 1280;
     public Vector3[] localWaypoints;
-    Vector3[] globalWaypoints;
+    private Vector3[] globalWaypoints;
 
     public float speed;
     public bool cyclic;
@@ -17,12 +17,12 @@ public class PlatformController : RaycastController
     [Range(0, 3)]
     public float easeAmount;
 
-    int fromWaypointIndex;
-    float percentBetweenWaypoints;
-    float nextMoveTime;
+    private int fromWaypointIndex;
+    private float percentBetweenWaypoints;
+    private float nextMoveTime;
 
-    List<PassengerMovement> passengerMovement;
-    Dictionary<Transform, Controller2D> passengerDictionary = new Dictionary<Transform, Controller2D>();
+    private List<PassengerMovement> passengerMovement;
+    private Dictionary<Transform, Controller2D> passengerDictionary = new Dictionary<Transform, Controller2D>();
 
     public override void Start()
     {
@@ -35,7 +35,7 @@ public class PlatformController : RaycastController
         }
     }
 
-    void Update()
+    private void Update()
     {
 
         UpdateRaycastOrigins();
@@ -49,13 +49,13 @@ public class PlatformController : RaycastController
         MovePassengers(false);
     }
 
-    float Ease(float x)
+    private float Ease(float x)
     {
         float a = easeAmount + 1;
         return Mathf.Pow(x, a) / (Mathf.Pow(x, a) + Mathf.Pow(1 - x, a));
     }
 
-    Vector3 CalculatePlatformMovement()
+    private Vector3 CalculatePlatformMovement()
     {
 
         if (Time.time < nextMoveTime)
@@ -91,7 +91,7 @@ public class PlatformController : RaycastController
         return newPos - transform.position;
     }
 
-    void MovePassengers(bool beforeMovePlatform)
+    private void MovePassengers(bool beforeMovePlatform)
     {
         foreach (PassengerMovement passenger in passengerMovement)
         {
@@ -107,7 +107,7 @@ public class PlatformController : RaycastController
         }
     }
 
-    void CalculatePassengerMovement(Vector3 velocity)
+    private void CalculatePassengerMovement(Vector3 velocity)
     {
         HashSet<Transform> movedPassengers = new HashSet<Transform>();
         passengerMovement = new List<PassengerMovement>();
@@ -124,6 +124,9 @@ public class PlatformController : RaycastController
                 Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
                 rayOrigin += Vector2.right * (verticalRaySpacing * i);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, passengerMask);
+#if DEBUG
+                Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength);
+#endif
 
                 if (hit && hit.distance != 0)
                 {
@@ -148,6 +151,9 @@ public class PlatformController : RaycastController
                 Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
                 rayOrigin += Vector2.up * (horizontalRaySpacing * i);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, passengerMask);
+#if DEBUG
+                Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength);
+#endif
 
                 if (hit && hit.distance != 0)
                 {
@@ -171,6 +177,9 @@ public class PlatformController : RaycastController
             {
                 Vector2 rayOrigin = raycastOrigins.topLeft + Vector2.right * (verticalRaySpacing * i);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up, rayLength, passengerMask);
+#if DEBUG
+                Debug.DrawRay(rayOrigin, Vector2.up * rayLength);
+#endif
 
                 if (hit && hit.distance != 0)
                 {
@@ -187,7 +196,7 @@ public class PlatformController : RaycastController
         }
     }
 
-    struct PassengerMovement
+    private struct PassengerMovement
     {
         public Transform transform;
         public Vector3 velocity;
