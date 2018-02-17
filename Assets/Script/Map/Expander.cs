@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Expander : MonoBehaviour
 {
+    private const float EPSILON = 0.1f;
+
     public SpriteRenderer[] MiddleBlocks;
 
     protected BoxCollider2D boxCollider;
@@ -23,13 +25,16 @@ public class Expander : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider2D>();
 #if DEBUG
-        Vector3 size = MiddleBlocks[0].sprite.bounds.size;
-        for (int i = 1; i < MiddleBlocks.Length; i++)
+        if (MiddleBlocks.Length > 0)
         {
-            Vector3 nextSize = MiddleBlocks[i].sprite.bounds.size;
-            if (size != nextSize)
-                Debug.LogWarning("Middle blocks have different sizes.");
-            size = nextSize;
+            Vector3 size = MiddleBlocks[0].sprite.bounds.size;
+            for (int i = 1; i < MiddleBlocks.Length; i++)
+            {
+                Vector3 nextSize = MiddleBlocks[i].sprite.bounds.size;
+                if (size != nextSize)
+                    Debug.LogWarning("Middle blocks have different sizes.");
+                size = nextSize;
+            }
         }
 #endif
     }
@@ -39,8 +44,8 @@ public class Expander : MonoBehaviour
 #if DEBUG
         if (totalLength < 0f)
             Debug.LogWarning("Length is too short. Minimum length is " + (endBlock1Length + endBlock2Length));
-        else if (Mathf.Abs(totalLength % middleBlockLength) > float.Epsilon)
-            Debug.LogWarning("Total length - end block lengths is not multiple of middle block length. Shrink length " + totalLength % middleBlockLength);
+        else if (Mathf.Abs(totalLength % middleBlockLength) > EPSILON)
+            Debug.LogWarning('[' + name + "] Total length - end block lengths is not multiple of middle block length. Shrink length " + totalLength % middleBlockLength);
 #endif
 
         int numMiddleBlocks = Mathf.RoundToInt(totalLength / middleBlockLength);
