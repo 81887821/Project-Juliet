@@ -102,7 +102,7 @@ public class PlatformController : RaycastController
 
             if (passenger.moveBeforePlatform == beforeMovePlatform)
             {
-                passengerDictionary[passenger.transform].Move(passenger.velocity, passenger.standingOnPlatform, Space.World);
+                passengerDictionary[passenger.transform].Move(passenger.velocity, Space.World);
             }
         }
     }
@@ -136,7 +136,7 @@ public class PlatformController : RaycastController
                         float pushX = (directionY == 1) ? velocity.x : 0;
                         float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
 
-                        passengerMovement.Add(new PassengerMovement(hit.transform, new Vector3(pushX, pushY), directionY == 1, true));
+                        passengerMovement.Add(new PassengerMovement(hit.transform, new Vector3(pushX, pushY), true));
                     }
                 }
             }
@@ -163,7 +163,7 @@ public class PlatformController : RaycastController
                         float pushX = velocity.x - (hit.distance - skinWidth) * directionX;
                         float pushY = -skinWidth;
 
-                        passengerMovement.Add(new PassengerMovement(hit.transform, new Vector3(pushX, pushY), false, true));
+                        passengerMovement.Add(new PassengerMovement(hit.transform, new Vector3(pushX, pushY), true));
                     }
                 }
             }
@@ -189,7 +189,7 @@ public class PlatformController : RaycastController
                         float pushX = velocity.x;
                         float pushY = velocity.y;
 
-                        passengerMovement.Add(new PassengerMovement(hit.transform, new Vector3(pushX, pushY), true, false));
+                        passengerMovement.Add(new PassengerMovement(hit.transform, new Vector3(pushX, pushY), false));
                     }
                 }
             }
@@ -200,14 +200,12 @@ public class PlatformController : RaycastController
     {
         public Transform transform;
         public Vector3 velocity;
-        public bool standingOnPlatform;
         public bool moveBeforePlatform;
 
-        public PassengerMovement(Transform _transform, Vector3 _velocity, bool _standingOnPlatform, bool _moveBeforePlatform)
+        public PassengerMovement(Transform _transform, Vector3 _velocity, bool _moveBeforePlatform)
         {
             transform = _transform;
             velocity = _velocity;
-            standingOnPlatform = _standingOnPlatform;
             moveBeforePlatform = _moveBeforePlatform;
         }
     }
