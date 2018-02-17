@@ -715,7 +715,7 @@ MonoBehaviour:
   floatingTime: 0.8
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
-  juliaMoveSpeed: 20
+  juliaMoveSpeed: 25
   supperJumpMultiplier: 1.5
   wallJumpClimb: {x: 16, y: 0}
   wallJumpOff: {x: 16, y: 0}
