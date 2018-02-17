@@ -400,6 +400,12 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
             playerCore.CurrentHealth -= damage;
 
+            if (playerCore.CurrentHealth <= 0)
+            {
+                Die();
+                return;
+            }
+
             HeadingRight = attackerOnRight;
             velocity.x -= knockback.x;
             velocity.y += knockback.y;
@@ -413,6 +419,8 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
     public virtual void Die()
     {
-        Destroy(gameObject);
+        nextState = PlayerState.GAME_OVER;
+        UpdateState();
+        Destroy(playerTransform.gameObject, 5f);
     }
 }
