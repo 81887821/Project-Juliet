@@ -10,6 +10,9 @@ TextureImporter:
     21300006: Mob_6
     21300008: mob-hit
     21300010: Mob_3
+    21300012: mob-body-normal
+    21300014: mob-body-hit
+    21300016: mob-head
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -133,6 +136,48 @@ TextureImporter:
         height: 1079
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mob-body-normal
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 1
+        width: 324
+        height: 803
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mob-body-hit
+      rect:
+        serializedVersion: 2
+        x: 1432
+        y: 2
+        width: 322
+        height: 802
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mob-head
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 810
+        width: 302
+        height: 270
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

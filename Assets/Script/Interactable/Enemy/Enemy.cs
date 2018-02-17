@@ -84,7 +84,7 @@ public abstract class Enemy : MonoBehaviour, IInteractable
     {
         bool attackerOnRight = attacker.transform.position.x > transform.position.x;
 
-        currentHealth--;
+        currentHealth -= damage;
         if (currentHealth <= 0)
             Die();
 
