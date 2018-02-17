@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c111970c80bee8a4db2ac2260c2728e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 20
+  currentHealth: 10
   accelerationTimeGrounded: 0.1
   accelerationTimeAirborne: 0.2
   gravity: -150
