@@ -23,9 +23,9 @@ public class Patrol : Enemy
     private PatrolState state = PatrolState.NORMAL;
     private PatrolState nextState = PatrolState.NORMAL;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         playerDetector = GetComponentInChildren<TargetDetector>();
         animator = GetComponent<Animator>();
     }

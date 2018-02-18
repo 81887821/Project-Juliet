@@ -13,7 +13,7 @@ public abstract class Item : MonoBehaviour
     private float movingProgress = 0f;
     private bool movingUpward = true;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         originalPosition = transform.position;
     }

@@ -111,17 +111,18 @@ public class PlayerCore : MonoBehaviour
 #if DEBUG
         Debug.Assert(cancelableSpecialActionAvailableTime <= totalSpecialActionAvailableTime, "Cancelable special action available time cannot be larger than total special action available time.");
 #endif
-    }
 
-    void Start()
-    {
         julia = GetComponentInChildren<Julia>();
         juliett = GetComponentInChildren<Juliett>();
         physicalCollider = GetComponent<BoxCollider2D>();
         controller = GetComponent<Controller2D>();
 
-        WaitingPlayerCharacter.IsActive = false;
         currentHealth = maxHealth;
+    }
+
+    void Start()
+    {
+        WaitingPlayerCharacter.IsActive = false;
     }
 
     public void OnActionButtonClicked()

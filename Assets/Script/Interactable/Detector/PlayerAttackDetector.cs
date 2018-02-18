@@ -11,7 +11,15 @@ public class PlayerAttackDetector : MonoBehaviour
     private IInteractable interactable;
     private BoxCollider2D boxCollider;
     private List<DamageDetector> hitList = new List<DamageDetector>();
-    
+
+    private void Awake()
+    {
+        interactable = GetComponentInParent<IInteractable>();
+        if (interactable == null)
+            Debug.LogError("Cannot find interactive object.");
+        boxCollider = GetComponent<BoxCollider2D>();
+    }
+
     private void OnEnable()
     {
         hitList.Clear();
@@ -19,10 +27,6 @@ public class PlayerAttackDetector : MonoBehaviour
 
     private void Start()
     {
-        interactable = GetComponentInParent<IInteractable>();
-        if (interactable == null)
-            Debug.LogError("Cannot find interactive object.");
-        boxCollider = GetComponent<BoxCollider2D>();
         gameObject.SetActive(ActiveOnStart);
     }
 

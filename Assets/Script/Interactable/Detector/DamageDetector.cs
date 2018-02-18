@@ -15,7 +15,7 @@ public class DamageDetector : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         interactable = GetComponent<IInteractable>();
         if (interactable == null)

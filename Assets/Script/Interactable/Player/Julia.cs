@@ -8,9 +8,9 @@ public class Julia : PlayerBase
     private GameObject jumpDownAttackDetector;
     private GameObject rollingAttackDetector;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         jumpDownAttackDetector = transform.Find("JumpDownAttackDetector").gameObject;
         rollingAttackDetector = transform.Find("RollingAttackDetector").gameObject;
     }

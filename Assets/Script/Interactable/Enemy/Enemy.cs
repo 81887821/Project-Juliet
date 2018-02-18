@@ -53,12 +53,15 @@ public abstract class Enemy : MonoBehaviour, IInteractable
     protected float stateEndTime;
     #endregion
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         controller = GetComponent<Controller2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         headingRight = transform.rotation == new Quaternion(0f, 0f, 0f, 1f);
+    }
 
+    protected virtual void Start()
+    {
         maxSpeed = PlayerCore.Instance.juliaMoveSpeed * SpeedRelativeToJulia;
     }
 

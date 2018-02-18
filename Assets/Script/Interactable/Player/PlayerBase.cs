@@ -126,7 +126,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     protected float specialActionAvailableTime;
     #endregion
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         playerCore = GetComponentInParent<PlayerCore>();
         input = GetComponentInParent<PlayerInput>();
@@ -135,7 +135,10 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         damageDetector = transform.Find("DamageDetector").gameObject;
+    }
 
+    protected virtual void Start()
+    {
         gravity = -(8 * playerCore.maxJumpHeight) / Mathf.Pow(playerCore.floatingTime, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * (playerCore.floatingTime / 2);
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * playerCore.minJumpHeight);

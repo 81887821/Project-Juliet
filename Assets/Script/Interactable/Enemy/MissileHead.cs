@@ -17,13 +17,18 @@ public class MissileHead : Enemy
     private Vector2 launchVelocity;
     private int[] obstacles;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        obstacles = new int[2];
+        obstacles[0] = LayerMask.NameToLayer("Obstacle");
+        obstacles[1] = LayerMask.NameToLayer("Obstacle (Unstickable)");
+    }
+
     protected override void Start()
     {
         base.Start();
         launchVelocity = new Vector2(maxSpeed, 0f);
-        obstacles = new int[2];
-        obstacles[0] = LayerMask.NameToLayer("Obstacle");
-        obstacles[1] = LayerMask.NameToLayer("Obstacle (Unstickable)");
     }
 
     protected override void Update()

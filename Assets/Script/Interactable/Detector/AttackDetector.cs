@@ -10,13 +10,17 @@ public class AttackDetector : MonoBehaviour
 
     private IInteractable interactable;
 
-    private void Start()
+    private void Awake()
     {
         interactable = GetComponent<IInteractable>();
         if (interactable == null)
             interactable = GetComponentInParent<IInteractable>();
         if (interactable == null)
             Debug.LogError("Cannot find interactive object.");
+    }
+
+    private void Start()
+    {
         gameObject.SetActive(ActiveOnStart);
     }
 

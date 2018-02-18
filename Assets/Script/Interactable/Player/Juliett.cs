@@ -14,9 +14,9 @@ public class Juliett : PlayerBase
     private GameObject[] normalAttackDetectors = new GameObject[4];
     private GameObject uppercutDetector;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         for (int i = 0; i < 4; i++)
             normalAttackDetectors[i] = transform.Find(string.Format("Attack{0}Detector", i + 1)).gameObject;
         uppercutDetector = transform.Find("UppercutDetector").gameObject;

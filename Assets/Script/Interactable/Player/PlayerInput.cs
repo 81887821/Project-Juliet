@@ -21,15 +21,19 @@ public class PlayerInput : MonoBehaviour
     private PlayerCore player;
     private InGameUIManager ui;
 
-    void Start()
+    private void Awake()
     {
         player = GetComponent<PlayerCore>();
+    }
+
+    private void Start()
+    {
         ui = InGameUIManager.Instance;
         ui.ActionButton.onClick.AddListener(player.OnActionButtonClicked);
         ui.TransformationButton.onClick.AddListener(player.OnTransformationButtonClicked);
     }
     
-    void Update()
+    private void Update()
     {
         HorizontalInput = ui.movementScrollbar.value * 2 - 1;
 

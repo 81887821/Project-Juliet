@@ -10,7 +10,11 @@ using UnityEngine.UI;
 //Singleton Class
 public class InGameUIManager : MonoBehaviour
 {
-    public static InGameUIManager Instance;
+    public static InGameUIManager Instance
+    {
+        get;
+        private set;
+    }
 
     //Movement Variables
     [Header("Movement")]
@@ -42,8 +46,8 @@ public class InGameUIManager : MonoBehaviour
     public GameObject heartParentObject; //Object Which Contains heart Objects
     public GameObject diaryParentObject; //Object Which Contains diary Objects
 
-    private List<Image> heartImageList;
-    private List<Image> diaryImageList;
+    private List<Image> heartImageList = new List<Image>();
+    private List<Image> diaryImageList = new List<Image>();
 
     private bool playerIsSmallForm = true;
     private bool playerCanDoSpecialAction = false;
@@ -75,23 +79,16 @@ public class InGameUIManager : MonoBehaviour
     
     private void Awake()
     {
-        //Basic way to set Singleton Pattern
-        if(Instance == null)
+        if (Instance != null)
         {
-            Instance = this;
+            Debug.LogError("Double instantiation : " + this);
+            Destroy(this);
+            return;
         }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
 
-    private void Start()
-    {
-        heartImageList = new List<Image>();
-        diaryImageList = new List<Image>();
+        Instance = this;
 
-        foreach(var itr in heartParentObject.GetComponentsInChildren<Image>())
+        foreach (var itr in heartParentObject.GetComponentsInChildren<Image>())
         {
             if (itr != null)
             {
@@ -106,7 +103,10 @@ public class InGameUIManager : MonoBehaviour
                 diaryImageList.Add(itr);
             }
         }
+    }
 
+    private void Start()
+    {
         InitUIElements();
 
         PlayerCore player = PlayerCore.Instance;

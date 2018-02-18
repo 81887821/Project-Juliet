@@ -19,10 +19,15 @@ public class MissileBody : Enemy
     private bool attackEnabled = true;
     private float nextHeadLaunch;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     protected override void Start()
     {
         base.Start();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         SpareHead.gameObject.SetActive(false);
         LaunchHead();
     }
