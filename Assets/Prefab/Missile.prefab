@@ -179,7 +179,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000641918199946}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -187,7 +187,7 @@ Transform:
   - {fileID: 4739371973349616}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4165001028887716
 Transform:
   m_ObjectHideFlags: 1
@@ -415,7 +415,7 @@ MonoBehaviour:
   accelerationTimeAirborne: 0
   gravity: 0
   defaultKnockback: {x: 0, y: 0}
-  SpeedRelativeToJulia: 2
+  SpeedRelativeToJulia: 1
   ExplosionEffect: {fileID: 1048661152490384}
   WaitingTimeBeforeLaunch: 1
   LoadingAbsoluteSpeed: 3
