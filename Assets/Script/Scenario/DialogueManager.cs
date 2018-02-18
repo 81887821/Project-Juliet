@@ -15,8 +15,12 @@ public class DialogueManager : MonoBehaviour
         private set;
     }
 
+    [Header("Text")]
     public Text NameText;
     public Text DialogueText;
+    public float TextInterval = 0.1f;
+    [Header("Image")]
+    public Image CharacterImage;
 
     public bool IsOpen
     {
@@ -33,7 +37,6 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
-    public float TextInterval = 0.1f;
 
     private Animator animator;
     private bool isOpen = false;
