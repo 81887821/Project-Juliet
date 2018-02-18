@@ -211,7 +211,7 @@ public class PlatformController : RaycastController
     }
 
 #if UNITY_EDITOR
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         if (LocalWaypoints != null)
         {

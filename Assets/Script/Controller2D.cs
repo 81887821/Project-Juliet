@@ -22,7 +22,7 @@ public class Controller2D : RaycastController
         transform.Translate(moveAmount, moveSpace);
     }
 
-    void HorizontalCollisions(ref Vector2 moveAmount)
+    private void HorizontalCollisions(ref Vector2 moveAmount)
     {
         float directionX = transform.right.x * Mathf.Sign(moveAmount.x);
         float rayLength = Mathf.Abs(moveAmount.x) + SKIN_WIDTH;
@@ -66,7 +66,7 @@ public class Controller2D : RaycastController
         }
     }
 
-    void VerticalCollisions(ref Vector2 moveAmount)
+    private void VerticalCollisions(ref Vector2 moveAmount)
     {
         float directionY = Mathf.Sign(moveAmount.y);
         float rayLength = Mathf.Abs(moveAmount.y) + SKIN_WIDTH;

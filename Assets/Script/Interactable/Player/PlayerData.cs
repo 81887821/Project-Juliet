@@ -120,7 +120,7 @@ public class PlayerData : MonoBehaviour
         currentHealth = MaxHealth;
     }
 
-    void Start()
+    private void Start()
     {
         WaitingPlayerCharacter.IsActive = false;
     }
