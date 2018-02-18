@@ -323,6 +323,10 @@ MonoBehaviour:
   defaultKnockback: {x: 80, y: 15}
   SpeedRelativeToJulia: 0.7
   AlertModeSpeedMultiplier: 1.3
+  MoveBackAfterAttack: {x: 60, y: 0}
+  DelayOnAlert: 1
+  DelayAfterAttack: 2
+  DelayAfterHit: 1
 --- !u!114 &114896328850948570
 MonoBehaviour:
   m_ObjectHideFlags: 1
