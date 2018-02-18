@@ -5,18 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class AttackDetector : MonoBehaviour
 {
-    private IInteractable interactable;
-
     public LayerMask TargetMask;
-    public bool ActiveOnStart = false;
+    public bool ActiveOnStart = true;
 
-    public IInteractable Interactable
-    {
-        get
-        {
-            return interactable;
-        }
-    }
+    private IInteractable interactable;
 
     private void Start()
     {
@@ -28,7 +20,7 @@ public class AttackDetector : MonoBehaviour
         gameObject.SetActive(ActiveOnStart);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         DamageDetector target = collision.GetComponent<DamageDetector>();
 
