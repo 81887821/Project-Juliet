@@ -8,9 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c6cc75da64748049ab1535d751bee98, type: 3}
-  m_Name: tempGameStart2
+  m_Script: {fileID: 11500000, guid: c0352e7c00c2c38478d4dd4bbf5c490c, type: 3}
+  m_Name: Test1
   m_EditorClassIdentifier: 
-  speaker: Tip
-  sentences:
-  - push A, D or right, left arrow to move.
+  Dialogues:
+  - Speaker: 2
+    Sentence: Hello
