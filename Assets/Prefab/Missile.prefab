@@ -374,11 +374,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db672c57e8ecac4d99dc05179bbc352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 6
-  accelerationTimeGrounded: 0.1
-  accelerationTimeAirborne: 0.2
-  gravity: -150
-  defaultKnockback: {x: 15, y: 4}
+  CurrentHealth: 6
+  AccelerationTimeGrounded: 0.1
+  AccelerationTimeAirborne: 0.2
+  Gravity: -150
+  DefaultKnockback: {x: 45, y: 12}
   SpeedRelativeToJulia: 0
   SpareHead: {fileID: 114169428277378264}
   NormalBodySprite: {fileID: 21300012, guid: 81f0b7a4b079e1b46bdea00152788107, type: 3}
@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3984759a4d5a64896c27a9c0ed56a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionMask:
+  CollisionMask:
     serializedVersion: 2
     m_Bits: 2816
   coll: {fileID: 0}
@@ -410,11 +410,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15339c24d6c04bf43a4b8268d8a25771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 1
-  accelerationTimeGrounded: 0
-  accelerationTimeAirborne: 0
-  gravity: 0
-  defaultKnockback: {x: 0, y: 0}
+  CurrentHealth: 1
+  AccelerationTimeGrounded: 0
+  AccelerationTimeAirborne: 0
+  Gravity: 0
+  DefaultKnockback: {x: 0, y: 0}
   SpeedRelativeToJulia: 1
   ExplosionEffect: {fileID: 1048661152490384}
   WaitingTimeBeforeLaunch: 1
@@ -454,7 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3984759a4d5a64896c27a9c0ed56a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionMask:
+  CollisionMask:
     serializedVersion: 2
     m_Bits: 2816
   coll: {fileID: 0}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerCore))]
+[RequireComponent(typeof(PlayerData))]
 public class PlayerInput : MonoBehaviour
 {
     public float HorizontalInput
@@ -18,12 +18,12 @@ public class PlayerInput : MonoBehaviour
         }
     }
     
-    private PlayerCore player;
+    private PlayerData player;
     private InGameUIManager ui;
 
     private void Awake()
     {
-        player = GetComponent<PlayerCore>();
+        player = GetComponent<PlayerData>();
     }
 
     private void Start()
@@ -35,24 +35,24 @@ public class PlayerInput : MonoBehaviour
     
     private void Update()
     {
-        HorizontalInput = ui.movementScrollbar.value * 2 - 1;
+        HorizontalInput = ui.MovementScrollbar.value * 2 - 1;
 
 #if DEBUG
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            ui.movementScrollbar.value -= 0.5f;
+            ui.MovementScrollbar.value -= 0.5f;
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            ui.movementScrollbar.value += 0.5f;
+            ui.MovementScrollbar.value += 0.5f;
         }
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            ui.movementScrollbar.value += 0.5f;
+            ui.MovementScrollbar.value += 0.5f;
         }
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            ui.movementScrollbar.value -= 0.5f;
+            ui.MovementScrollbar.value -= 0.5f;
         }
 
         if (Input.GetKeyDown(KeyCode.A))

@@ -69,8 +69,8 @@ public class MissileBody : Enemy
     {
         const float targetVelocityX = 0f;
 
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-        velocity.y += gravity * Time.deltaTime;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.Collisions.below) ? AccelerationTimeGrounded : AccelerationTimeAirborne);
+        velocity.y += Gravity * Time.deltaTime;
     }
 
     private void LaunchHead()

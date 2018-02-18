@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Controller2D : RaycastController
 {
-    public CollisionInfo collisions;
+    public CollisionInfo Collisions;
 
     public void Move(Vector2 moveAmount, Space moveSpace = Space.Self)
     {
         UpdateRaycastOrigins();
 
-        collisions.Reset();
-        collisions.moveAmountOld = moveAmount;
+        Collisions.Reset();
+        Collisions.moveAmountOld = moveAmount;
 
         HorizontalCollisions(ref moveAmount);
         if (moveAmount.y != 0)
@@ -25,39 +25,39 @@ public class Controller2D : RaycastController
     void HorizontalCollisions(ref Vector2 moveAmount)
     {
         float directionX = transform.right.x * Mathf.Sign(moveAmount.x);
-        float rayLength = Mathf.Abs(moveAmount.x) + skinWidth;
+        float rayLength = Mathf.Abs(moveAmount.x) + SKIN_WIDTH;
 
-        if (Mathf.Abs(moveAmount.x) < skinWidth)
+        if (Mathf.Abs(moveAmount.x) < SKIN_WIDTH)
         {
-            rayLength = 2 * skinWidth;
+            rayLength = 2 * SKIN_WIDTH;
         }
 
         for (int i = 0; i < horizontalRayCount; i++)
         {
             Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
             rayOrigin += Vector2.up * (horizontalRaySpacing * i);
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, CollisionMask);
 
             if (hit)
             {
 #if DEBUG
                 Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
 #endif
-                if (hit.distance <= skinWidth)
+                if (hit.distance <= SKIN_WIDTH)
                 {
                     moveAmount.x = 0f;
                     i = horizontalRayCount; // Break after setting collision flags.
                 }
                 else
                 {
-                    moveAmount.x = (hit.distance - skinWidth) * Mathf.Sign(moveAmount.x);
+                    moveAmount.x = (hit.distance - SKIN_WIDTH) * Mathf.Sign(moveAmount.x);
                     rayLength = hit.distance;
                 }
 
-                if (collisions.moveAmountOld.x >= 0f)
-                    collisions.front += hit.transform.gameObject.layer;
+                if (Collisions.moveAmountOld.x >= 0f)
+                    Collisions.front += hit.transform.gameObject.layer;
                 else
-                    collisions.back += hit.transform.gameObject.layer;
+                    Collisions.back += hit.transform.gameObject.layer;
             }
 #if DEBUG
             else
@@ -69,13 +69,13 @@ public class Controller2D : RaycastController
     void VerticalCollisions(ref Vector2 moveAmount)
     {
         float directionY = Mathf.Sign(moveAmount.y);
-        float rayLength = Mathf.Abs(moveAmount.y) + skinWidth;
+        float rayLength = Mathf.Abs(moveAmount.y) + SKIN_WIDTH;
 
         for (int i = 0; i < verticalRayCount; i++)
         {
             Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
             rayOrigin += Vector2.right * (verticalRaySpacing * i + transform.right.x * moveAmount.x);
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, CollisionMask);
 
             if (hit)
             {
@@ -83,21 +83,21 @@ public class Controller2D : RaycastController
                 Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
 #endif
 
-                if (hit.distance <= skinWidth)
+                if (hit.distance <= SKIN_WIDTH)
                 {
                     moveAmount.y = 0f;
                     i = verticalRayCount; // Break after setting collision flags.
                 }
                 else
                 {
-                    moveAmount.y = (hit.distance - skinWidth) * directionY;
+                    moveAmount.y = (hit.distance - SKIN_WIDTH) * directionY;
                     rayLength = hit.distance;
                 }
 
                 if (directionY == -1)
-                    collisions.below += hit.transform.gameObject.layer;
+                    Collisions.below += hit.transform.gameObject.layer;
                 else if (directionY == 1)
-                    collisions.above += hit.transform.gameObject.layer;
+                    Collisions.above += hit.transform.gameObject.layer;
                 else
                     Debug.LogError("Error : Wrong vertical collisions direction Y : " + directionY);
             }

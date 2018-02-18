@@ -24,58 +24,58 @@ public class Julia : PlayerBase
     {
         switch (state)
         {
-            case PlayerState.IDLE:
-            case PlayerState.WALKING:
-            case PlayerState.WALL_STICK:
-                nextState = PlayerState.JUMPING_UP;
+            case PlayerState.Idle:
+            case PlayerState.Walking:
+            case PlayerState.WallStick:
+                nextState = PlayerState.JumpingUp;
                 break;
-            case PlayerState.SPECIAL_ACTION_READY:
-            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
-                nextState = PlayerState.SUPER_JUMP;
+            case PlayerState.SpecialActionReady:
+            case PlayerState.CancelableSpecialActionReady:
+                nextState = PlayerState.SuperJump;
                 break;
         }
     }
 
     protected override float GetMoveSpeed()
     {
-        return playerCore.juliaMoveSpeed;
+        return playerCore.JuliaMoveSpeed;
     }
     
     protected override void UpdateAnimationState(PlayerState state)
     {
         switch (state)
         {
-            case PlayerState.IDLE:
-            case PlayerState.POST_TRANSFORMATION_DELAY:
+            case PlayerState.Idle:
+            case PlayerState.PostTransformationDelay:
                 animator.Play("JuliaIdle");
                 break;
-            case PlayerState.JUMPING_UP:
+            case PlayerState.JumpingUp:
                 animator.Play("JuliaJumpUp");
                 break;
-            case PlayerState.JUMPING_DOWN:
-            case PlayerState.SPECIAL_JUMPING_DOWN:
+            case PlayerState.JumpingDown:
+            case PlayerState.SpecialJumpingDown:
                 animator.Play("JuliaJumpDownPrepare");
                 break;
-            case PlayerState.WALKING:
+            case PlayerState.Walking:
                 animator.Play("JuliaWalk");
                 break;
-            case PlayerState.SPECIAL_ACTION_READY:
-            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
+            case PlayerState.SpecialActionReady:
+            case PlayerState.CancelableSpecialActionReady:
                 animator.Play("JuliaSuperJumpPrepare");
                 break;
-            case PlayerState.SUPER_JUMP:
+            case PlayerState.SuperJump:
                 animator.Play("JuliaSuperJump");
                 break;
-            case PlayerState.ROLLING:
+            case PlayerState.Rolling:
                 animator.Play("JuliaRolling");
                 break;
-            case PlayerState.WALL_STICK:
+            case PlayerState.WallStick:
                 animator.Play("JuliaWallStick");
                 break;
-            case PlayerState.HIT:
+            case PlayerState.Hit:
                 animator.Play("JuliaHit");
                 break;
-            case PlayerState.GAME_OVER:
+            case PlayerState.GameOver:
                 animator.Play("JuliaGameOver");
                 break;
             default:
@@ -89,34 +89,34 @@ public class Julia : PlayerBase
     {
         switch (state)
         {
-            case PlayerState.JUMPING_DOWN:
-            case PlayerState.SPECIAL_JUMPING_DOWN:
-                if (!controller.collisions.below && controller.collisions.front.Contains("Obstacle"))
-                    return PlayerState.WALL_STICK;
+            case PlayerState.JumpingDown:
+            case PlayerState.SpecialJumpingDown:
+                if (!controller.Collisions.below && controller.Collisions.front.Contains("Obstacle"))
+                    return PlayerState.WallStick;
                 else
                     return base.GetNextStateByEnvironment();
-            case PlayerState.WALL_STICK:
-                if (controller.collisions.below)
-                    return PlayerState.IDLE;
+            case PlayerState.WallStick:
+                if (controller.Collisions.below)
+                    return PlayerState.Idle;
                 else
-                    return PlayerState.WALL_STICK;
-            case PlayerState.JUMPING_UP:
+                    return PlayerState.WallStick;
+            case PlayerState.JumpingUp:
                 if (velocity.y <= 0f)
-                    return PlayerState.JUMPING_DOWN;
+                    return PlayerState.JumpingDown;
                 else
-                    return PlayerState.JUMPING_UP;
-            case PlayerState.SUPER_JUMP:
+                    return PlayerState.JumpingUp;
+            case PlayerState.SuperJump:
                 if (velocity.y <= 0f)
-                    return PlayerState.ROLLING;
+                    return PlayerState.Rolling;
                 else
-                    return PlayerState.SUPER_JUMP;
-            case PlayerState.ROLLING:
-                if (controller.collisions.below)
-                    return PlayerState.IDLE;
-                else if (controller.collisions.front.Contains("Obstacle"))
-                    return PlayerState.WALL_STICK;
+                    return PlayerState.SuperJump;
+            case PlayerState.Rolling:
+                if (controller.Collisions.below)
+                    return PlayerState.Idle;
+                else if (controller.Collisions.front.Contains("Obstacle"))
+                    return PlayerState.WallStick;
                 else
-                    return PlayerState.ROLLING;
+                    return PlayerState.Rolling;
             default:
                 return base.GetNextStateByEnvironment();
         }
@@ -126,14 +126,14 @@ public class Julia : PlayerBase
     {
         switch (oldState)
         {
-            case PlayerState.JUMPING_DOWN:
+            case PlayerState.JumpingDown:
                 jumpDownAttackDetector.SetActive(false);
                 break;
-            case PlayerState.WALL_STICK:
+            case PlayerState.WallStick:
                 horizontalMovementEnabled = true;
-                gravity /= playerCore.wallGravityRatio;
+                gravity /= playerCore.WallGravityRatio;
                 break;
-            case PlayerState.ROLLING:
+            case PlayerState.Rolling:
                 rollingAttackDetector.SetActive(false);
                 break;
         }
@@ -142,24 +142,24 @@ public class Julia : PlayerBase
 
         switch (newState)
         {
-            case PlayerState.JUMPING_DOWN:
+            case PlayerState.JumpingDown:
                 jumpDownAttackDetector.SetActive(true);
                 break;
-            case PlayerState.WALL_STICK:
+            case PlayerState.WallStick:
                 horizontalMovementEnabled = false;
                 velocity.y = 0f;
-                gravity *= playerCore.wallGravityRatio;
+                gravity *= playerCore.WallGravityRatio;
                 break;
-            case PlayerState.JUMPING_UP:
-                if (oldState == PlayerState.WALL_STICK)
+            case PlayerState.JumpingUp:
+                if (oldState == PlayerState.WallStick)
                     WallJump();
                 else
                     Jump();
                 break;
-            case PlayerState.ROLLING:
+            case PlayerState.Rolling:
                 rollingAttackDetector.SetActive(true);
                 break;
-            case PlayerState.SUPER_JUMP:
+            case PlayerState.SuperJump:
                 SuperJump();
                 break;
         }
@@ -176,37 +176,37 @@ public class Julia : PlayerBase
         
         if (input.HorizontalInput == 0)
         {
-            velocity.x = -playerCore.wallJumpOff.x;
-            velocity.y = playerCore.wallJumpOff.y;
+            velocity.x = -playerCore.WallJumpOff.x;
+            velocity.y = playerCore.WallJumpOff.y;
         }
         else if (wallDirX == Mathf.Sign(input.HorizontalInput))
         {
-            velocity.x = -playerCore.wallJumpClimb.x;
-            velocity.y = playerCore.wallJumpClimb.y;
+            velocity.x = -playerCore.WallJumpClimb.x;
+            velocity.y = playerCore.WallJumpClimb.y;
         }
         else
         {
-            velocity.x = -playerCore.wallLeap.x;
-            velocity.y = playerCore.wallLeap.y;
+            velocity.x = -playerCore.WallLeap.x;
+            velocity.y = playerCore.WallLeap.y;
         }
     }
 
     private void SuperJump()
     {
-        velocity.y = maxJumpVelocity * playerCore.supperJumpMultiplier;
+        velocity.y = maxJumpVelocity * playerCore.SupperJumpMultiplier;
     }
 
     public override void OnAttack(IInteractable target)
     {
         switch (state)
         {
-            case PlayerState.JUMPING_DOWN:
+            case PlayerState.JumpingDown:
                 target.OnDamaged(this, 1, Vector2.zero);
-                nextState = PlayerState.JUMPING_UP;
+                nextState = PlayerState.JumpingUp;
                 break;
-            case PlayerState.ROLLING:
+            case PlayerState.Rolling:
                 target.OnDamaged(this, 1, Vector2.zero);
-                nextState = PlayerState.JUMPING_UP;
+                nextState = PlayerState.JumpingUp;
                 break;
             default:
                 Debug.LogWarning("Attack detected on non-attacking state : " + state);

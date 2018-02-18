@@ -16,19 +16,19 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         /// <summary>
         /// Special state to represent a method doesn't want to change state.
         /// </summary>
-        NONE,
-        IDLE, SPECIAL_ACTION_READY, CANCELABLE_SPECIAL_ACTION_READY, WALKING, // For both
-        ATTACK1, ATTACK2, ATTACK3, ATTACK4, // For Juliett
-        JUMPING_DOWN, // For both
+        None,
+        Idle, SpecialActionReady, CancelableSpecialActionReady, Walking, // For both
+        Attack1, Attack2, Attack3, Attack4, // For Juliett
+        JumpingDown, // For both
         /// <summary>
         /// Jumping down state right after transformation.
         /// Next action can be special action.
         /// State for both Julia and Juliett.
         /// </summary>
-        SPECIAL_JUMPING_DOWN,
-        UPPERCUT, // For Juliett
-        WALL_STICK, ROLLING, SUPER_JUMP, JUMPING_UP, // For Julia
-        POST_TRANSFORMATION_DELAY, HIT, GAME_OVER // For both
+        SpecialJumpingDown,
+        Uppercut, // For Juliett
+        WallStick, Rolling, SuperJump, JumpingUp, // For Julia
+        PostTransformationDelay, Hit, GameOver // For both
     }
     protected const float EPSILON = 0.1f;
 
@@ -38,7 +38,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     #endregion
 
     #region Unity components in parent
-    protected PlayerCore playerCore;
+    protected PlayerData playerCore;
     protected PlayerInput input;
     protected Controller2D controller;
     protected Transform playerTransform;
@@ -53,8 +53,8 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     protected GameObject damageDetector;
     #endregion
 
-    protected PlayerState state = PlayerState.IDLE;
-    protected PlayerState nextState = PlayerState.IDLE;
+    protected PlayerState state = PlayerState.Idle;
+    protected PlayerState nextState = PlayerState.Idle;
 
     #region State flags
     /// <summary>
@@ -99,9 +99,9 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
                 headingRight = value;
                 playerTransform.rotation = (headingRight ? new Quaternion(0f, 0f, 0f, 1f) : new Quaternion(0f, 1f, 0f, 0f));
                 velocity.x = -velocity.x;
-                Controller2D.Contacts temp = controller.collisions.back;
-                controller.collisions.back = controller.collisions.front;
-                controller.collisions.front = temp;
+                Controller2D.Contacts temp = controller.Collisions.back;
+                controller.Collisions.back = controller.Collisions.front;
+                controller.Collisions.front = temp;
             }
         }
     }
@@ -128,7 +128,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
     protected virtual void Awake()
     {
-        playerCore = GetComponentInParent<PlayerCore>();
+        playerCore = GetComponentInParent<PlayerData>();
         input = GetComponentInParent<PlayerInput>();
         controller = GetComponentInParent<Controller2D>();
         playerTransform = transform.parent;
@@ -139,9 +139,9 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
     protected virtual void Start()
     {
-        gravity = -(8 * playerCore.maxJumpHeight) / Mathf.Pow(playerCore.floatingTime, 2);
-        maxJumpVelocity = Mathf.Abs(gravity) * (playerCore.floatingTime / 2);
-        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * playerCore.minJumpHeight);
+        gravity = -(8 * playerCore.MaxJumpHeight) / Mathf.Pow(playerCore.FloatingTime, 2);
+        maxJumpVelocity = Mathf.Abs(gravity) * (playerCore.FloatingTime / 2);
+        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * playerCore.MinJumpHeight);
 
         moveSpeed = GetMoveSpeed();
     }
@@ -156,7 +156,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
         if (movementEnable)
         {
-            if (controller.collisions.above || controller.collisions.below)
+            if (controller.Collisions.above || controller.Collisions.below)
             {
                 velocity.y = 0;
             }
@@ -181,7 +181,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
             UpdateAnimationState(state);
         }
 
-        nextState = PlayerState.NONE;
+        nextState = PlayerState.None;
     }
 
     public abstract void OnActionButtonClicked();
@@ -208,14 +208,14 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     {
         switch (state)
         {
-            case PlayerState.IDLE:
-            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
+            case PlayerState.Idle:
+            case PlayerState.CancelableSpecialActionReady:
                 if (input.HorizontalInput != 0.0f)
-                    return PlayerState.WALKING;
+                    return PlayerState.Walking;
                 else
-                    return PlayerState.NONE;
+                    return PlayerState.None;
             default:
-                return PlayerState.NONE;
+                return PlayerState.None;
         }
     }
 
@@ -223,52 +223,52 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     {
         switch (state)
         {
-            case PlayerState.IDLE:
-                if (!controller.collisions.below)
-                    return PlayerState.JUMPING_DOWN;
+            case PlayerState.Idle:
+                if (!controller.Collisions.below)
+                    return PlayerState.JumpingDown;
                 else
-                    return PlayerState.IDLE;
-            case PlayerState.WALKING:
-                if (!controller.collisions.below)
-                    return PlayerState.JUMPING_DOWN;
+                    return PlayerState.Idle;
+            case PlayerState.Walking:
+                if (!controller.Collisions.below)
+                    return PlayerState.JumpingDown;
                 else if (Math.Abs(velocity.x) > EPSILON)
-                    return PlayerState.WALKING;
+                    return PlayerState.Walking;
                 else
-                    return PlayerState.IDLE;
-            case PlayerState.JUMPING_DOWN:
-                if (!controller.collisions.below)
-                    return PlayerState.JUMPING_DOWN;
+                    return PlayerState.Idle;
+            case PlayerState.JumpingDown:
+                if (!controller.Collisions.below)
+                    return PlayerState.JumpingDown;
                 else
-                    return PlayerState.IDLE;
-            case PlayerState.SPECIAL_JUMPING_DOWN:
-                if (!controller.collisions.below)
-                    return PlayerState.SPECIAL_JUMPING_DOWN;
+                    return PlayerState.Idle;
+            case PlayerState.SpecialJumpingDown:
+                if (!controller.Collisions.below)
+                    return PlayerState.SpecialJumpingDown;
                 else
-                    return PlayerState.SPECIAL_ACTION_READY;
-            case PlayerState.SPECIAL_ACTION_READY:
+                    return PlayerState.SpecialActionReady;
+            case PlayerState.SpecialActionReady:
                 if (stateEndTime > Time.time)
-                    return PlayerState.SPECIAL_ACTION_READY;
+                    return PlayerState.SpecialActionReady;
                 else
-                    return PlayerState.CANCELABLE_SPECIAL_ACTION_READY;
-            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
+                    return PlayerState.CancelableSpecialActionReady;
+            case PlayerState.CancelableSpecialActionReady:
                 if (stateEndTime > Time.time)
-                    return PlayerState.CANCELABLE_SPECIAL_ACTION_READY;
+                    return PlayerState.CancelableSpecialActionReady;
                 else
-                    return PlayerState.IDLE;
-            case PlayerState.POST_TRANSFORMATION_DELAY:
+                    return PlayerState.Idle;
+            case PlayerState.PostTransformationDelay:
                 if (stateEndTime > Time.time)
-                    return PlayerState.POST_TRANSFORMATION_DELAY;
-                else if (controller.collisions.below)
-                    return PlayerState.SPECIAL_ACTION_READY;
+                    return PlayerState.PostTransformationDelay;
+                else if (controller.Collisions.below)
+                    return PlayerState.SpecialActionReady;
                 else
-                    return PlayerState.SPECIAL_JUMPING_DOWN;
-            case PlayerState.HIT:
+                    return PlayerState.SpecialJumpingDown;
+            case PlayerState.Hit:
                 if (stateEndTime > Time.time)
-                    return PlayerState.HIT;
+                    return PlayerState.Hit;
                 else
-                    return PlayerState.IDLE;
-            case PlayerState.GAME_OVER:
-                return PlayerState.GAME_OVER;
+                    return PlayerState.Idle;
+            case PlayerState.GameOver:
+                return PlayerState.GameOver;
             default:
                 throw new Exception("Undefined state " + state);
         }
@@ -283,19 +283,19 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     {
         switch (oldState)
         {
-            case PlayerState.SPECIAL_ACTION_READY:
+            case PlayerState.SpecialActionReady:
                 horizontalMovementEnabled = true;
-                if (newState != PlayerState.CANCELABLE_SPECIAL_ACTION_READY)
+                if (newState != PlayerState.CancelableSpecialActionReady)
                     playerCore.OnSpecialActionDisabled();
                 break;
-            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
+            case PlayerState.CancelableSpecialActionReady:
                 playerCore.OnSpecialActionDisabled();
                 break;
-            case PlayerState.POST_TRANSFORMATION_DELAY:
+            case PlayerState.PostTransformationDelay:
                 movementEnable = true;
                 transformationEnabled = true;
                 break;
-            case PlayerState.HIT:
+            case PlayerState.Hit:
                 ignoreDamage = false;
                 horizontalMovementEnabled = true;
                 transformationEnabled = true;
@@ -304,25 +304,25 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
         switch (newState)
         {
-            case PlayerState.SPECIAL_ACTION_READY:
-                stateEndTime = Time.time + playerCore.totalSpecialActionAvailableTime - playerCore.cancelableSpecialActionAvailableTime;
+            case PlayerState.SpecialActionReady:
+                stateEndTime = Time.time + playerCore.TotalSpecialActionAvailableTime - playerCore.CancelableSpecialActionAvailableTime;
                 horizontalMovementEnabled = false;
                 break;
-            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
-                stateEndTime = Time.time + playerCore.totalSpecialActionAvailableTime;
+            case PlayerState.CancelableSpecialActionReady:
+                stateEndTime = Time.time + playerCore.TotalSpecialActionAvailableTime;
                 break;
-            case PlayerState.POST_TRANSFORMATION_DELAY:
-                stateEndTime = Time.time + playerCore.transformationDelayTime;
+            case PlayerState.PostTransformationDelay:
+                stateEndTime = Time.time + playerCore.TransformationDelayTime;
                 transformationEnabled = false;
                 movementEnable = false;
                 break;
-            case PlayerState.HIT:
+            case PlayerState.Hit:
                 ignoreDamage = true;
                 horizontalMovementEnabled = false;
                 transformationEnabled = false;
                 stateEndTime = Time.time + playerCore.KnockbackTime;
                 break;
-            case PlayerState.GAME_OVER:
+            case PlayerState.GameOver:
                 ignoreDamage = true;
                 horizontalMovementEnabled = false;
                 transformationEnabled = false;
@@ -340,7 +340,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         else
             targetVelocityX = 0f;
 
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? playerCore.accelerationTimeGrounded : playerCore.accelerationTimeAirborne);
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.Collisions.below) ? playerCore.AccelerationTimeGrounded : playerCore.AccelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
     }
     
@@ -369,7 +369,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         horizontalMovementEnabled = true;
         HeadingRight = priorCharacter.headingRight;
 
-        priorCharacter.HandleStateTransitionSideEffect(priorCharacter.state, PlayerState.NONE);
+        priorCharacter.HandleStateTransitionSideEffect(priorCharacter.state, PlayerState.None);
         horizontalMovementEnabled = priorCharacter.horizontalMovementEnabled;
         ignoreDamage = priorCharacter.ignoreDamage;
 
@@ -378,8 +378,8 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         velocityXSmoothing = priorCharacter.velocityXSmoothing;
         timeToWallUnstick = priorCharacter.timeToWallUnstick;
 
-        state = PlayerState.NONE;
-        nextState = PlayerState.POST_TRANSFORMATION_DELAY;
+        state = PlayerState.None;
+        nextState = PlayerState.PostTransformationDelay;
 
         UpdateDirection();
 
@@ -387,7 +387,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         state = nextState;
         UpdateAnimationState(state);
 
-        nextState = PlayerState.NONE;
+        nextState = PlayerState.None;
     }
 
     public void OnDamaged(IInteractable attacker, int damage)
@@ -413,7 +413,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
             velocity.x -= knockback.x;
             velocity.y += knockback.y;
 
-            nextState = PlayerState.HIT;
+            nextState = PlayerState.Hit;
             UpdateState();
         }
     }
@@ -422,7 +422,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
     public virtual void Die()
     {
-        nextState = PlayerState.GAME_OVER;
+        nextState = PlayerState.GameOver;
         UpdateState();
         Destroy(playerTransform.gameObject, 5f);
     }

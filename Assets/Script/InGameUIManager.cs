@@ -18,7 +18,7 @@ public class InGameUIManager : MonoBehaviour
 
     //Movement Variables
     [Header("Movement")]
-    public Scrollbar movementScrollbar; //joystick for movement
+    public Scrollbar MovementScrollbar; //joystick for movement
 
     [Header("Buttons")]
     public Button ActionButton;
@@ -36,15 +36,15 @@ public class InGameUIManager : MonoBehaviour
 
     //Health & Diary Variables
     [Header("Health & Diary Sprite")]
-    public Sprite blankHeartImage;
-    public Sprite halfHeaertImage;
-    public Sprite fullHeartImage;
+    public Sprite BlankHeartImage;
+    public Sprite HalfHeaertImage;
+    public Sprite FullHeartImage;
     
-    public Sprite diaryImage;
+    public Sprite DiaryImage;
 
     [Header("Health & Diary Set")]
-    public GameObject heartParentObject; //Object Which Contains heart Objects
-    public GameObject diaryParentObject; //Object Which Contains diary Objects
+    public GameObject HeartParentObject; //Object Which Contains heart Objects
+    public GameObject DiaryParentObject; //Object Which Contains diary Objects
 
     private List<Image> heartImageList = new List<Image>();
     private List<Image> diaryImageList = new List<Image>();
@@ -88,7 +88,7 @@ public class InGameUIManager : MonoBehaviour
 
         Instance = this;
 
-        foreach (var itr in heartParentObject.GetComponentsInChildren<Image>())
+        foreach (var itr in HeartParentObject.GetComponentsInChildren<Image>())
         {
             if (itr != null)
             {
@@ -96,7 +96,7 @@ public class InGameUIManager : MonoBehaviour
             }
         }
 
-        foreach (var itr in diaryParentObject.GetComponentsInChildren<Image>())
+        foreach (var itr in DiaryParentObject.GetComponentsInChildren<Image>())
         {
             if (itr != null)
             {
@@ -109,7 +109,7 @@ public class InGameUIManager : MonoBehaviour
     {
         InitUIElements();
 
-        PlayerCore player = PlayerCore.Instance;
+        PlayerData player = PlayerData.Instance;
         player.AvailableActionChanged += (canDoSpecialAction) => PlayerCanDoSpecialAction = canDoSpecialAction;
         player.PlayerTransformed += (isSmallForm) => PlayerIsSmallForm = isSmallForm;
         player.PlayerHPChanged += SetCurrentHeartNum;
@@ -119,15 +119,15 @@ public class InGameUIManager : MonoBehaviour
     {
 
         //0.5f = Center, 0 = Left, 1 = Right
-        movementScrollbar.value = 0.5f;
+        MovementScrollbar.value = 0.5f;
         foreach(var itr in heartImageList)
         {
-            itr.sprite = fullHeartImage;
+            itr.sprite = FullHeartImage;
         }
 
         foreach(var itr in diaryImageList)
         {
-            itr.sprite = diaryImage;
+            itr.sprite = DiaryImage;
         }
 
         //TODO: Apply saved data to UI
@@ -142,17 +142,17 @@ public class InGameUIManager : MonoBehaviour
         {
             if(i < (amount / 2))
             {
-                heartImageList[i].sprite = fullHeartImage;
+                heartImageList[i].sprite = FullHeartImage;
             }
             else
             {
                 if((amount - i * 2) == 1)
                 {
-                    heartImageList[i].sprite = halfHeaertImage;
+                    heartImageList[i].sprite = HalfHeaertImage;
                 }
                 else
                 {
-                    heartImageList[i].sprite = blankHeartImage;
+                    heartImageList[i].sprite = BlankHeartImage;
                 }    
             }
             

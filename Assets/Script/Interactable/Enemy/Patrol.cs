@@ -6,9 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Patrol : Enemy
 {
-    private enum PatrolState { NONE, NORMAL, TURNING, ALERT_DELAY, ALERT, SEARCHING_LEFT, SEARCHING_RIGHT, POST_ATTACK_DELAY, HIT, DEAD }
+    private enum PatrolState { None, Normal, Turning, AlertDelay, Alert, SearchingLeft, SearchingRight, PostAttackDelay, Hit, Dead }
 
-    public float AlertModeSpeedMultiplier = 1.5f;
+    public float AlertModeSpeedMultiplier = 1.3f;
     public Vector2 MoveBackAfterAttack = new Vector2(60f, 0f);
     [Space]
     public float DelayOnAlert = 1f;
@@ -20,8 +20,8 @@ public class Patrol : Enemy
 
     private bool attackDisabled;
 
-    private PatrolState state = PatrolState.NORMAL;
-    private PatrolState nextState = PatrolState.NORMAL;
+    private PatrolState state = PatrolState.Normal;
+    private PatrolState nextState = PatrolState.Normal;
 
     protected override void Awake()
     {
@@ -48,58 +48,58 @@ public class Patrol : Enemy
             UpdateAnimationState(state);
         }
 
-        nextState = PatrolState.NONE;
+        nextState = PatrolState.None;
     }
 
     private PatrolState GetNextStateByEnvironment()
     {
         switch (state)
         {
-            case PatrolState.NORMAL:
-                if (controller.collisions.front || CliffOnFront())
-                    return PatrolState.TURNING;
+            case PatrolState.Normal:
+                if (controller.Collisions.front || CliffOnFront())
+                    return PatrolState.Turning;
                 else if (playerDetector.TargetFound)
-                    return PatrolState.ALERT_DELAY;
+                    return PatrolState.AlertDelay;
                 else
-                    return PatrolState.NORMAL;
-            case PatrolState.TURNING:
-                return PatrolState.NORMAL;
-            case PatrolState.ALERT_DELAY:
+                    return PatrolState.Normal;
+            case PatrolState.Turning:
+                return PatrolState.Normal;
+            case PatrolState.AlertDelay:
                 if (stateEndTime > Time.time)
-                    return PatrolState.ALERT_DELAY;
+                    return PatrolState.AlertDelay;
                 else
-                    return PatrolState.ALERT;
-            case PatrolState.ALERT:
+                    return PatrolState.Alert;
+            case PatrolState.Alert:
                 if (playerDetector.TargetFound)
-                    return PatrolState.ALERT;
+                    return PatrolState.Alert;
                 else
-                    return PatrolState.SEARCHING_LEFT;
-            case PatrolState.SEARCHING_LEFT:
+                    return PatrolState.SearchingLeft;
+            case PatrolState.SearchingLeft:
                 if (playerDetector.TargetFound)
-                    return PatrolState.ALERT;
+                    return PatrolState.Alert;
                 else if (stateEndTime > Time.time)
-                    return PatrolState.SEARCHING_LEFT;
+                    return PatrolState.SearchingLeft;
                 else
-                    return PatrolState.SEARCHING_RIGHT;
-            case PatrolState.SEARCHING_RIGHT:
+                    return PatrolState.SearchingRight;
+            case PatrolState.SearchingRight:
                 if (playerDetector.TargetFound)
-                    return PatrolState.ALERT;
+                    return PatrolState.Alert;
                 else if (stateEndTime > Time.time)
-                    return PatrolState.SEARCHING_RIGHT;
+                    return PatrolState.SearchingRight;
                 else
-                    return PatrolState.NORMAL;
-            case PatrolState.POST_ATTACK_DELAY:
+                    return PatrolState.Normal;
+            case PatrolState.PostAttackDelay:
                 if (stateEndTime > Time.time)
-                    return PatrolState.POST_ATTACK_DELAY;
+                    return PatrolState.PostAttackDelay;
                 else
-                    return PatrolState.ALERT;
-            case PatrolState.HIT:
+                    return PatrolState.Alert;
+            case PatrolState.Hit:
                 if (stateEndTime > Time.time)
-                    return PatrolState.HIT;
+                    return PatrolState.Hit;
                 else
-                    return PatrolState.ALERT;
-            case PatrolState.DEAD:
-                return PatrolState.DEAD;
+                    return PatrolState.Alert;
+            case PatrolState.Dead:
+                return PatrolState.Dead;
             default:
                 throw new Exception("Forbidden state for Cleaner : " + state);
         }
@@ -109,46 +109,46 @@ public class Patrol : Enemy
     {
         switch (oldState)
         {
-            case PatrolState.ALERT:
-            case PatrolState.SEARCHING_LEFT:
-            case PatrolState.SEARCHING_RIGHT:
+            case PatrolState.Alert:
+            case PatrolState.SearchingLeft:
+            case PatrolState.SearchingRight:
                 maxSpeed /= AlertModeSpeedMultiplier;
                 break;
-            case PatrolState.HIT:
+            case PatrolState.Hit:
                 attackDisabled = false;
                 break;
         }
 
         switch (newState)
         {
-            case PatrolState.TURNING:
+            case PatrolState.Turning:
                 HeadingRight = !HeadingRight;
                 velocity.x = 0f;
                 break;
-            case PatrolState.ALERT_DELAY:
+            case PatrolState.AlertDelay:
                 stateEndTime = Time.time + DelayAfterAttack;
                 break;
-            case PatrolState.ALERT:
+            case PatrolState.Alert:
                 maxSpeed *= AlertModeSpeedMultiplier;
                 break;
-            case PatrolState.SEARCHING_LEFT:
+            case PatrolState.SearchingLeft:
                 maxSpeed *= AlertModeSpeedMultiplier;
                 HeadingRight = false;
                 stateEndTime = Time.time + 1f;
                 break;
-            case PatrolState.SEARCHING_RIGHT:
+            case PatrolState.SearchingRight:
                 maxSpeed *= AlertModeSpeedMultiplier;
                 HeadingRight = true;
                 stateEndTime = Time.time + 1f;
                 break;
-            case PatrolState.POST_ATTACK_DELAY:
+            case PatrolState.PostAttackDelay:
                 stateEndTime = Time.time + DelayAfterAttack;
                 break;
-            case PatrolState.HIT:
+            case PatrolState.Hit:
                 attackDisabled = true;
                 stateEndTime = Time.time + DelayAfterHit;
                 break;
-            case PatrolState.DEAD:
+            case PatrolState.Dead:
                 attackDisabled = true;
                 Destroy(gameObject, 1f);
                 break;
@@ -159,19 +159,19 @@ public class Patrol : Enemy
     {
         switch (state)
         {
-            case PatrolState.NORMAL:
-            case PatrolState.TURNING:
+            case PatrolState.Normal:
+            case PatrolState.Turning:
                 animator.Play("PatrolNormal");
                 break;
-            case PatrolState.ALERT_DELAY:
-            case PatrolState.ALERT:
-            case PatrolState.SEARCHING_LEFT:
-            case PatrolState.SEARCHING_RIGHT:
-            case PatrolState.POST_ATTACK_DELAY:
-            case PatrolState.HIT:
+            case PatrolState.AlertDelay:
+            case PatrolState.Alert:
+            case PatrolState.SearchingLeft:
+            case PatrolState.SearchingRight:
+            case PatrolState.PostAttackDelay:
+            case PatrolState.Hit:
                 animator.Play("PatrolAlert");
                 break;
-            case PatrolState.DEAD:
+            case PatrolState.Dead:
                 animator.Play("PatrolNormalDead");
                 break;
             default:
@@ -185,14 +185,14 @@ public class Patrol : Enemy
         {
             target.OnDamaged(this, 1);
             velocity -= MoveBackAfterAttack;
-            nextState = PatrolState.POST_ATTACK_DELAY;
+            nextState = PatrolState.PostAttackDelay;
         }
     }
 
     public override void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
     {
         base.OnDamaged(attacker, damage, knockback);
-        nextState = PatrolState.HIT;
+        nextState = PatrolState.Hit;
         UpdateState();
     }
 
@@ -202,10 +202,10 @@ public class Patrol : Enemy
 
         switch (state)
         {
-            case PatrolState.NORMAL:
-            case PatrolState.ALERT:
-            case PatrolState.SEARCHING_LEFT:
-            case PatrolState.SEARCHING_RIGHT:
+            case PatrolState.Normal:
+            case PatrolState.Alert:
+            case PatrolState.SearchingLeft:
+            case PatrolState.SearchingRight:
                 targetVelocityX = maxSpeed;
                 break;
             default:
@@ -213,13 +213,13 @@ public class Patrol : Enemy
                 break;
         }
 
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-        velocity.y += gravity * Time.deltaTime;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.Collisions.below) ? AccelerationTimeGrounded : AccelerationTimeAirborne);
+        velocity.y += Gravity * Time.deltaTime;
     }
 
     public override void Die()
     {
-        nextState = PatrolState.DEAD;
+        nextState = PatrolState.Dead;
         UpdateState();
     }
 }

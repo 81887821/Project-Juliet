@@ -5,10 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class RaycastController : MonoBehaviour
 {
-    public LayerMask collisionMask;
+    public LayerMask CollisionMask = 2560;
 
-    public const float skinWidth = .015f;
-    const float dstBetweenRays = .25f;
+    public const float SKIN_WIDTH = .015f;
+    const float DISTANCE_BETWEEN_RAYS = .25f;
 
     protected int horizontalRayCount;
     protected int verticalRayCount;
@@ -32,7 +32,7 @@ public class RaycastController : MonoBehaviour
     public void UpdateRaycastOrigins()
     {
         Bounds bounds = coll.bounds;
-        bounds.Expand(skinWidth * -2);
+        bounds.Expand(SKIN_WIDTH * -2);
 
         raycastOrigins.topLeft = new Vector2(bounds.min.x, bounds.max.y);
         raycastOrigins.topRight = new Vector2(bounds.max.x, bounds.max.y);
@@ -43,13 +43,13 @@ public class RaycastController : MonoBehaviour
     public void CalculateRaySpacing()
     {
         Bounds bounds = coll.bounds;
-        bounds.Expand(skinWidth * -2);
+        bounds.Expand(SKIN_WIDTH * -2);
 
         float boundsWidth = bounds.size.x;
         float boundsHeight = bounds.size.y;
 
-        horizontalRayCount = Mathf.FloorToInt(boundsHeight / dstBetweenRays);
-        verticalRayCount = Mathf.FloorToInt(boundsWidth / dstBetweenRays);
+        horizontalRayCount = Mathf.FloorToInt(boundsHeight / DISTANCE_BETWEEN_RAYS);
+        verticalRayCount = Mathf.FloorToInt(boundsWidth / DISTANCE_BETWEEN_RAYS);
 
         horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
         verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);

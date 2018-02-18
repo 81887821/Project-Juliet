@@ -853,6 +853,16 @@ Prefab:
       propertyPath: currentHealth
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114505075661973116, guid: f7b44ffb8a1dc9b43bf8fd615ff678ed,
+        type: 2}
+      propertyPath: CurrentHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114505075661973116, guid: f7b44ffb8a1dc9b43bf8fd615ff678ed,
+        type: 2}
+      propertyPath: Gravity
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114792492955537784, guid: f7b44ffb8a1dc9b43bf8fd615ff678ed, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f7b44ffb8a1dc9b43bf8fd615ff678ed, type: 2}
@@ -2915,6 +2925,16 @@ Prefab:
         type: 2}
       propertyPath: currentHealth
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114505075661973116, guid: f7b44ffb8a1dc9b43bf8fd615ff678ed,
+        type: 2}
+      propertyPath: CurrentHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114505075661973116, guid: f7b44ffb8a1dc9b43bf8fd615ff678ed,
+        type: 2}
+      propertyPath: Gravity
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114792492955537784, guid: f7b44ffb8a1dc9b43bf8fd615ff678ed, type: 2}
@@ -7882,6 +7902,16 @@ Prefab:
         type: 2}
       propertyPath: currentHealth
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114505075661973116, guid: f7b44ffb8a1dc9b43bf8fd615ff678ed,
+        type: 2}
+      propertyPath: CurrentHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114505075661973116, guid: f7b44ffb8a1dc9b43bf8fd615ff678ed,
+        type: 2}
+      propertyPath: Gravity
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114792492955537784, guid: f7b44ffb8a1dc9b43bf8fd615ff678ed, type: 2}

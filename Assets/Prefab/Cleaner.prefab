@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3984759a4d5a64896c27a9c0ed56a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionMask:
+  CollisionMask:
     serializedVersion: 2
     m_Bits: 2816
   coll: {fileID: 0}
@@ -128,11 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e22e25c4600c14da441daa9f86c165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 1
-  accelerationTimeGrounded: 0.1
-  accelerationTimeAirborne: 0.2
-  gravity: -150
-  defaultKnockback: {x: 45, y: 12}
+  CurrentHealth: 1
+  AccelerationTimeGrounded: 0.1
+  AccelerationTimeAirborne: 0.2
+  Gravity: -150
+  DefaultKnockback: {x: 45, y: 12}
   SpeedRelativeToJulia: 0.5
 --- !u!114 &114792492955537784
 MonoBehaviour:

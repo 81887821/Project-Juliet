@@ -31,65 +31,65 @@ public class Juliett : PlayerBase
     {
         switch (state)
         {
-            case PlayerState.IDLE:
-            case PlayerState.WALKING:
-                nextState = PlayerState.ATTACK1;
+            case PlayerState.Idle:
+            case PlayerState.Walking:
+                nextState = PlayerState.Attack1;
                 break;
-            case PlayerState.ATTACK1:
-            case PlayerState.ATTACK2:
-            case PlayerState.ATTACK3:
+            case PlayerState.Attack1:
+            case PlayerState.Attack2:
+            case PlayerState.Attack3:
                 attackContinue = true;
                 break;
-            case PlayerState.SPECIAL_ACTION_READY:
-            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
-                nextState = PlayerState.UPPERCUT;
+            case PlayerState.SpecialActionReady:
+            case PlayerState.CancelableSpecialActionReady:
+                nextState = PlayerState.Uppercut;
                 break;
         }
     }
 
     protected override float GetMoveSpeed()
     {
-        return playerCore.juliettMoveSpeed;
+        return playerCore.JuliettMoveSpeed;
     }
     
     protected override void UpdateAnimationState(PlayerState state)
     {
         switch (state)
         {
-            case PlayerState.IDLE:
-            case PlayerState.POST_TRANSFORMATION_DELAY:
+            case PlayerState.Idle:
+            case PlayerState.PostTransformationDelay:
                 animator.Play("JuliettIdle");
                 break;
-            case PlayerState.JUMPING_DOWN:
-            case PlayerState.SPECIAL_JUMPING_DOWN:
+            case PlayerState.JumpingDown:
+            case PlayerState.SpecialJumpingDown:
                 animator.Play("JuliettJumpDown");
                 break;
-            case PlayerState.WALKING:
+            case PlayerState.Walking:
                 animator.Play("JuliettWalk");
                 break;
-            case PlayerState.ATTACK1:
+            case PlayerState.Attack1:
                 animator.Play("JuliettAttack1");
                 break;
-            case PlayerState.ATTACK2:
+            case PlayerState.Attack2:
                 animator.Play("JuliettAttack2");
                 break;
-            case PlayerState.ATTACK3:
+            case PlayerState.Attack3:
                 animator.Play("JuliettAttack3");
                 break;
-            case PlayerState.ATTACK4:
+            case PlayerState.Attack4:
                 animator.Play("JuliettAttack4");
                 break;
-            case PlayerState.SPECIAL_ACTION_READY:
-            case PlayerState.CANCELABLE_SPECIAL_ACTION_READY:
+            case PlayerState.SpecialActionReady:
+            case PlayerState.CancelableSpecialActionReady:
                 animator.Play("JuliettUppercutPrepare");
                 break;
-            case PlayerState.UPPERCUT:
+            case PlayerState.Uppercut:
                 animator.Play("JuliettUppercut");
                 break;
-            case PlayerState.HIT:
+            case PlayerState.Hit:
                 animator.Play("JuliettHit");
                 break;
-            case PlayerState.GAME_OVER:
+            case PlayerState.GameOver:
                 animator.Play("JuliettGameOver");
                 break;
             default:
@@ -103,25 +103,25 @@ public class Juliett : PlayerBase
     {
         switch (state)
         {
-            case PlayerState.ATTACK1:
-            case PlayerState.ATTACK2:
-            case PlayerState.ATTACK3:
+            case PlayerState.Attack1:
+            case PlayerState.Attack2:
+            case PlayerState.Attack3:
                 if (stateEndTime > Time.time)
                     return state;
                 else if (attackContinue)
                     return state + 1;
                 else
-                    return PlayerState.IDLE;
-            case PlayerState.ATTACK4:
+                    return PlayerState.Idle;
+            case PlayerState.Attack4:
                 if (stateEndTime > Time.time)
                     return state;
                 else
-                    return PlayerState.IDLE;
-            case PlayerState.UPPERCUT:
+                    return PlayerState.Idle;
+            case PlayerState.Uppercut:
                 if (stateEndTime > Time.time)
-                    return PlayerState.UPPERCUT;
+                    return PlayerState.Uppercut;
                 else
-                    return PlayerState.IDLE;
+                    return PlayerState.Idle;
             default:
                 return base.GetNextStateByEnvironment();
         }
@@ -131,15 +131,15 @@ public class Juliett : PlayerBase
     {
         switch (oldState)
         {
-            case PlayerState.ATTACK1:
-            case PlayerState.ATTACK2:
-            case PlayerState.ATTACK3:
-            case PlayerState.ATTACK4:
+            case PlayerState.Attack1:
+            case PlayerState.Attack2:
+            case PlayerState.Attack3:
+            case PlayerState.Attack4:
                 attackContinue = false;
                 horizontalMovementEnabled = true;
-                normalAttackDetectors[oldState - PlayerState.ATTACK1].SetActive(false);
+                normalAttackDetectors[oldState - PlayerState.Attack1].SetActive(false);
                 break;
-            case PlayerState.UPPERCUT:
+            case PlayerState.Uppercut:
                 horizontalMovementEnabled = true;
                 uppercutDetector.SetActive(false);
                 break;
@@ -149,17 +149,17 @@ public class Juliett : PlayerBase
 
         switch (newState)
         {
-            case PlayerState.ATTACK1:
-            case PlayerState.ATTACK2:
-            case PlayerState.ATTACK3:
-            case PlayerState.ATTACK4:
-                stateEndTime = Time.time + playerCore.attackInterval[newState - PlayerState.ATTACK1];
-                velocity += playerCore.accelerationOnAttack[newState - PlayerState.ATTACK1];
+            case PlayerState.Attack1:
+            case PlayerState.Attack2:
+            case PlayerState.Attack3:
+            case PlayerState.Attack4:
+                stateEndTime = Time.time + playerCore.AttackInterval[newState - PlayerState.Attack1];
+                velocity += playerCore.AccelerationOnAttack[newState - PlayerState.Attack1];
                 horizontalMovementEnabled = false;
-                normalAttackDetectors[newState - PlayerState.ATTACK1].SetActive(true);
+                normalAttackDetectors[newState - PlayerState.Attack1].SetActive(true);
                 break;
-            case PlayerState.UPPERCUT:
-                stateEndTime = Time.time + playerCore.uppercutDuration;
+            case PlayerState.Uppercut:
+                stateEndTime = Time.time + playerCore.UppercutDuration;
                 horizontalMovementEnabled = false;
                 uppercutDetector.SetActive(true);
                 break;
@@ -176,7 +176,7 @@ public class Juliett : PlayerBase
             Vector3 size = PhysicalBounds.size;
             size.Scale(transform.lossyScale);
 
-            Collider2D collision = Physics2D.OverlapBox(transform.position + center, size - COLLISION_BOX_SHRINK, 0f, controller.collisionMask);
+            Collider2D collision = Physics2D.OverlapBox(transform.position + center, size - COLLISION_BOX_SHRINK, 0f, controller.CollisionMask);
             return base.CanTransform && collision == null;
         }
     }
@@ -185,14 +185,14 @@ public class Juliett : PlayerBase
     {
         switch (state)
         {
-            case PlayerState.ATTACK1:
-            case PlayerState.ATTACK2:
-            case PlayerState.ATTACK3:
-            case PlayerState.ATTACK4:
-                target.OnDamaged(this, 1, playerCore.enemyKnockbackOnAttack[state - PlayerState.ATTACK1]);
+            case PlayerState.Attack1:
+            case PlayerState.Attack2:
+            case PlayerState.Attack3:
+            case PlayerState.Attack4:
+                target.OnDamaged(this, 1, playerCore.EnemyKnockbackOnAttack[state - PlayerState.Attack1]);
                 break;
-            case PlayerState.UPPERCUT:
-                target.OnDamaged(this, 1, playerCore.enemyKnockbackOnUppercut);
+            case PlayerState.Uppercut:
+                target.OnDamaged(this, 1, playerCore.EnemyKnockbackOnUppercut);
                 break;
             default:
                 Debug.LogWarning("Attack detected on non-attacking state : " + state);

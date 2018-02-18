@@ -7,12 +7,12 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour, IInteractable
 {
     #region Variables shown in Unity Editor
-    public int currentHealth = 6;
+    public int CurrentHealth = 6;
 
-    public float accelerationTimeGrounded = .1f;
-    public float accelerationTimeAirborne = .2f;
-    public float gravity = -50f;
-    public Vector2 defaultKnockback = new Vector2(15f, 4f);
+    public float AccelerationTimeGrounded = .1f;
+    public float AccelerationTimeAirborne = .2f;
+    public float Gravity = -150f;
+    public Vector2 DefaultKnockback = new Vector2(45f, 12f);
 
     public float SpeedRelativeToJulia = 1f;
     #endregion
@@ -33,9 +33,9 @@ public abstract class Enemy : MonoBehaviour, IInteractable
                 headingRight = value;
                 transform.rotation = (headingRight ? new Quaternion(0f, 0f, 0f, 1f) : new Quaternion(0f, 1f, 0f, 0f));
                 velocity.x = -velocity.x;
-                Controller2D.Contacts temp = controller.collisions.back;
-                controller.collisions.back = controller.collisions.front;
-                controller.collisions.front = temp;
+                Controller2D.Contacts temp = controller.Collisions.back;
+                controller.Collisions.back = controller.Collisions.front;
+                controller.Collisions.front = temp;
             }
         }
     }
@@ -62,7 +62,7 @@ public abstract class Enemy : MonoBehaviour, IInteractable
 
     protected virtual void Start()
     {
-        maxSpeed = PlayerCore.Instance.juliaMoveSpeed * SpeedRelativeToJulia;
+        maxSpeed = PlayerData.Instance.JuliaMoveSpeed * SpeedRelativeToJulia;
     }
 
     protected virtual void Update()
@@ -70,7 +70,7 @@ public abstract class Enemy : MonoBehaviour, IInteractable
         UpdateVelocity();
         controller.Move(velocity * Time.deltaTime);
 
-        if (controller.collisions.above || controller.collisions.below)
+        if (controller.Collisions.above || controller.Collisions.below)
         {
             velocity.y = 0;
         }
@@ -80,15 +80,15 @@ public abstract class Enemy : MonoBehaviour, IInteractable
 
     public virtual void OnDamaged(IInteractable attacker, int damage)
     {
-        OnDamaged(attacker, damage, defaultKnockback);
+        OnDamaged(attacker, damage, DefaultKnockback);
     }
 
     public virtual void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
     {
         bool attackerOnRight = attacker.transform.position.x > transform.position.x;
 
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        CurrentHealth -= damage;
+        if (CurrentHealth <= 0)
             Die();
 
         HeadingRight = attackerOnRight;
@@ -113,6 +113,6 @@ public abstract class Enemy : MonoBehaviour, IInteractable
 #if DEBUG
         Debug.DrawRay(origin, rayDirection);
 #endif
-        return !Physics2D.Raycast(origin, rayDirection, rayDirection.magnitude, controller.collisionMask); ;
+        return !Physics2D.Raycast(origin, rayDirection, rayDirection.magnitude, controller.CollisionMask); ;
     }
 }

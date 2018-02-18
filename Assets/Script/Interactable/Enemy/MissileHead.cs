@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class MissileHead : Enemy
 {
-    private enum HeadState { NONE, VERTICAL_LOADING, HORIZONTAL_LOADING, WAITING, LAUNCHED, OBSTACLE_HIT }
+    private enum HeadState { None, VerticalLoading, HorizontalLoading, Waiting, Launched, ObstacleHit }
 
     public GameObject ExplosionEffect;
     public float WaitingTimeBeforeLaunch = 1f;
     public float LoadingAbsoluteSpeed = 3f;
     public int ExplosionDamageToBody = 3;
 
-    private HeadState state = HeadState.VERTICAL_LOADING;
-    private HeadState nextState = HeadState.VERTICAL_LOADING;
+    private HeadState state = HeadState.VerticalLoading;
+    private HeadState nextState = HeadState.VerticalLoading;
     private Vector2 launchVelocity;
     private int[] obstacles;
 
@@ -48,38 +48,38 @@ public class MissileHead : Enemy
             state = nextState;
         }
 
-        nextState = HeadState.NONE;
+        nextState = HeadState.None;
     }
 
     private HeadState GetNextStateByEnvironment()
     {
         switch (state)
         {
-            case HeadState.VERTICAL_LOADING:
+            case HeadState.VerticalLoading:
                 if (transform.localPosition.y < 5.4f)
-                    return HeadState.VERTICAL_LOADING;
+                    return HeadState.VerticalLoading;
                 else
-                    return HeadState.HORIZONTAL_LOADING;
-            case HeadState.HORIZONTAL_LOADING:
+                    return HeadState.HorizontalLoading;
+            case HeadState.HorizontalLoading:
                 if (transform.localPosition.x < 0.3f)
-                    return HeadState.HORIZONTAL_LOADING;
+                    return HeadState.HorizontalLoading;
                 else
-                    return HeadState.WAITING;
-            case HeadState.WAITING:
+                    return HeadState.Waiting;
+            case HeadState.Waiting:
                 if (Time.time >= stateEndTime)
-                    return HeadState.LAUNCHED;
+                    return HeadState.Launched;
                 else
-                    return HeadState.WAITING;
-            case HeadState.LAUNCHED:
+                    return HeadState.Waiting;
+            case HeadState.Launched:
                 foreach (int layer in obstacles)
                 {
-                    Controller2D.CollisionInfo collision = controller.collisions;
+                    Controller2D.CollisionInfo collision = controller.Collisions;
                     if (collision.above.Contains(layer) || collision.below.Contains(layer) || collision.front.Contains(layer) || collision.back.Contains(layer))
-                        return HeadState.OBSTACLE_HIT;
+                        return HeadState.ObstacleHit;
                 }
-                return HeadState.LAUNCHED;
-            case HeadState.OBSTACLE_HIT:
-                return HeadState.OBSTACLE_HIT;
+                return HeadState.Launched;
+            case HeadState.ObstacleHit:
+                return HeadState.ObstacleHit;
             default:
                 throw new Exception("Forbidden state for MissileHead : " + state);
         }
@@ -89,13 +89,13 @@ public class MissileHead : Enemy
     {
         switch (newState)
         {
-            case HeadState.WAITING:
+            case HeadState.Waiting:
                 stateEndTime = Time.time + WaitingTimeBeforeLaunch;
                 break;
-            case HeadState.LAUNCHED:
+            case HeadState.Launched:
                 transform.parent = transform.parent.parent;
                 break;
-            case HeadState.OBSTACLE_HIT:
+            case HeadState.ObstacleHit:
                 Die();
                 break;
         }
@@ -106,7 +106,7 @@ public class MissileHead : Enemy
         ExplosionEffect.transform.parent = transform.parent.parent;
         ExplosionEffect.SetActive(true);
 
-        if (state <= HeadState.WAITING)
+        if (state <= HeadState.Waiting)
             GetComponentInParent<MissileBody>().OnDamaged(this, ExplosionDamageToBody);
 
         Destroy(gameObject);
@@ -127,16 +127,16 @@ public class MissileHead : Enemy
     {
         switch (state)
         {
-            case HeadState.VERTICAL_LOADING:
+            case HeadState.VerticalLoading:
                 velocity = new Vector2(0f, LoadingAbsoluteSpeed);
                 break;
-            case HeadState.HORIZONTAL_LOADING:
+            case HeadState.HorizontalLoading:
                 velocity = new Vector2(LoadingAbsoluteSpeed, 0f);
                 break;
-            case HeadState.WAITING:
+            case HeadState.Waiting:
                 velocity = Vector2.zero;
                 break;
-            case HeadState.LAUNCHED:
+            case HeadState.Launched:
                 velocity = launchVelocity;
                 break;
             default:

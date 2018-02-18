@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class Cleaner : Enemy
 {
-    private enum CleanerState { NONE, CLEANING, TURNING, HIT, DEAD }
+    private enum CleanerState { None, Cleaning, Turning, Hit, Dead }
 
     private bool attackDisabled;
 
-    private CleanerState state = CleanerState.CLEANING;
-    private CleanerState nextState = CleanerState.CLEANING;
+    private CleanerState state = CleanerState.Cleaning;
+    private CleanerState nextState = CleanerState.Cleaning;
 
     protected override void Update()
     {
@@ -29,30 +29,30 @@ public class Cleaner : Enemy
             state = nextState;
         }
 
-        nextState = CleanerState.NONE;
+        nextState = CleanerState.None;
     }
 
     private CleanerState GetNextStateByEnvironment()
     {
         switch (state)
         {
-            case CleanerState.CLEANING:
-                if (controller.collisions.front || CliffOnFront())
-                    return CleanerState.TURNING;
+            case CleanerState.Cleaning:
+                if (controller.Collisions.front || CliffOnFront())
+                    return CleanerState.Turning;
                 else
-                    return CleanerState.CLEANING;
-            case CleanerState.TURNING:
+                    return CleanerState.Cleaning;
+            case CleanerState.Turning:
                 if (stateEndTime > Time.time)
-                    return CleanerState.TURNING;
+                    return CleanerState.Turning;
                 else
-                    return CleanerState.CLEANING;
-            case CleanerState.HIT:
+                    return CleanerState.Cleaning;
+            case CleanerState.Hit:
                 if (stateEndTime > Time.time)
-                    return CleanerState.HIT;
+                    return CleanerState.Hit;
                 else
-                    return CleanerState.CLEANING;
-            case CleanerState.DEAD:
-                return CleanerState.DEAD;
+                    return CleanerState.Cleaning;
+            case CleanerState.Dead:
+                return CleanerState.Dead;
             default:
                 throw new Exception("Forbidden state for Cleaner : " + state);
         }
@@ -62,19 +62,19 @@ public class Cleaner : Enemy
     {
         switch (oldState)
         {
-            case CleanerState.HIT:
+            case CleanerState.Hit:
                 attackDisabled = false;
                 break;
         }
 
         switch (newState)
         {
-            case CleanerState.TURNING:
+            case CleanerState.Turning:
                 HeadingRight = !HeadingRight;
                 velocity.x = 0f;
                 stateEndTime = Time.time + 0.5f;
                 break;
-            case CleanerState.HIT:
+            case CleanerState.Hit:
                 attackDisabled = true;
                 stateEndTime = Time.time + 0.5f;
                 break;
@@ -90,16 +90,16 @@ public class Cleaner : Enemy
     public override void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
     {
         base.OnDamaged(attacker, damage, knockback);
-        nextState = CleanerState.HIT;
+        nextState = CleanerState.Hit;
         UpdateState();
     }
 
     protected override void UpdateVelocity()
     {
-        float targetVelocityX = (state == CleanerState.CLEANING ? maxSpeed : 0f);
+        float targetVelocityX = (state == CleanerState.Cleaning ? maxSpeed : 0f);
 
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-        velocity.y += gravity * Time.deltaTime;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.Collisions.below) ? AccelerationTimeGrounded : AccelerationTimeAirborne);
+        velocity.y += Gravity * Time.deltaTime;
     }
 
     public override void Die()

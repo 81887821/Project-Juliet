@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Mob : Enemy
 {
-    private enum MobState { NONE, IDLE, PRESSED, HIT }
+    private enum MobState { None, Idle, Pressed, Hit }
 
     public Sprite MobIdle;
     public Sprite MobPressed;
@@ -14,8 +14,8 @@ public class Mob : Enemy
 
     private SpriteRenderer spriteRenderer;
 
-    private MobState state = MobState.IDLE;
-    private MobState nextState = MobState.IDLE;
+    private MobState state = MobState.Idle;
+    private MobState nextState = MobState.Idle;
 
     protected override void Awake()
     {
@@ -40,20 +40,20 @@ public class Mob : Enemy
             UpdateAnimationState(state);
         }
 
-        nextState = MobState.NONE;
+        nextState = MobState.None;
     }
 
     private void UpdateAnimationState(MobState state)
     {
         switch (state)
         {
-            case MobState.IDLE:
+            case MobState.Idle:
                 spriteRenderer.sprite = MobIdle;
                 break;
-            case MobState.PRESSED:
+            case MobState.Pressed:
                 spriteRenderer.sprite = MobPressed;
                 break;
-            case MobState.HIT:
+            case MobState.Hit:
                 spriteRenderer.sprite = MobHit;
                 break;
         }
@@ -63,14 +63,14 @@ public class Mob : Enemy
     {
         switch (state)
         {
-            case MobState.IDLE:
-                return MobState.IDLE;
-            case MobState.PRESSED:
-            case MobState.HIT:
+            case MobState.Idle:
+                return MobState.Idle;
+            case MobState.Pressed:
+            case MobState.Hit:
                 if (stateEndTime > Time.time)
                     return state;
                 else
-                    return MobState.IDLE;
+                    return MobState.Idle;
             default:
                 throw new Exception("Forbidden state for Mob : " + state);
         }
@@ -86,17 +86,17 @@ public class Mob : Enemy
         base.OnDamaged(attacker, damage, knockback);
 
         if (attacker is Julia)
-            nextState = MobState.PRESSED;
+            nextState = MobState.Pressed;
         else
-            nextState = MobState.HIT;
+            nextState = MobState.Hit;
         stateEndTime = Time.time + .3f;
         UpdateState();
     }
 
     protected override void UpdateVelocity()
     {
-        velocity.x = Mathf.SmoothDamp(velocity.x, 0f, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-        velocity.y += gravity * Time.deltaTime;
+        velocity.x = Mathf.SmoothDamp(velocity.x, 0f, ref velocityXSmoothing, (controller.Collisions.below) ? AccelerationTimeGrounded : AccelerationTimeAirborne);
+        velocity.y += Gravity * Time.deltaTime;
     }
 
     public override void Die()

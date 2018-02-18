@@ -5,7 +5,7 @@ using System;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Controller2D))]
-public class PlayerCore : MonoBehaviour
+public class PlayerData : MonoBehaviour
 {
     public delegate void PlayerTransformationHandler(bool isSmallForm);
     public delegate void ActionChangingHandler(bool canDoSpecialAction);
@@ -15,53 +15,53 @@ public class PlayerCore : MonoBehaviour
     public event ActionChangingHandler AvailableActionChanged;
     public event PlayerHPChangeHandler PlayerHPChanged;
 
-    public static PlayerCore Instance
+    public static PlayerData Instance
     {
         get;
         private set;
     }
 
     [Header("Player Condition")]
-    public bool isSmallForm = true;
-    public int maxHealth = 6;
+    public bool IsSmallForm = true;
+    public int MaxHealth = 6;
 
     [Header("Common Actions")]
-    public Vector2 Knockback = new Vector2(15f, 4f);
+    public Vector2 Knockback = new Vector2(50f, 15f);
     public float KnockbackTime = .3f;
 
     [Space]
-    public float totalSpecialActionAvailableTime = .5f;
-    public float cancelableSpecialActionAvailableTime = .3f;
-    public float transformationDelayTime = 1f;
+    public float TotalSpecialActionAvailableTime = .5f;
+    public float CancelableSpecialActionAvailableTime = .3f;
+    public float TransformationDelayTime = .2f;
 
     [Header("Julia Actions")]
-    public float maxJumpHeight = 3;
-    public float minJumpHeight = 1;
-    public float floatingTime = .8f;
-    public float accelerationTimeAirborne = .2f;
-    public float accelerationTimeGrounded = .1f;
-    public float juliaMoveSpeed = 6;
-    public float supperJumpMultiplier = 1.5f;
+    public float MaxJumpHeight = 15;
+    public float MinJumpHeight = 4;
+    public float FloatingTime = .8f;
+    public float AccelerationTimeAirborne = .2f;
+    public float AccelerationTimeGrounded = .1f;
+    public float JuliaMoveSpeed = 25;
+    public float SupperJumpMultiplier = 1.5f;
 
     [Header("Julia Advanced Movement")]
-    public Vector2 wallJumpClimb;
-    public Vector2 wallJumpOff;
-    public Vector2 wallLeap;
-    public float wallGravityRatio = .1f;
+    public Vector2 WallJumpClimb = new Vector2(16f, 0f);
+    public Vector2 WallJumpOff = new Vector2(16f, 0f);
+    public Vector2 WallLeap = new Vector2(50f, 70f);
+    public float WallGravityRatio = .3f;
 
     [Header("Juliett Actions")]
-    public float juliettMoveSpeed = 9;
-    public float uppercutDuration = 0.75f; // Match this value with JuliettUppercut animation.
-    public float[] attackInterval = { 0.4f, 0.4f, 0.4f, 0.4f };
-    public Vector3[] accelerationOnAttack = { Vector3.zero, Vector3.zero, new Vector3(20f, 0f), new Vector3(30f, 0f) };
-    public Vector2 enemyKnockbackOnUppercut = new Vector2(5f, 20f);
-    public Vector2[] enemyKnockbackOnAttack = { new Vector2(5f, 4f), new Vector2(5f, 4f), new Vector2(20f, 4f), new Vector2(30f, 4f) };
+    public float JuliettMoveSpeed = 33;
+    public float UppercutDuration = 0.5f; // Match this value with JuliettUppercut animation.
+    public float[] AttackInterval = { 0.3f, 0.4f, 0.6f, 0.6f };
+    public Vector3[] AccelerationOnAttack = { Vector3.zero, Vector3.zero, new Vector3(60f, 0f), new Vector3(100f, 0f) };
+    public Vector2 EnemyKnockbackOnUppercut = new Vector2(20f, 100f);
+    public Vector2[] EnemyKnockbackOnAttack = { new Vector2(15f, 12f), new Vector2(20f, 12f), new Vector2(60f, 12f), new Vector2(110f, 15f) };
 
     public PlayerBase CurrentPlayerCharacter
     {
         get
         {
-            if (isSmallForm)
+            if (IsSmallForm)
                 return julia;
             else
                 return juliett;
@@ -71,7 +71,7 @@ public class PlayerCore : MonoBehaviour
     {
         get
         {
-            if (isSmallForm)
+            if (IsSmallForm)
                 return juliett;
             else
                 return julia;
@@ -109,7 +109,7 @@ public class PlayerCore : MonoBehaviour
         }
 
 #if DEBUG
-        Debug.Assert(cancelableSpecialActionAvailableTime <= totalSpecialActionAvailableTime, "Cancelable special action available time cannot be larger than total special action available time.");
+        Debug.Assert(CancelableSpecialActionAvailableTime <= TotalSpecialActionAvailableTime, "Cancelable special action available time cannot be larger than total special action available time.");
 #endif
 
         julia = GetComponentInChildren<Julia>();
@@ -117,7 +117,7 @@ public class PlayerCore : MonoBehaviour
         physicalCollider = GetComponent<BoxCollider2D>();
         controller = GetComponent<Controller2D>();
 
-        currentHealth = maxHealth;
+        currentHealth = MaxHealth;
     }
 
     void Start()
@@ -134,7 +134,7 @@ public class PlayerCore : MonoBehaviour
     {
         if (julia.CanTransform && juliett.CanTransform)
         {
-            isSmallForm = !isSmallForm;
+            IsSmallForm = !IsSmallForm;
             physicalCollider.size = CurrentPlayerCharacter.PhysicalBounds.size;
             physicalCollider.offset = CurrentPlayerCharacter.PhysicalBounds.center;
             controller.CalculateRaySpacing();
@@ -143,7 +143,7 @@ public class PlayerCore : MonoBehaviour
             WaitingPlayerCharacter.IsActive = false;
             CurrentPlayerCharacter.OnTransformation(WaitingPlayerCharacter);
 
-            PlayerTransformed(isSmallForm);
+            PlayerTransformed(IsSmallForm);
             AvailableActionChanged(true);
         }
     }
