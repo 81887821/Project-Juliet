@@ -800,7 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906d84ecb95e767428db3416d60a2e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementScrollbar: {fileID: 114189077884028130}
+  MovementScrollbar: {fileID: 114189077884028130}
   ActionButton: {fileID: 114120330260711004}
   TransformationButton: {fileID: 114795753113225952}
   JuliaToJuliettButtonSprite: {fileID: 21300000, guid: 2fbc9c5392a9eb74ab65393ea29cf542,
@@ -813,12 +813,12 @@ MonoBehaviour:
     type: 3}
   UppercutButtonSprite: {fileID: 21300000, guid: 8a8fe618aa4529542b4ce66fd6309b83,
     type: 3}
-  blankHeartImage: {fileID: 21300004, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
-  halfHeaertImage: {fileID: 21300002, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
-  fullHeartImage: {fileID: 21300000, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
-  diaryImage: {fileID: 21300000, guid: bbcc311b91006cb49aed2efab0e44edb, type: 3}
-  heartParentObject: {fileID: 1522744562522286}
-  diaryParentObject: {fileID: 1127524923918204}
+  BlankHeartImage: {fileID: 21300004, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
+  HalfHeaertImage: {fileID: 21300002, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
+  FullHeartImage: {fileID: 21300000, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
+  DiaryImage: {fileID: 21300000, guid: bbcc311b91006cb49aed2efab0e44edb, type: 3}
+  HeartParentObject: {fileID: 1522744562522286}
+  DiaryParentObject: {fileID: 1127524923918204}
 --- !u!114 &114405092213340650
 MonoBehaviour:
   m_ObjectHideFlags: 1
