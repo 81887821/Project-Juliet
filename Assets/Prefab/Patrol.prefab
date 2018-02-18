@@ -316,13 +316,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c111970c80bee8a4db2ac2260c2728e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 10
+  currentHealth: 8
   accelerationTimeGrounded: 0.1
   accelerationTimeAirborne: 0.2
   gravity: -150
   defaultKnockback: {x: 80, y: 15}
-  SpeedRelativeToJulia: 0.8
-  AlertModeSpeedMultiplier: 1.5
+  SpeedRelativeToJulia: 0.7
+  AlertModeSpeedMultiplier: 1.3
 --- !u!114 &114896328850948570
 MonoBehaviour:
   m_ObjectHideFlags: 1
