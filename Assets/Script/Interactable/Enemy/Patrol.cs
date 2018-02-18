@@ -128,6 +128,7 @@ public class Patrol : Enemy
                 stateEndTime = Time.time + 0.5f;
                 break;
             case PatrolState.DEAD:
+                attackDisabled = true;
                 Destroy(gameObject, 1f);
                 break;
         }
