@@ -98,8 +98,8 @@ public class MissileHead : Enemy
 
     public override void Die()
     {
-        GameObject effect = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
-        effect.SetActive(true);
+        ExplosionEffect.transform.parent = transform.parent.parent;
+        ExplosionEffect.SetActive(true);
 
         if (state <= HeadState.WAITING)
             GetComponentInParent<MissileBody>().OnDamaged(this, ExplosionDamageToBody);
