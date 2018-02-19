@@ -113,6 +113,6 @@ public abstract class Enemy : MonoBehaviour, IInteractable
 #if DEBUG
         Debug.DrawRay(origin, rayDirection);
 #endif
-        return !Physics2D.Raycast(origin, rayDirection, rayDirection.magnitude, controller.CollisionMask); ;
+        return !Physics2D.Raycast(origin, rayDirection, rayDirection.magnitude, controller.CollisionMask);
     }
 }

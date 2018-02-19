@@ -4,13 +4,13 @@ timeCreated: 1518972506
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: guard walk 01
-    21300002: guard ready 01
-    21300004: guard shoot 01
-    21300006: guard backjump
-    21300008: guard walk 02
-    21300010: guard ready 02
-    21300012: guard shoot 02
+    21300000: guard-walk-01
+    21300002: guard-ready-near
+    21300004: guard-shoot-near
+    21300006: guard-backjump
+    21300008: guard-walk-02
+    21300010: guard-ready-far
+    21300012: guard-shoot-far
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: guard walk 01
+      name: guard-walk-01
       rect:
         serializedVersion: 2
         x: 292
@@ -111,7 +111,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: guard ready 01
+      name: guard-ready-near
       rect:
         serializedVersion: 2
         x: 2141
@@ -125,7 +125,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: guard shoot 01
+      name: guard-shoot-near
       rect:
         serializedVersion: 2
         x: 4511
@@ -139,7 +139,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: guard backjump
+      name: guard-backjump
       rect:
         serializedVersion: 2
         x: 48
@@ -153,7 +153,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: guard walk 02
+      name: guard-walk-02
       rect:
         serializedVersion: 2
         x: 1445
@@ -167,7 +167,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: guard ready 02
+      name: guard-ready-far
       rect:
         serializedVersion: 2
         x: 2816
@@ -181,7 +181,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: guard shoot 02
+      name: guard-shoot-far
       rect:
         serializedVersion: 2
         x: 4781
