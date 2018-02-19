@@ -41,6 +41,8 @@ GameObject:
   - component: {fileID: 114154641997313798}
   - component: {fileID: 114921179317222544}
   - component: {fileID: 61024922511533992}
+  - component: {fileID: 114150949986165786}
+  - component: {fileID: 114553000032594446}
   m_Layer: 10
   m_Name: Guard
   m_TagString: Untagged
@@ -212,6 +214,21 @@ MonoBehaviour:
   Targets:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &114150949986165786
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1725121794263330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 648c8f37ff738ca4fa9301260f3cbb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetMask:
+    serializedVersion: 2
+    m_Bits: 256
+  ActiveOnStart: 1
 --- !u!114 &114154641997313798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -227,6 +244,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2816
   coll: {fileID: 0}
+--- !u!114 &114553000032594446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1725121794263330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e6cb0d0813bb4d47be7df1b34787c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114921179317222544
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -246,10 +274,15 @@ MonoBehaviour:
   SpeedRelativeToJulia: 1
   BackJumpAmount: {x: 120, y: 30}
   NearReadyDelay: 1
-  NearShootDelay: 1
+  NearShootDelay: 0.1
   FarReadyDelay: 3
-  FarShootDelay: 2
+  FarShootDelay: 1
   HitDelay: 0.5
+  NearShootParticles: 10
+  LaserPrefab: {fileID: 114692081395424562, guid: cd86fe7983c1fb94cb9eb4b1c555fa78,
+    type: 2}
+  ParticlePrefab: {fileID: 114856627527126358, guid: 84d917d43e170164884aafd728a18ea2,
+    type: 2}
 --- !u!114 &114947370303128948
 MonoBehaviour:
   m_ObjectHideFlags: 1

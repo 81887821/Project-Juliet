@@ -10,11 +10,15 @@ public class Guard : Enemy
 
     [Header("Guard")]
     public Vector2 BackJumpAmount = new Vector2(120f, 30f);
-    public float NearReadyDelay = 1f;
+    public float NearReadyDelay = .1f;
     public float NearShootDelay = 1f;
     public float FarReadyDelay = 3f;
-    public float FarShootDelay = 2f;
+    public float FarShootDelay = 1f;
     public float HitDelay = .5f;
+    public int NearShootParticles = 10;
+    [Header("Prefabs")]
+    public Laser LaserPrefab;
+    public Particle ParticlePrefab;
 
     #region Unity components
     private Animator animator;
@@ -24,6 +28,8 @@ public class Guard : Enemy
 
     private GuardState state = GuardState.Idle;
     private GuardState nextState = GuardState.Idle;
+
+    private Laser laser;
 
     protected override void Awake()
     {
@@ -101,7 +107,9 @@ public class Guard : Enemy
             case GuardState.Turning:
                 return GuardState.Walking;
             case GuardState.FarReady:
-                if (stateEndTime > Time.time)
+                if (nearPlayerDetector.TargetFound)
+                    return GuardState.NearReady;
+                else if (stateEndTime > Time.time)
                     return GuardState.FarReady;
                 else
                     return GuardState.FarShoot;
@@ -143,6 +151,14 @@ public class Guard : Enemy
 
     private void HandleStateTransitionSideEffect(GuardState oldState, GuardState newState)
     {
+        switch (oldState)
+        {
+            case GuardState.FarShoot:
+                laser.Stop();
+                laser = null;
+                break;
+        }
+
         switch (newState)
         {
             case GuardState.Turning:
@@ -153,13 +169,19 @@ public class Guard : Enemy
                 stateEndTime = Time.time + FarReadyDelay;
                 break;
             case GuardState.NearReady:
-                stateEndTime = Time.time + NearReadyDelay;
+                if (oldState == GuardState.FarReady)
+                    stateEndTime = Mathf.Min(stateEndTime, Time.time + NearReadyDelay);
+                else
+                    stateEndTime = Time.time + NearReadyDelay;
                 break;
             case GuardState.FarShoot:
                 stateEndTime = Time.time + FarShootDelay;
+                laser = Instantiate(LaserPrefab, transform);
                 break;
             case GuardState.NearShoot:
                 stateEndTime = Time.time + NearShootDelay;
+                for (int i = 0; i < NearShootParticles; i++)
+                    Instantiate(ParticlePrefab, transform);
                 break;
             case GuardState.BackJumping:
                 BackJump();
