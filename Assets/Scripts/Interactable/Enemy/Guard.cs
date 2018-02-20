@@ -19,6 +19,7 @@ public class Guard : Enemy
     [Header("Prefabs")]
     public Laser LaserPrefab;
     public Particle ParticlePrefab;
+    public AimingLine AimingLinePrefab;
 
     #region Unity components
     private Animator animator;
@@ -30,6 +31,7 @@ public class Guard : Enemy
     private GuardState nextState = GuardState.Idle;
 
     private Laser laser;
+    private AimingLine aimingLine;
 
     protected override void Awake()
     {
@@ -153,6 +155,9 @@ public class Guard : Enemy
     {
         switch (oldState)
         {
+            case GuardState.FarReady:
+                aimingLine.Stop();
+                break;
             case GuardState.FarShoot:
                 laser.Stop();
                 laser = null;
@@ -167,6 +172,7 @@ public class Guard : Enemy
                 break;
             case GuardState.FarReady:
                 stateEndTime = Time.time + FarReadyDelay;
+                aimingLine = Instantiate(AimingLinePrefab, transform);
                 break;
             case GuardState.NearReady:
                 if (oldState == GuardState.FarReady)
@@ -209,14 +215,10 @@ public class Guard : Enemy
                 animator.Play("GuardWalk");
                 break;
             case GuardState.FarReady:
-                animator.Play("GuardReadyFar");
-                break;
-            case GuardState.NearReady:
-                animator.Play("GuardReadyNear");
-                break;
             case GuardState.FarShoot:
                 animator.Play("GuardShootFar");
                 break;
+            case GuardState.NearReady:
             case GuardState.NearShoot:
                 animator.Play("GuardShootNear");
                 break;
