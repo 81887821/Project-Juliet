@@ -8,13 +8,10 @@ public class LaserController : MonoBehaviour
     public LayerMask CollisionMask = 2560;
 
     private const float SKIN_WIDTH = .015f;
-    private const float DISTANCE_BETWEEN_RAYS = .25f;
 
     private SpriteRenderer spriteRenderer;
     private float length;
     private Vector2 localOrigin;
-    private int rayCount;
-    private float raySpacing;
 
     private void Awake()
     {
@@ -24,9 +21,7 @@ public class LaserController : MonoBehaviour
         Bounds bounds = sprite.bounds;
 
         length = bounds.size.x;
-        localOrigin = new Vector2(length, 0f) - sprite.pivot / sprite.pixelsPerUnit;
-        rayCount = Mathf.FloorToInt(bounds.size.y / DISTANCE_BETWEEN_RAYS);
-        raySpacing = bounds.size.y / (rayCount - 1);
+        localOrigin = new Vector2(length, bounds.size.y / 2f) - sprite.pivot / sprite.pixelsPerUnit;
     }
 
     public RaycastHit2D Grow(float growAmount)
@@ -38,21 +33,22 @@ public class LaserController : MonoBehaviour
         }
         else
         {
-            RaycastHit2D nearestHit = new RaycastHit2D();
             float rayLength = growAmount + SKIN_WIDTH;
+            Vector2 rayOrigin = localOrigin.ToGlobalPosition(this);
 
-            for (int i = 0; i < rayCount; i++)
+            RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.right.ToGlobalSpace(this), rayLength, CollisionMask);
+            RaycastHit2D nearestHit = new RaycastHit2D();
+            float minDistance = float.MaxValue;
+
+            foreach (RaycastHit2D hit in hits)
             {
-                Vector2 rayOrigin = (localOrigin + Vector2.up * (raySpacing * i)).ToGlobalPosition(this);
-
-                RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right.ToGlobalSpace(this), rayLength, CollisionMask);
-
-                if (hit)
-                {
 #if DEBUG
-                    Debug.DrawRay(rayOrigin, Vector2.right.ToGlobalSpace(this) * rayLength, Color.red);
+                Debug.DrawRay(rayOrigin, Vector2.right.ToGlobalSpace(this) * rayLength, Color.red);
 #endif
+                if (hit.distance < minDistance)
+                {
                     nearestHit = hit;
+                    minDistance = hit.distance;
 
                     if (hit.distance <= SKIN_WIDTH)
                     {
@@ -65,11 +61,11 @@ public class LaserController : MonoBehaviour
                         rayLength = hit.distance;
                     }
                 }
-#if DEBUG
-                else
-                    Debug.DrawRay(rayOrigin, Vector2.right.ToGlobalSpace(this) * rayLength, Color.white);
-#endif
             }
+#if DEBUG
+            if (hits.Length == 0)
+                Debug.DrawRay(rayOrigin, Vector2.right.ToGlobalSpace(this) * rayLength, Color.white);
+#endif
 
             transform.localScale = GetNewScale(growAmount);
             return nearestHit;
