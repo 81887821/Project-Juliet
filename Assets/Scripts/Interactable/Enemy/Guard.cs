@@ -102,7 +102,7 @@ public class Guard : Enemy
                     return GuardState.NearReady;
                 else if (farPlayerDetector.TargetFound)
                     return GuardState.FarReady;
-                else if (CliffOnFront())
+                else if (controller.Collisions.front || CliffOnFront())
                     return GuardState.Turning;
                 else
                     return GuardState.Walking;
