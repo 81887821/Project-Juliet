@@ -11,7 +11,6 @@ public class AimingLine : MonoBehaviour
     private LaserController controller;
     private float speed;
     private bool growing = true;
-    private List<IInteractable> attackedTargets = new List<IInteractable>();
 
     private void Awake()
     {
