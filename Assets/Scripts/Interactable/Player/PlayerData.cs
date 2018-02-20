@@ -44,9 +44,7 @@ public class PlayerData : MonoBehaviour
     public float SupperJumpMultiplier = 1.5f;
 
     [Header("Julia Advanced Movement")]
-    public Vector2 WallJumpClimb = new Vector2(16f, 0f);
-    public Vector2 WallJumpOff = new Vector2(16f, 0f);
-    public Vector2 WallLeap = new Vector2(50f, 70f);
+    public Vector2 WallJump = new Vector2(70f, 70f);
     public float WallGravityRatio = .3f;
 
     [Header("Juliett Actions")]

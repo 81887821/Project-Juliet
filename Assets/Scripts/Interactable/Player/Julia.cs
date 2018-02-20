@@ -172,23 +172,9 @@ public class Julia : PlayerBase
 
     private void WallJump()
     {
-        float wallDirX = HeadingRight ? 1f : -1f;
-        
-        if (input.HorizontalInput == 0)
-        {
-            velocity.x = -playerCore.WallJumpOff.x;
-            velocity.y = playerCore.WallJumpOff.y;
-        }
-        else if (wallDirX == Mathf.Sign(input.HorizontalInput))
-        {
-            velocity.x = -playerCore.WallJumpClimb.x;
-            velocity.y = playerCore.WallJumpClimb.y;
-        }
-        else
-        {
-            velocity.x = -playerCore.WallLeap.x;
-            velocity.y = playerCore.WallLeap.y;
-        }
+        velocity.x = -playerCore.WallJump.x;
+        velocity.y = playerCore.WallJump.y;
+        HeadingRight = !HeadingRight;
     }
 
     private void SuperJump()

@@ -727,9 +727,7 @@ MonoBehaviour:
   AccelerationTimeGrounded: 0.1
   JuliaMoveSpeed: 25
   SupperJumpMultiplier: 1.5
-  WallJumpClimb: {x: 16, y: 0}
-  WallJumpOff: {x: 16, y: 0}
-  WallLeap: {x: 50, y: 70}
+  WallJump: {x: 70, y: 70}
   WallGravityRatio: 0.3
   JuliettMoveSpeed: 33
   UppercutDuration: 0.5
