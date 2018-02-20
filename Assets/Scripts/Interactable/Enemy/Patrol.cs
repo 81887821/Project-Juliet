@@ -126,7 +126,7 @@ public class Patrol : Enemy
                 velocity.x = 0f;
                 break;
             case PatrolState.AlertDelay:
-                stateEndTime = Time.time + DelayAfterAttack;
+                stateEndTime = Time.time + DelayOnAlert;
                 break;
             case PatrolState.Alert:
                 maxSpeed *= AlertModeSpeedMultiplier;
