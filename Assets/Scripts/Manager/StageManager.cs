@@ -1,18 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StageManager : MonoBehaviour
 {
-    // Use this for initialization
-    void Start ()
+    public static StageManager Instance
     {
-        
+        get;
+        private set;
     }
-    
-    // Update is called once per frame
-    void Update ()
+    public string StageName
     {
-        
+        get;
+        private set;
+    }
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("Double instantiation : " + this);
+            Destroy(this);
+            return;
+        }
+
+        Instance = this;
+        StageName = SceneManager.GetActiveScene().name;
     }
 }

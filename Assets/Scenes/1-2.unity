@@ -719,6 +719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovingPeriod: 2
   MovingLength: 1
+  ReportNumberInScene: 2
 --- !u!212 &332435349
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1416,17 +1417,17 @@ Prefab:
     - target: {fileID: 224476634202183190, guid: 4946daa2731822e4c870340649f09837,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224476634202183190, guid: 4946daa2731822e4c870340649f09837,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224476634202183190, guid: 4946daa2731822e4c870340649f09837,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4946daa2731822e4c870340649f09837, type: 2}
@@ -4254,6 +4255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovingPeriod: 2
   MovingLength: 1
+  ReportNumberInScene: 3
 --- !u!212 &1446860664
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6232,6 +6234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovingPeriod: 2
   MovingLength: 1
+  ReportNumberInScene: 1
 --- !u!212 &2009879406
 SpriteRenderer:
   m_ObjectHideFlags: 0

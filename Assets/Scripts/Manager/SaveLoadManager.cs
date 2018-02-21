@@ -7,40 +7,13 @@ using System.IO;
 
 public static class SaveLoadManager
 {
-    public static void SavePlayer(UserStatus us)
+    public static void Save()
     {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream stream = new FileStream(Application.persistentDataPath + "/save.juliett", FileMode.Create);
-
-        bf.Serialize(stream, us);
-        stream.Close();
+        throw new NotImplementedException();
     }
 
-    public static UserStatus LoadPlayer()
+    public static void Load()
     {
-        if (File.Exists(Application.persistentDataPath + "/save.juliett"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-
-            FileStream stream = new FileStream(Application.persistentDataPath + "/save.juliett", FileMode.Open);
-
-            UserStatus dat = bf.Deserialize(stream) as UserStatus;
-
-            stream.Close();
-            return dat;
-        }
-        else
-        {
-            Debug.Log("No Save File");
-            UserStatus dat = new UserStatus();
-            return dat;
-        }
+        throw new NotImplementedException();
     }
 }
-
-[Serializable]
-public class UserStatus
-{
-
-}
-
