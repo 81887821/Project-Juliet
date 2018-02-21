@@ -39,15 +39,15 @@ public class InGameUIManager : MonoBehaviour
     public Sprite BlankHeartImage;
     public Sprite HalfHeaertImage;
     public Sprite FullHeartImage;
-    
-    public Sprite DiaryImage;
+    public Sprite EmptyReportImage;
+    public Sprite CollectedReportImage;
 
     [Header("Health & Diary Set")]
     public GameObject HeartParentObject; //Object Which Contains heart Objects
     public GameObject DiaryParentObject; //Object Which Contains diary Objects
 
     private List<Image> heartImageList = new List<Image>();
-    private List<Image> diaryImageList = new List<Image>();
+    private List<Image> reportImageList = new List<Image>();
 
     private bool playerIsSmallForm = true;
     private bool playerCanDoSpecialAction = false;
@@ -76,7 +76,7 @@ public class InGameUIManager : MonoBehaviour
             UpdateButtonImages();
         }
     }
-    
+
     private void Awake()
     {
         if (Instance != null)
@@ -100,7 +100,7 @@ public class InGameUIManager : MonoBehaviour
         {
             if (itr != null)
             {
-                diaryImageList.Add(itr);
+                reportImageList.Add(itr);
             }
         }
     }
@@ -113,65 +113,56 @@ public class InGameUIManager : MonoBehaviour
         player.AvailableActionChanged += (canDoSpecialAction) => PlayerCanDoSpecialAction = canDoSpecialAction;
         player.PlayerTransformed += (isSmallForm) => PlayerIsSmallForm = isSmallForm;
         player.PlayerHPChanged += SetCurrentHeartNum;
+
+        ReportManager.ReportCollected += SetReportSprites;
     }
 
     public void InitUIElements()
     {
-
         //0.5f = Center, 0 = Left, 1 = Right
         MovementScrollbar.value = 0.5f;
-        foreach(var itr in heartImageList)
+        foreach (var itr in heartImageList)
         {
             itr.sprite = FullHeartImage;
         }
 
-        foreach(var itr in diaryImageList)
-        {
-            itr.sprite = DiaryImage;
-        }
-
-        //TODO: Apply saved data to UI
-
-
+        SetReportSprites();
     }
 
     //amount: current number of heart
     public void SetCurrentHeartNum(int amount)
     {
-        for(int i = 0; i < heartImageList.Count; ++i)
+        for (int i = 0; i < heartImageList.Count; ++i)
         {
-            if(i < (amount / 2))
+            if (i < (amount / 2))
             {
                 heartImageList[i].sprite = FullHeartImage;
             }
             else
             {
-                if((amount - i * 2) == 1)
+                if ((amount - i * 2) == 1)
                 {
                     heartImageList[i].sprite = HalfHeaertImage;
                 }
                 else
                 {
                     heartImageList[i].sprite = BlankHeartImage;
-                }    
+                }
             }
-            
+
         }
     }
 
-    //amount: current number of diary
-    public void SetCurrentDiaryNum(int amount)
+    public void SetReportSprites()
     {
-        for(int i = 0; i < diaryImageList.Count; ++i)
+        string stageName = StageManager.Instance.StageName;
+
+        for (int i = 0; i < reportImageList.Count; ++i)
         {
-            if(i < amount)
-            {
-                diaryImageList[i].color = new Color(1, 1, 1, 1);
-            }
+            if (ReportManager.IsCollected(stageName, i + 1))
+                reportImageList[i].sprite = CollectedReportImage;
             else
-            {
-                diaryImageList[i].color = new Color(1, 1, 1, 0.5f);
-            }
+                reportImageList[i].sprite = EmptyReportImage;
         }
     }
 

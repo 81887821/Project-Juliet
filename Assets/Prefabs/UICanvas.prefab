@@ -37,10 +37,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4160467182769468}
   - component: {fileID: 114384507926594144}
+  - component: {fileID: 114724597438170880}
   - component: {fileID: 114161620788471786}
   - component: {fileID: 114090518774166918}
   m_Layer: 0
-  m_Name: UIManager
+  m_Name: Manager collections
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -816,7 +817,9 @@ MonoBehaviour:
   BlankHeartImage: {fileID: 21300004, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
   HalfHeaertImage: {fileID: 21300002, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
   FullHeartImage: {fileID: 21300000, guid: 06a94b88dbf45d44fb5f05514629fc9c, type: 3}
-  DiaryImage: {fileID: 21300000, guid: bbcc311b91006cb49aed2efab0e44edb, type: 3}
+  EmptyReportImage: {fileID: 21300000, guid: bbcc311b91006cb49aed2efab0e44edb, type: 3}
+  CollectedReportImage: {fileID: 21300002, guid: bbcc311b91006cb49aed2efab0e44edb,
+    type: 3}
   HeartParentObject: {fileID: 1522744562522286}
   DiaryParentObject: {fileID: 1127524923918204}
 --- !u!114 &114405092213340650
@@ -976,6 +979,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114724597438170880
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1071543210324850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5af6b1884924144408035716a0f2f6ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114795753113225952
 MonoBehaviour:
   m_ObjectHideFlags: 1
