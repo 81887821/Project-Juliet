@@ -27,5 +27,6 @@ public class StageManager : MonoBehaviour
 
         Instance = this;
         StageName = SceneManager.GetActiveScene().name;
+        SaveLoadManager.Load();
     }
 }
