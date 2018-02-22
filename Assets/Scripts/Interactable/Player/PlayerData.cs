@@ -33,6 +33,7 @@ public class PlayerData : MonoBehaviour
     public float TotalSpecialActionAvailableTime = .5f;
     public float CancelableSpecialActionAvailableTime = .3f;
     public float TransformationDelayTime = .2f;
+    public float DamageIgnoreDurationAfterHit = 1f;
 
     [Header("Julia Actions")]
     public float MaxJumpHeight = 15;

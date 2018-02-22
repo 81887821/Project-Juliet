@@ -38,7 +38,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     #endregion
 
     #region Unity components in parent
-    protected PlayerData playerCore;
+    protected PlayerData playerData;
     protected PlayerInput input;
     protected Controller2D controller;
     protected Transform playerTransform;
@@ -128,7 +128,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
     protected virtual void Awake()
     {
-        playerCore = GetComponentInParent<PlayerData>();
+        playerData = GetComponentInParent<PlayerData>();
         input = GetComponentInParent<PlayerInput>();
         controller = GetComponentInParent<Controller2D>();
         playerTransform = transform.parent;
@@ -139,9 +139,9 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
     protected virtual void Start()
     {
-        gravity = -(8 * playerCore.MaxJumpHeight) / Mathf.Pow(playerCore.FloatingTime, 2);
-        maxJumpVelocity = Mathf.Abs(gravity) * (playerCore.FloatingTime / 2);
-        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * playerCore.MinJumpHeight);
+        gravity = -(8 * playerData.MaxJumpHeight) / Mathf.Pow(playerData.FloatingTime, 2);
+        maxJumpVelocity = Mathf.Abs(gravity) * (playerData.FloatingTime / 2);
+        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * playerData.MinJumpHeight);
 
         moveSpeed = GetMoveSpeed();
     }
@@ -286,41 +286,40 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
             case PlayerState.SpecialActionReady:
                 horizontalMovementEnabled = true;
                 if (newState != PlayerState.CancelableSpecialActionReady)
-                    playerCore.OnSpecialActionDisabled();
+                    playerData.OnSpecialActionDisabled();
                 break;
             case PlayerState.CancelableSpecialActionReady:
-                playerCore.OnSpecialActionDisabled();
+                playerData.OnSpecialActionDisabled();
                 break;
             case PlayerState.PostTransformationDelay:
                 movementEnable = true;
                 transformationEnabled = true;
                 break;
             case PlayerState.Hit:
-                ignoreDamage = false;
                 horizontalMovementEnabled = true;
-                transformationEnabled = true;
                 break;
         }
 
         switch (newState)
         {
             case PlayerState.SpecialActionReady:
-                stateEndTime = Time.time + playerCore.TotalSpecialActionAvailableTime - playerCore.CancelableSpecialActionAvailableTime;
+                stateEndTime = Time.time + playerData.TotalSpecialActionAvailableTime - playerData.CancelableSpecialActionAvailableTime;
                 horizontalMovementEnabled = false;
                 break;
             case PlayerState.CancelableSpecialActionReady:
-                stateEndTime = Time.time + playerCore.TotalSpecialActionAvailableTime;
+                stateEndTime = Time.time + playerData.TotalSpecialActionAvailableTime;
                 break;
             case PlayerState.PostTransformationDelay:
-                stateEndTime = Time.time + playerCore.TransformationDelayTime;
+                stateEndTime = Time.time + playerData.TransformationDelayTime;
                 transformationEnabled = false;
                 movementEnable = false;
                 break;
             case PlayerState.Hit:
                 ignoreDamage = true;
+                StartCoroutine(DamageIgnoreEffect(playerData.DamageIgnoreDurationAfterHit));
                 horizontalMovementEnabled = false;
                 transformationEnabled = false;
-                stateEndTime = Time.time + playerCore.KnockbackTime;
+                stateEndTime = Time.time + playerData.KnockbackTime;
                 break;
             case PlayerState.GameOver:
                 ignoreDamage = true;
@@ -328,6 +327,31 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
                 transformationEnabled = false;
                 break;
         }
+    }
+
+    private IEnumerator DamageIgnoreEffect(float duration)
+    {
+        const float BILINKING_INTERVAL = 1 / 6f;
+        WaitForSeconds waitForSeconds = new WaitForSeconds(BILINKING_INTERVAL);
+        bool isHalfVisible = false;
+        Color halfVisible = spriteRenderer.color;
+        Color original = spriteRenderer.color;
+        halfVisible.a = 0.5f;
+
+        while (duration >= 0f)
+        {
+            if (isHalfVisible)
+                spriteRenderer.color = original;
+            else
+                spriteRenderer.color = halfVisible;
+            isHalfVisible = !isHalfVisible;
+            duration -= BILINKING_INTERVAL;
+            yield return waitForSeconds;
+        }
+
+        spriteRenderer.color = original;
+        ignoreDamage = false;
+        transformationEnabled = true; // Remove this code with caution. ignoreDamage flag must be unset before transformation, since this coroutine will not be send to Player class of another form.
     }
 
     private void CalculateVelocity()
@@ -340,7 +364,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         else
             targetVelocityX = 0f;
 
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.Collisions.below) ? playerCore.AccelerationTimeGrounded : playerCore.AccelerationTimeAirborne);
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.Collisions.below) ? playerData.AccelerationTimeGrounded : playerData.AccelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
     }
     
@@ -392,7 +416,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
     public void OnDamaged(IInteractable attacker, int damage)
     {
-        OnDamaged(attacker, damage, playerCore.Knockback);
+        OnDamaged(attacker, damage, playerData.Knockback);
     }
     
     public void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
@@ -401,9 +425,9 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         {
             bool attackerOnRight = attacker.transform.position.x > playerTransform.position.x;
 
-            playerCore.CurrentHealth -= damage;
+            playerData.CurrentHealth -= damage;
 
-            if (playerCore.CurrentHealth <= 0)
+            if (playerData.CurrentHealth <= 0)
             {
                 Die();
                 return;

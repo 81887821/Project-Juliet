@@ -49,7 +49,7 @@ public class Juliett : PlayerBase
 
     protected override float GetMoveSpeed()
     {
-        return playerCore.JuliettMoveSpeed;
+        return playerData.JuliettMoveSpeed;
     }
     
     protected override void UpdateAnimationState(PlayerState state)
@@ -153,13 +153,13 @@ public class Juliett : PlayerBase
             case PlayerState.Attack2:
             case PlayerState.Attack3:
             case PlayerState.Attack4:
-                stateEndTime = Time.time + playerCore.AttackInterval[newState - PlayerState.Attack1];
-                velocity += playerCore.AccelerationOnAttack[newState - PlayerState.Attack1];
+                stateEndTime = Time.time + playerData.AttackInterval[newState - PlayerState.Attack1];
+                velocity += playerData.AccelerationOnAttack[newState - PlayerState.Attack1];
                 horizontalMovementEnabled = false;
                 normalAttackDetectors[newState - PlayerState.Attack1].SetActive(true);
                 break;
             case PlayerState.Uppercut:
-                stateEndTime = Time.time + playerCore.UppercutDuration;
+                stateEndTime = Time.time + playerData.UppercutDuration;
                 horizontalMovementEnabled = false;
                 uppercutDetector.SetActive(true);
                 break;
@@ -189,10 +189,10 @@ public class Juliett : PlayerBase
             case PlayerState.Attack2:
             case PlayerState.Attack3:
             case PlayerState.Attack4:
-                target.OnDamaged(this, 1, playerCore.EnemyKnockbackOnAttack[state - PlayerState.Attack1]);
+                target.OnDamaged(this, 1, playerData.EnemyKnockbackOnAttack[state - PlayerState.Attack1]);
                 break;
             case PlayerState.Uppercut:
-                target.OnDamaged(this, 1, playerCore.EnemyKnockbackOnUppercut);
+                target.OnDamaged(this, 1, playerData.EnemyKnockbackOnUppercut);
                 break;
             default:
                 Debug.LogWarning("Attack detected on non-attacking state : " + state);
