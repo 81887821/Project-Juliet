@@ -98,8 +98,10 @@ public class Julia : PlayerBase
             case PlayerState.WallStick:
                 if (controller.Collisions.below)
                     return PlayerState.Idle;
-                else
+                else if (controller.Collisions.front.Contains("Obstacle"))
                     return PlayerState.WallStick;
+                else
+                    return PlayerState.JumpingDown;
             case PlayerState.JumpingUp:
                 if (velocity.y <= 0f)
                     return PlayerState.JumpingDown;
