@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db672c57e8ecac4d99dc05179bbc352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHealth: 6
+  CurrentHealth: 1
   AccelerationTimeGrounded: 0.1
   AccelerationTimeAirborne: 0.2
   Gravity: -150
@@ -383,7 +383,7 @@ MonoBehaviour:
   SpareHead: {fileID: 114169428277378264}
   NormalBodySprite: {fileID: 21300012, guid: 81f0b7a4b079e1b46bdea00152788107, type: 3}
   HitBodySprite: {fileID: 21300014, guid: 81f0b7a4b079e1b46bdea00152788107, type: 3}
-  HeadLaunchInterval: 3
+  HeadLaunchInterval: 5
 --- !u!114 &114102941463501338
 MonoBehaviour:
   m_ObjectHideFlags: 1
