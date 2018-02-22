@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e01632a8cccbf74ab64c7cb27d4cb9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedRelativeToJulia: 5
+  SpeedRelativeToJulia: 25
+  MaximumLength: 100
 --- !u!114 &114709563788547356
 MonoBehaviour:
   m_ObjectHideFlags: 1
