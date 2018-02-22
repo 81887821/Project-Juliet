@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c111970c80bee8a4db2ac2260c2728e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHealth: 8
+  CurrentHealth: 6
   AccelerationTimeGrounded: 0.1
   AccelerationTimeAirborne: 0.2
   Gravity: -150
@@ -324,7 +324,7 @@ MonoBehaviour:
   SpeedRelativeToJulia: 0.7
   AlertModeSpeedMultiplier: 1.3
   MoveBackAfterAttack: {x: 60, y: 0}
-  DelayOnAlert: 1
+  DelayOnAlert: 0.5
   DelayAfterAttack: 2
   DelayAfterHit: 1
 --- !u!114 &114896328850948570
