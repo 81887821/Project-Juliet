@@ -99,8 +99,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1725121794263330}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -352.7, y: -118, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4606874928646888}
@@ -273,11 +273,11 @@ MonoBehaviour:
   DefaultKnockback: {x: 45, y: 12}
   SpeedRelativeToJulia: 1
   BackJumpAmount: {x: 120, y: 30}
-  NearReadyDelay: 1.5
+  NearReadyDelay: 0.8
   NearShootDelay: 0.1
   FarReadyDelay: 2
   FarShootDelay: 0.3
-  HitDelay: 3
+  HitDelay: 0.5
   NearShootParticles: 10
   LaserPrefab: {fileID: 114692081395424562, guid: cd86fe7983c1fb94cb9eb4b1c555fa78,
     type: 2}

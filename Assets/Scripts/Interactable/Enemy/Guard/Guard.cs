@@ -10,10 +10,10 @@ public class Guard : Enemy
 
     [Header("Guard")]
     public Vector2 BackJumpAmount = new Vector2(120f, 30f);
-    public float NearReadyDelay = .1f;
-    public float NearShootDelay = 1f;
-    public float FarReadyDelay = 3f;
-    public float FarShootDelay = 1f;
+    public float NearReadyDelay = .8f;
+    public float NearShootDelay = .1f;
+    public float FarReadyDelay = 2f;
+    public float FarShootDelay = .3f;
     public float HitDelay = .5f;
     public int NearShootParticles = 10;
     [Header("Prefabs")]
@@ -206,7 +206,6 @@ public class Guard : Enemy
         switch (state)
         {
             case GuardState.Idle:
-            case GuardState.Hit:
             case GuardState.Dead:
                 animator.Play("GuardIdle");
                 break;
@@ -225,6 +224,9 @@ public class Guard : Enemy
             case GuardState.BackJumping:
                 animator.Play("GuardBackJump");
                 break;
+            case GuardState.Hit:
+                animator.Play("GuardHit");
+                break;
             default:
                 throw new Exception("Forbidden state for Guard : " + state);
         }
@@ -239,6 +241,13 @@ public class Guard : Enemy
     public override void OnAttack(IInteractable target)
     {
         target.OnDamaged(this, 1);
+    }
+
+    public override void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
+    {
+        base.OnDamaged(attacker, damage, knockback);
+        nextState = GuardState.Hit;
+        UpdateState();
     }
 
     protected override void UpdateVelocity()
