@@ -38,7 +38,7 @@ public class Julia : PlayerBase
 
     protected override float GetMoveSpeed()
     {
-        return playerCore.JuliaMoveSpeed;
+        return playerData.JuliaMoveSpeed;
     }
     
     protected override void UpdateAnimationState(PlayerState state)
@@ -98,8 +98,10 @@ public class Julia : PlayerBase
             case PlayerState.WallStick:
                 if (controller.Collisions.below)
                     return PlayerState.Idle;
-                else
+                else if (controller.Collisions.front.Contains("Obstacle"))
                     return PlayerState.WallStick;
+                else
+                    return PlayerState.JumpingDown;
             case PlayerState.JumpingUp:
                 if (velocity.y <= 0f)
                     return PlayerState.JumpingDown;
@@ -131,7 +133,7 @@ public class Julia : PlayerBase
                 break;
             case PlayerState.WallStick:
                 horizontalMovementEnabled = true;
-                gravity /= playerCore.WallGravityRatio;
+                gravity /= playerData.WallGravityRatio;
                 break;
             case PlayerState.Rolling:
                 rollingAttackDetector.SetActive(false);
@@ -148,7 +150,7 @@ public class Julia : PlayerBase
             case PlayerState.WallStick:
                 horizontalMovementEnabled = false;
                 velocity.y = 0f;
-                gravity *= playerCore.WallGravityRatio;
+                gravity *= playerData.WallGravityRatio;
                 break;
             case PlayerState.JumpingUp:
                 if (oldState == PlayerState.WallStick)
@@ -172,14 +174,14 @@ public class Julia : PlayerBase
 
     private void WallJump()
     {
-        velocity.x = -playerCore.WallJump.x;
-        velocity.y = playerCore.WallJump.y;
+        velocity.x = -playerData.WallJump.x;
+        velocity.y = playerData.WallJump.y;
         HeadingRight = !HeadingRight;
     }
 
     private void SuperJump()
     {
-        velocity.y = maxJumpVelocity * playerCore.SupperJumpMultiplier;
+        velocity.y = maxJumpVelocity * playerData.SupperJumpMultiplier;
     }
 
     public override void OnAttack(IInteractable target)

@@ -11,6 +11,8 @@ public class Particle : MonoBehaviour, IInteractable
     public float MinInitialSpeedRelativeToJulia = 1f;
     public float MaxInitialSpeedRelativeToJulia = 5f;
     public float RemainingDuration = 2f;
+    public float AttackableDuration = 1.5f;
+    public GameObject ExplosionEffect;
 
     private Controller2D controller;
     private Vector2 initialVelocity;
@@ -51,7 +53,14 @@ public class Particle : MonoBehaviour, IInteractable
 
     public void OnAttack(IInteractable target)
     {
-        target.OnDamaged(this, 1);
+        if (Time.time <= startTime + AttackableDuration)
+        {
+            target.OnDamaged(this, 1);
+            ExplosionEffect.transform.parent = null;
+            ExplosionEffect.transform.localScale = new Vector3(2f, 2f, 2f);
+            ExplosionEffect.SetActive(true);
+            Destroy(gameObject);
+        }
     }
 
     public void OnDamaged(IInteractable attacker, int damage)

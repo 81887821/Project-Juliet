@@ -275,8 +275,8 @@ MonoBehaviour:
   BackJumpAmount: {x: 120, y: 30}
   NearReadyDelay: 1
   NearShootDelay: 0.1
-  FarReadyDelay: 3
-  FarShootDelay: 1
+  FarReadyDelay: 1
+  FarShootDelay: 0.3
   HitDelay: 0.5
   NearShootParticles: 10
   LaserPrefab: {fileID: 114692081395424562, guid: cd86fe7983c1fb94cb9eb4b1c555fa78,
