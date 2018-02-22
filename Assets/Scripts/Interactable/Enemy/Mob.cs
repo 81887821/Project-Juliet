@@ -6,21 +6,18 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Mob : Enemy
 {
-    private enum MobState { None, Idle, Pressed, Hit }
+    private enum MobState { None, Idle, Pressed, Hit, Dead }
 
     public Sprite MobIdle;
     public Sprite MobPressed;
     public Sprite MobHit;
-
-    private SpriteRenderer spriteRenderer;
-
+    
     private MobState state = MobState.Idle;
     private MobState nextState = MobState.Idle;
 
     protected override void Awake()
     {
         base.Awake();
-        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     protected override void Update()
@@ -56,6 +53,7 @@ public class Mob : Enemy
             case MobState.Hit:
                 spriteRenderer.sprite = MobHit;
                 break;
+            // Use previous sprite on Dead state.
         }
     }
 
@@ -101,6 +99,8 @@ public class Mob : Enemy
 
     public override void Die()
     {
-        Destroy(gameObject);
+        base.Die();
+        nextState = MobState.Dead;
+        UpdateState();
     }
 }

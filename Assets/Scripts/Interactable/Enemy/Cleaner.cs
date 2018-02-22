@@ -78,6 +78,9 @@ public class Cleaner : Enemy
                 attackDisabled = true;
                 stateEndTime = Time.time + 0.5f;
                 break;
+            case CleanerState.Dead:
+                attackDisabled = true;
+                break;
         }
     }
 
@@ -104,6 +107,8 @@ public class Cleaner : Enemy
 
     public override void Die()
     {
-        Destroy(gameObject);
+        nextState = CleanerState.Dead;
+        UpdateState();
+        base.Die();
     }
 }

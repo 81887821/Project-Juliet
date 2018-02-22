@@ -16,6 +16,7 @@ public class Patrol : Enemy
     public float DelayAfterHit = 1f;
 
     private TargetDetector playerDetector;
+    private DamageDetector damageDetector;
     private Animator animator;
 
     private bool attackDisabled;
@@ -27,6 +28,7 @@ public class Patrol : Enemy
     {
         base.Awake();
         playerDetector = GetComponentInChildren<TargetDetector>();
+        damageDetector = GetComponentInChildren<DamageDetector>();
         animator = GetComponent<Animator>();
     }
 
@@ -150,7 +152,7 @@ public class Patrol : Enemy
                 break;
             case PatrolState.Dead:
                 attackDisabled = true;
-                Destroy(gameObject, 1f);
+                damageDetector.gameObject.SetActive(false);
                 break;
         }
     }
@@ -221,5 +223,6 @@ public class Patrol : Enemy
     {
         nextState = PatrolState.Dead;
         UpdateState();
+        base.Die();
     }
 }

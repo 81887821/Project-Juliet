@@ -14,7 +14,6 @@ public class MissileBody : Enemy
     public float HeadLaunchInterval = 3f;
 
     private MissileHead currentHead;
-    private SpriteRenderer spriteRenderer;
     private float hitStateEndTime;
     private bool attackEnabled = true;
     private float nextHeadLaunch;
@@ -22,7 +21,6 @@ public class MissileBody : Enemy
     protected override void Awake()
     {
         base.Awake();
-        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     protected override void Start()
@@ -48,7 +46,17 @@ public class MissileBody : Enemy
 
     public override void Die()
     {
-        Destroy(gameObject);
+        Die(true);
+    }
+
+    private void Die(bool destroyHead)
+    {
+        hitStateEndTime = float.MaxValue;
+        attackEnabled = false;
+        nextHeadLaunch = float.MaxValue;
+        if (destroyHead && currentHead != null)
+            currentHead.Die();
+        base.Die();
     }
 
     public override void OnAttack(IInteractable target)
@@ -59,10 +67,19 @@ public class MissileBody : Enemy
 
     public override void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
     {
-        base.OnDamaged(attacker, damage, knockback);
+        bool attackerOnRight = attacker.transform.position.x > transform.position.x;
+
+        HeadingRight = attackerOnRight;
+        velocity.x -= knockback.x;
+        velocity.y += knockback.y;
+
         hitStateEndTime = Time.time + 1f;
         attackEnabled = false;
         spriteRenderer.sprite = HitBodySprite;
+
+        CurrentHealth -= damage;
+        if (CurrentHealth <= 0)
+            Die(!(attacker is MissileHead));
     }
 
     protected override void UpdateVelocity()

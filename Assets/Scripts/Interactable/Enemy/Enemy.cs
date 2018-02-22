@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Controller2D))]
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 public abstract class Enemy : MonoBehaviour, IInteractable
 {
     #region Variables shown in Unity Editor
@@ -44,6 +45,7 @@ public abstract class Enemy : MonoBehaviour, IInteractable
     #region Other variables
     protected Controller2D controller;
     protected BoxCollider2D boxCollider;
+    protected SpriteRenderer spriteRenderer;
 
     protected float maxSpeed;
 
@@ -57,6 +59,7 @@ public abstract class Enemy : MonoBehaviour, IInteractable
     {
         controller = GetComponent<Controller2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         headingRight = transform.rotation == new Quaternion(0f, 0f, 0f, 1f);
     }
 
@@ -96,7 +99,31 @@ public abstract class Enemy : MonoBehaviour, IInteractable
         velocity.y += knockback.y;
     }
 
-    public abstract void Die();
+    public virtual void Die()
+    {
+        gameObject.layer = 0;
+        StartCoroutine(FadeAndDestoried(2f));
+    }
+
+    protected IEnumerator FadeAndDestoried(float fadeDuration)
+    {
+        float startTime = Time.time;
+        float endTime = startTime + fadeDuration;
+        float currentTime = startTime;
+        Color color = spriteRenderer.color;
+        var wait = new WaitForEndOfFrame();
+        
+        while (currentTime < endTime)
+        {
+            float alpha = (endTime - currentTime) / fadeDuration;
+            color.a = alpha * alpha;
+            spriteRenderer.color = color;
+            yield return wait;
+            currentTime = Time.time;
+        }
+
+        Destroy(gameObject);
+    }
 
     /// <summary>
     /// Set velocity for next frame.
