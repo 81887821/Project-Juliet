@@ -17,6 +17,7 @@ public static class SaveLoadManager
     static SaveLoadManager()
     {
         ReportManager.ReportCollected += Save;
+        ScenarioTriggerManager.Triggered += Save;
     }
 
     public static void Save()

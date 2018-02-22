@@ -9,6 +9,8 @@ using UnityEngine;
 /// </summary>
 public static class ScenarioTriggerManager
 {
+    public static event Action Triggered = delegate {};
+
     public static bool IsTriggered(IScenarioTrigger trigger)
     {
         return PlayerPrefs.GetInt(SaveLoadManager.SCENARIO_TRIGGER_PREFIX + trigger.TriggerId, 0) != 0;
@@ -17,5 +19,6 @@ public static class ScenarioTriggerManager
     public static void MarkTriggered(IScenarioTrigger trigger)
     {
         PlayerPrefs.SetInt(SaveLoadManager.SCENARIO_TRIGGER_PREFIX + trigger.TriggerId, 1);
+        Triggered();
     }
 }
