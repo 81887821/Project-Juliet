@@ -9,11 +9,9 @@ public static class ReportManager
     public static event Action ReportCollected = delegate {};
 
     private static List<string> sceneList = new List<string>();
-    /// <summary>
-    /// Key is stage name.
-    /// Value is bitwise or-ed collected report numbers.
-    /// </summary>
-    private static Dictionary<string, int> collectedReports = new Dictionary<string, int>();
+
+    // Report collection is saved to PlayerPrefs.
+    // Key is stage name, value is bitwise or-ed collected report numbers.
 
     public static bool IsCollected(string stageName, int reportNumber)
     {
