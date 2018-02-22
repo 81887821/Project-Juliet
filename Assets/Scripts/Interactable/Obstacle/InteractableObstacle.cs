@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakableWall : MonoBehaviour, IInteractable
+public class InteractableObstacle : MonoBehaviour, IInteractable
 {
+    public int Damage = 1;
     public int CurrentHealth = 1;
 
     public void Die()
@@ -14,7 +15,7 @@ public class BreakableWall : MonoBehaviour, IInteractable
 
     public void OnAttack(IInteractable target)
     {
-        throw new InvalidOperationException("Wall cannot attack.");
+        target.OnDamaged(this, Damage);
     }
 
     public void OnDamaged(IInteractable attacker, int damage)
@@ -27,7 +28,7 @@ public class BreakableWall : MonoBehaviour, IInteractable
 
     public void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
     {
-        // Wall ignores knockback.
+        // Obstacle ignores knockback.
         OnDamaged(attacker, damage);
     }
 }
