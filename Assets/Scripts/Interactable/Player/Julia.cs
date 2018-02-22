@@ -7,12 +7,14 @@ public class Julia : PlayerBase
 {
     private GameObject jumpDownAttackDetector;
     private GameObject rollingAttackDetector;
+    private JuliaEffects effects;
 
     protected override void Awake()
     {
         base.Awake();
         jumpDownAttackDetector = transform.Find("JumpDownAttackDetector").gameObject;
         rollingAttackDetector = transform.Find("RollingAttackDetector").gameObject;
+        effects = GetComponentInChildren<JuliaEffects>();
     }
 
     protected override void Update()
@@ -137,6 +139,7 @@ public class Julia : PlayerBase
                 break;
             case PlayerState.Rolling:
                 rollingAttackDetector.SetActive(false);
+                effects.SetRollingEffects(false);
                 break;
         }
 
@@ -160,6 +163,7 @@ public class Julia : PlayerBase
                 break;
             case PlayerState.Rolling:
                 rollingAttackDetector.SetActive(true);
+                effects.SetRollingEffects(true);
                 break;
             case PlayerState.SuperJump:
                 SuperJump();
