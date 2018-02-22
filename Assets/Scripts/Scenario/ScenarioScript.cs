@@ -26,7 +26,9 @@ public class ScenarioScript : ScriptableObject
         /// If no player character is instantiated in current game scene, small form image will be used.
         /// </summary>
         JuliettCurrentForm,
-        Romeo
+        Romeo,
+        Researcher,
+        Guard
     }
 
     [Serializable]

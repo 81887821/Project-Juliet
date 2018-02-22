@@ -19,8 +19,16 @@ public class DialogueManager : MonoBehaviour
     public Text NameText;
     public Text DialogueText;
     public float TextInterval = 0.1f;
+    public float DelayAfterSentence = 1f;
     [Header("Image")]
+    public GameObject Profile;
     public Image CharacterImage;
+    [Space]
+    public Sprite JuliaSprite;
+    public Sprite JuliettSprite;
+    public Sprite RomeoSprite;
+    public Sprite ResearcherSprite;
+    public Sprite GuardSprite;
 
     public bool IsOpen
     {
@@ -40,7 +48,6 @@ public class DialogueManager : MonoBehaviour
 
     private Animator animator;
     private bool isOpen = false;
-    private WaitForSeconds textShowInterval;
 
     private void Awake()
     {
@@ -60,22 +67,99 @@ public class DialogueManager : MonoBehaviour
         if (!IsOpen)
             IsOpen = true;
 
-        // TODO : Show character.
+        UpdateCharacterName(character);
+        UpdateProfileImage(character);
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
+    }
+
+    private void UpdateCharacterName(ScenarioScript.Character character)
+    {
+        string name;
+
+        switch (character)
+        {
+            case ScenarioScript.Character.Julia:
+            case ScenarioScript.Character.Juliett:
+            case ScenarioScript.Character.JuliettCurrentForm:
+                name = "Juliett";
+                break;
+            case ScenarioScript.Character.Romeo:
+                name = "Romeo";
+                break;
+            case ScenarioScript.Character.Researcher:
+                name = "Researcher";
+                break;
+            case ScenarioScript.Character.Guard:
+                name = "Guard";
+                break;
+            default:
+                Debug.LogError("Unknown character : " + character);
+                return;
+        }
+
+        NameText.text = name;
+    }
+
+    private void UpdateProfileImage(ScenarioScript.Character character)
+    {
+        bool showProfile = true;
+        Sprite characterSprite = null;
+
+        switch (character)
+        {
+            case ScenarioScript.Character.None:
+                showProfile = false;
+                break;
+            case ScenarioScript.Character.Julia:
+                characterSprite = JuliaSprite;
+                break;
+            case ScenarioScript.Character.Juliett:
+                characterSprite = JuliettSprite;
+                break;
+            case ScenarioScript.Character.JuliettCurrentForm:
+                try
+                {
+                    if (PlayerData.Instance.IsSmallForm)
+                        characterSprite = JuliaSprite;
+                    else
+                        characterSprite = JuliettSprite;
+                }
+                catch (Exception)
+                {
+                    characterSprite = JuliaSprite;
+                }
+                break;
+            case ScenarioScript.Character.Romeo:
+                characterSprite = RomeoSprite;
+                break;
+            case ScenarioScript.Character.Researcher:
+                characterSprite = ResearcherSprite;
+                break;
+            case ScenarioScript.Character.Guard:
+                characterSprite = GuardSprite;
+                break;
+            default:
+                Debug.LogError("Unknown character : " + character);
+                return;
+        }
+
+        Profile.SetActive(showProfile);
+        if (showProfile)
+            CharacterImage.sprite = characterSprite;
     }
 
     IEnumerator TypeSentence(string sentence)
     {
         DialogueText.text = string.Empty;
-        textShowInterval = new WaitForSeconds(TextInterval);
 
         foreach (char letter in sentence)
         {
             DialogueText.text += letter;
-            yield return textShowInterval;
+            yield return new WaitForSecondsRealtime(TextInterval);
         }
 
+        yield return new WaitForSecondsRealtime(DelayAfterSentence);
         SentenceFinished();
     }
 }

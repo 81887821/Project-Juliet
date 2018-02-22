@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScenarioInterpreter : MonoBehaviour
 {
@@ -83,8 +85,45 @@ public class ScenarioInterpreter : MonoBehaviour
             ScriptFinished();
     }
 
+    #region Scenario directives
     private void RunScenarioDirective(string directive)
     {
-        Debug.LogWarningFormat("\"{0}\" is not a valid scenario directive.", directive);
+        try
+        {
+            string[] parsedDirective = ParseScenarioDirective(directive);
+
+            switch (parsedDirective[0])
+            {
+                case "scene":
+                    if (HandleSceneDirective(parsedDirective))
+                        return;
+                    break;
+            }
+            Debug.LogWarningFormat("\"{0}\" is not a valid scenario directive.", directive);
+        }
+        catch (Exception e)
+        {
+            Debug.LogErrorFormat("Exception on processing directive \"{0}\" : {1}", directive, e.Message);
+        }
     }
+
+    private Regex parser = new Regex("(?<match>[^\\s\"]+)|\"(?<match>[^\"]*)\"");
+
+    private string[] ParseScenarioDirective(string directive)
+    {
+        return parser.Matches(directive).Cast<Match>().Select(m => m.Groups["match"].Value).ToArray();
+    }
+
+    private bool HandleSceneDirective(string[] parsedDirective)
+    {
+        switch (parsedDirective[1])
+        {
+            case "load":
+                SceneManager.LoadScene(parsedDirective[2]);
+                return true;
+            default:
+                return false;
+        }
+    }
+    #endregion
 }
