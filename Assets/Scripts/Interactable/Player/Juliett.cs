@@ -13,6 +13,7 @@ public class Juliett : PlayerBase
 
     private GameObject[] normalAttackDetectors = new GameObject[4];
     private GameObject uppercutDetector;
+    private JuliettEffects effects;
 
     protected override void Awake()
     {
@@ -20,6 +21,7 @@ public class Juliett : PlayerBase
         for (int i = 0; i < 4; i++)
             normalAttackDetectors[i] = transform.Find(string.Format("Attack{0}Detector", i + 1)).gameObject;
         uppercutDetector = transform.Find("UppercutDetector").gameObject;
+        effects = GetComponentInChildren<JuliettEffects>();
     }
 
     protected override void Update()
@@ -157,11 +159,13 @@ public class Juliett : PlayerBase
                 velocity += playerData.AccelerationOnAttack[newState - PlayerState.Attack1];
                 horizontalMovementEnabled = false;
                 normalAttackDetectors[newState - PlayerState.Attack1].SetActive(true);
+                effects.PlayAttackEffects(newState - PlayerState.Attack1, HeadingRight);
                 break;
             case PlayerState.Uppercut:
                 stateEndTime = Time.time + playerData.UppercutDuration;
                 horizontalMovementEnabled = false;
                 uppercutDetector.SetActive(true);
+                effects.PlayUppercutEffect(HeadingRight);
                 break;
         }
     }
