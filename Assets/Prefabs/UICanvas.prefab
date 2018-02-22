@@ -753,8 +753,8 @@ MonoBehaviour:
   DelayAfterSentence: 1
   Profile: {fileID: 1583168673638494}
   CharacterImage: {fileID: 114957256890692820}
-  JuliaSprite: {fileID: 0}
-  JuliettSprite: {fileID: 21300000, guid: 6824b73ac8c83294487a44ba44b35945, type: 3}
+  JuliaSprite: {fileID: 21300000, guid: 6824b73ac8c83294487a44ba44b35945, type: 3}
+  JuliettSprite: {fileID: 21300000, guid: 47387718563c379488dcbf3d72ad93cc, type: 3}
   RomeoSprite: {fileID: 21300000, guid: 15d5bcadec2627e4d87b889e599ea97f, type: 3}
   ResearcherSprite: {fileID: 21300000, guid: c7424a2ff143493419bf2a777c4c5fd4, type: 3}
   GuardSprite: {fileID: 21300000, guid: e99cc25cf14ad7f48b3d5fc3e9fef845, type: 3}
