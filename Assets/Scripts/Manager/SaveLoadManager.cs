@@ -9,6 +9,7 @@ using System.Text;
 public static class SaveLoadManager
 {
     public const string SCENE_LIST_KEY = "Scene list";
+    public const string SCENARIO_TRIGGER_PREFIX = "ScenarioTrigger";
 
     private const string SAVE_FORMAT_VERSION_KEY = "Save format version";
     private const int SAVE_FORMAT_VERSION = 0;
@@ -20,7 +21,6 @@ public static class SaveLoadManager
 
     public static void Save()
     {
-        PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt(SAVE_FORMAT_VERSION_KEY, SAVE_FORMAT_VERSION);
         ReportManager.SetPlayerPrefs();
         PlayerPrefs.Save();
