@@ -7,11 +7,13 @@ using UnityEngine;
 public class Laser : MonoBehaviour, IInteractable
 {
     public float SpeedRelativeToJulia = 5f;
+    public float MaximumLength = 100f;
 
     private LaserController controller;
     private float speed;
-    private bool growing = true;
+    private bool stop = false;
     private List<IInteractable> attackedTargets = new List<IInteractable>();
+    private float totalGrowLength = 0f;
 
     private void Awake()
     {
@@ -26,9 +28,13 @@ public class Laser : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        if (growing)
-            controller.Grow(speed * Time.deltaTime);
-        else
+        if (totalGrowLength < MaximumLength)
+        {
+            float growLength = speed * Time.deltaTime;
+            totalGrowLength += growLength;
+            controller.Grow(growLength);
+        }
+        if (stop)
         {
             controller.Shrink(speed * Time.deltaTime);
             if (transform.localScale.x <= 0f)
@@ -38,7 +44,7 @@ public class Laser : MonoBehaviour, IInteractable
 
     public void Stop()
     {
-        growing = false;
+        stop = true;
     }
 
     public void Die()
