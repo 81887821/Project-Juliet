@@ -33,6 +33,8 @@ public class Guard : Enemy
     private Laser laser;
     private AimingLine aimingLine;
 
+    private bool attackEnabled = true;
+
     protected override void Awake()
     {
         base.Awake();
@@ -162,6 +164,9 @@ public class Guard : Enemy
                 laser.Stop();
                 laser = null;
                 break;
+            case GuardState.Hit:
+                attackEnabled = true;
+                break;
         }
 
         switch (newState)
@@ -194,9 +199,10 @@ public class Guard : Enemy
                 break;
             case GuardState.Hit:
                 stateEndTime = Time.time + HitDelay;
+                attackEnabled = false;
                 break;
             case GuardState.Dead:
-                Destroy(gameObject);
+                attackEnabled = false;
                 break;
         }
     }
@@ -206,7 +212,6 @@ public class Guard : Enemy
         switch (state)
         {
             case GuardState.Idle:
-            case GuardState.Dead:
                 animator.Play("GuardIdle");
                 break;
             case GuardState.Walking:
@@ -225,6 +230,7 @@ public class Guard : Enemy
                 animator.Play("GuardBackJump");
                 break;
             case GuardState.Hit:
+            case GuardState.Dead:
                 animator.Play("GuardHit");
                 break;
             default:
@@ -236,11 +242,13 @@ public class Guard : Enemy
     {
         nextState = GuardState.Dead;
         UpdateState();
+        base.Die();
     }
 
     public override void OnAttack(IInteractable target)
     {
-        target.OnDamaged(this, 1);
+        if (attackEnabled)
+            target.OnDamaged(this, 1);
     }
 
     public override void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
