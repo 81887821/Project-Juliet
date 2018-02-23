@@ -318,7 +318,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     {
         get
         {
-            return transformationEnabled;
+            return transformationEnabled && !playerData.IsTransformationCoolTime;
         }
     }
 

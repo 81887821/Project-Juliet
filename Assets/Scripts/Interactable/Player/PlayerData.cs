@@ -8,11 +8,12 @@ using System;
 public class PlayerData : MonoBehaviour
 {
     public delegate void PlayerTransformationHandler(bool isSmallForm);
-    public delegate void ActionChangingHandler(bool canDoSpecialAction);
+    public delegate void AvailabilityChangeHandler(bool available);
     public delegate void PlayerHPChangeHandler(int currentHealth);
 
     public event PlayerTransformationHandler PlayerTransformed = delegate {};
-    public event ActionChangingHandler AvailableActionChanged = delegate {};
+    public event AvailabilityChangeHandler SpecialActionAvailbilityChanged = delegate {};
+    public event AvailabilityChangeHandler TransformationAvailbilityChanged = delegate {};
     public event PlayerHPChangeHandler PlayerHPChanged = delegate {};
     public event Action PlayerDead = delegate {};
 
@@ -33,6 +34,7 @@ public class PlayerData : MonoBehaviour
     [Space]
     public float SpecialActionAvailableTime = .5f;
     public float DamageIgnoreDurationAfterHit = 1f;
+    public float TransformationCoolTime = .5f;
 
     [Header("Julia Actions")]
     public float MaxJumpHeight = 15;
@@ -99,12 +101,31 @@ public class PlayerData : MonoBehaviour
         set
         {
             specialActionAvailable = value;
-            AvailableActionChanged(value);
+            SpecialActionAvailbilityChanged(value);
 
             if (specialActionAvailable)
                 specialActionTimer = StartCoroutine(SpecialActionTimer());
             else if (specialActionTimer != null)
                 StopCoroutine(specialActionTimer);
+        }
+    }
+    public bool IsTransformationCoolTime
+    {
+        get
+        {
+            return isTransformationCoolTime;
+        }
+
+        set
+        {
+            isTransformationCoolTime = value;
+            TransformationAvailbilityChanged(!value);
+
+            if (transformationCoolTimeTimer != null)
+                StopCoroutine(transformationCoolTimeTimer);
+
+            if (value)
+                StartCoroutine(TransformationCoolTimeTimer());
         }
     }
 
@@ -116,6 +137,8 @@ public class PlayerData : MonoBehaviour
     private Controller2D controller;
     private bool specialActionAvailable = false;
     private Coroutine specialActionTimer = null;
+    private bool isTransformationCoolTime = false;
+    private Coroutine transformationCoolTimeTimer = null;
 
     private void Awake()
     {
@@ -161,6 +184,7 @@ public class PlayerData : MonoBehaviour
 
             PlayerTransformed(IsSmallForm);
             CanDoSpecialAction = true;
+            IsTransformationCoolTime = true;
         }
     }
 
@@ -169,5 +193,12 @@ public class PlayerData : MonoBehaviour
         yield return new WaitForSeconds(SpecialActionAvailableTime);
         specialActionTimer = null;
         CanDoSpecialAction = false;
+    }
+
+    private IEnumerator TransformationCoolTimeTimer()
+    {
+        yield return new WaitForSeconds(TransformationCoolTime);
+        transformationCoolTimeTimer = null;
+        IsTransformationCoolTime = false;
     }
 }

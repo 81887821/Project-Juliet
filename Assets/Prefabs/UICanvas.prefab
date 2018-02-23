@@ -1065,6 +1065,7 @@ MonoBehaviour:
   MovementScrollbar: {fileID: 114189077884028130}
   ActionButton: {fileID: 114120330260711004}
   TransformationButton: {fileID: 114795753113225952}
+  TransformationUnavailableColor: {r: 1, g: 0.15686275, b: 0.15686275, a: 0.24705882}
   JuliaToJuliettButtonSprite: {fileID: 21300000, guid: 2fbc9c5392a9eb74ab65393ea29cf542,
     type: 3}
   JuliettToJuliaButtonSprite: {fileID: 21300000, guid: 955c062ddcf33774e847525c42cb9051,

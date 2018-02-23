@@ -25,6 +25,7 @@ public class InGameUIManager : MonoBehaviour
     [Header("Buttons")]
     public Button ActionButton;
     public Button TransformationButton;
+    public Color TransformationUnavailableColor;
 
     [Header("Transformation Button Images")]
     public Sprite JuliaToJuliettButtonSprite;
@@ -85,6 +86,7 @@ public class InGameUIManager : MonoBehaviour
 
     private bool playerIsSmallForm = true;
     private bool playerCanDoSpecialAction = false;
+    private bool playerCanTransform = true;
 
     private bool PlayerIsSmallForm
     {
@@ -107,6 +109,19 @@ public class InGameUIManager : MonoBehaviour
         set
         {
             playerCanDoSpecialAction = value;
+            UpdateButtonImages();
+        }
+    }
+    private bool PlayerCanTransform
+    {
+        get
+        {
+            return playerCanTransform;
+        }
+
+        set
+        {
+            playerCanTransform = value;
             UpdateButtonImages();
         }
     }
@@ -144,7 +159,8 @@ public class InGameUIManager : MonoBehaviour
         InitUIElements();
 
         PlayerData player = PlayerData.Instance;
-        player.AvailableActionChanged += (canDoSpecialAction) => PlayerCanDoSpecialAction = canDoSpecialAction;
+        player.SpecialActionAvailbilityChanged += (canDoSpecialAction) => PlayerCanDoSpecialAction = canDoSpecialAction;
+        player.TransformationAvailbilityChanged += (canTransform) => PlayerCanTransform = canTransform;
         player.PlayerTransformed += (isSmallForm) => PlayerIsSmallForm = isSmallForm;
         player.PlayerHPChanged += SetCurrentHeartNum;
         player.PlayerDead += () => UIMode = Mode.GameOver;
@@ -219,6 +235,11 @@ public class InGameUIManager : MonoBehaviour
             else
                 ActionButton.image.sprite = AttackButtonSprite;
         }
+
+        if (PlayerCanTransform)
+            TransformationButton.image.color = Color.white;
+        else
+            TransformationButton.image.color = TransformationUnavailableColor;
     }
 
     private void SetUIVisibility(bool visible)
