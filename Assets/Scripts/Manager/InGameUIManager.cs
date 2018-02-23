@@ -190,6 +190,11 @@ public class InGameUIManager : MonoBehaviour
         ReportManager.ReportCollected += SetReportSprites;
     }
 
+    private void OnDestroy()
+    {
+        ReportManager.ReportCollected -= SetReportSprites;
+    }
+
     public void InitUIElements()
     {
         //0.5f = Center, 0 = Left, 1 = Right
