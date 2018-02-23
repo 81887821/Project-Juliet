@@ -351,7 +351,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
         spriteRenderer.color = original;
         ignoreDamage = false;
-        transformationEnabled = true; // Remove this code with caution. ignoreDamage flag must be unset before transformation, since this coroutine will not be send to Player class of another form.
+        transformationEnabled = true; // Remove this code with caution. ignoreDamage flag must be unset before transformation, since this coroutine will not be sent to Player class of the other form.
     }
 
     private void CalculateVelocity()
@@ -446,8 +446,8 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
     public virtual void Die()
     {
+        playerData.CurrentHealth = 0;
         nextState = PlayerState.GameOver;
         UpdateState();
-        Destroy(playerTransform.gameObject, 5f);
     }
 }

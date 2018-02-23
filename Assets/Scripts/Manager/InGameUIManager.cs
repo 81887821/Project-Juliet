@@ -10,6 +10,8 @@ using UnityEngine.UI;
 //Singleton Class
 public class InGameUIManager : MonoBehaviour
 {
+    public enum Mode { None, Normal, Hidden, GameOver, Option }
+
     public static InGameUIManager Instance
     {
         get;
@@ -42,9 +44,41 @@ public class InGameUIManager : MonoBehaviour
     public Sprite EmptyReportImage;
     public Sprite CollectedReportImage;
 
-    [Header("Health & Diary Set")]
+    [Header("Child objects")]
     public GameObject HeartParentObject; //Object Which Contains heart Objects
-    public GameObject DiaryParentObject; //Object Which Contains diary Objects
+    public GameObject ReportParentObject; //Object Which Contains diary Objects
+    public GameObject GameOverMenu;
+
+    public Mode UIMode
+    {
+        get
+        {
+            return mode;
+        }
+
+        set
+        {
+            if (mode != value)
+            {
+                mode = value;
+
+                switch (mode)
+                {
+                    case Mode.Normal:
+                        SetUIVisibility(true);
+                        break;
+                    case Mode.Hidden:
+                        SetUIVisibility(false);
+                        break;
+                    case Mode.GameOver:
+                        GameOverMenu.SetActive(true);
+                        SetUIVisibility(false);
+                        break;
+                }
+            }
+        }
+    }
+    private Mode mode = Mode.Normal;
 
     private List<Image> heartImageList = new List<Image>();
     private List<Image> reportImageList = new List<Image>();
@@ -96,7 +130,7 @@ public class InGameUIManager : MonoBehaviour
             }
         }
 
-        foreach (var itr in DiaryParentObject.GetComponentsInChildren<Image>())
+        foreach (var itr in ReportParentObject.GetComponentsInChildren<Image>())
         {
             if (itr != null)
             {
@@ -113,6 +147,7 @@ public class InGameUIManager : MonoBehaviour
         player.AvailableActionChanged += (canDoSpecialAction) => PlayerCanDoSpecialAction = canDoSpecialAction;
         player.PlayerTransformed += (isSmallForm) => PlayerIsSmallForm = isSmallForm;
         player.PlayerHPChanged += SetCurrentHeartNum;
+        player.PlayerDead += () => UIMode = Mode.GameOver;
 
         ReportManager.ReportCollected += SetReportSprites;
     }
@@ -184,5 +219,14 @@ public class InGameUIManager : MonoBehaviour
             else
                 ActionButton.image.sprite = AttackButtonSprite;
         }
+    }
+
+    private void SetUIVisibility(bool visible)
+    {
+        MovementScrollbar.gameObject.SetActive(visible);
+        ActionButton.gameObject.SetActive(visible);
+        TransformationButton.gameObject.SetActive(visible);
+        HeartParentObject.SetActive(visible);
+        ReportParentObject.SetActive(visible);
     }
 }

@@ -15,6 +15,11 @@ public class StageManager : MonoBehaviour
         get;
         private set;
     }
+    public int StageBuildIndex
+    {
+        get;
+        private set;
+    }
 
     private void Awake()
     {
@@ -26,7 +31,23 @@ public class StageManager : MonoBehaviour
         }
 
         Instance = this;
-        StageName = SceneManager.GetActiveScene().name;
+        Scene currentScene = SceneManager.GetActiveScene();
+        StageName = currentScene.name;
+        StageBuildIndex = currentScene.buildIndex;
         SaveLoadManager.Load();
+    }
+
+    public void RestartCurrentStage()
+    {
+        SceneManager.LoadScene(StageBuildIndex);
+    }
+
+    /// <summary>
+    /// Stop current stage and go back to main menu.
+    /// </summary>
+    public void LoadMainMenu()
+    {
+        // TODO : Load main menu
+        Application.Quit();
     }
 }

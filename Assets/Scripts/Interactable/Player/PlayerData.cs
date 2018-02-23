@@ -11,9 +11,10 @@ public class PlayerData : MonoBehaviour
     public delegate void ActionChangingHandler(bool canDoSpecialAction);
     public delegate void PlayerHPChangeHandler(int currentHealth);
 
-    public event PlayerTransformationHandler PlayerTransformed;
-    public event ActionChangingHandler AvailableActionChanged;
-    public event PlayerHPChangeHandler PlayerHPChanged;
+    public event PlayerTransformationHandler PlayerTransformed = delegate {};
+    public event ActionChangingHandler AvailableActionChanged = delegate {};
+    public event PlayerHPChangeHandler PlayerHPChanged = delegate {};
+    public event Action PlayerDead = delegate {};
 
     public static PlayerData Instance
     {
@@ -86,6 +87,8 @@ public class PlayerData : MonoBehaviour
         {
             currentHealth = value;
             PlayerHPChanged(value);
+            if (currentHealth <= 0)
+                PlayerDead();
         }
     }
 
