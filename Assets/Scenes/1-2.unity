@@ -1297,7 +1297,7 @@ MonoBehaviour:
   InteractableMask:
     serializedVersion: 2
     m_Bits: 256
-  Script: {fileID: 11400000, guid: 087fc22e479ae4443b00f60a77792b79, type: 2}
+  Script: {fileID: 11400000, guid: 364ca6553c30cec47875b343e44bf568, type: 2}
   Mode: 2
   MinimumTriggerInterval: 0.5
 --- !u!61 &475171520
