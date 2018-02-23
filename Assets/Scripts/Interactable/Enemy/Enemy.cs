@@ -65,6 +65,8 @@ public abstract class Enemy : MonoBehaviour, IInteractable
 
     protected virtual void Start()
     {
+        StageManager.Instance.GameStateChanged += OnGameStateChanged;
+
         maxSpeed = PlayerData.Instance.JuliaMoveSpeed * SpeedRelativeToJulia;
     }
 
@@ -77,6 +79,16 @@ public abstract class Enemy : MonoBehaviour, IInteractable
         {
             velocity.y = 0;
         }
+    }
+
+    protected virtual void OnDestroy()
+    {
+        StageManager.Instance.GameStateChanged -= OnGameStateChanged;
+    }
+
+    protected virtual void OnGameStateChanged(bool gamePaused)
+    {
+        enabled = !gamePaused;
     }
 
     public abstract void OnAttack(IInteractable target);

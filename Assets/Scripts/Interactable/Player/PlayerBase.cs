@@ -132,11 +132,24 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
     protected virtual void Start()
     {
+        StageManager.Instance.GameStateChanged += OnGameStateChanged;
+
         gravity = -(8 * playerData.MaxJumpHeight) / Mathf.Pow(playerData.FloatingTime, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * (playerData.FloatingTime / 2);
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * playerData.MinJumpHeight);
 
         moveSpeed = GetMoveSpeed();
+    }
+
+    protected virtual void OnDestroy()
+    {
+        StageManager.Instance.GameStateChanged -= OnGameStateChanged;
+    }
+
+    protected virtual void OnGameStateChanged(bool gamePaused)
+    {
+        if (isActive)
+            enabled = !gamePaused;
     }
 
     protected virtual void Update()
@@ -159,6 +172,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
         UpdateState();
     }
+
 
     protected void UpdateState()
     {

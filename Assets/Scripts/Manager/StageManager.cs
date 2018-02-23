@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class StageManager : MonoBehaviour
 {
+    public delegate void GameStateChangeHandler(bool gamePaused);
+    public event GameStateChangeHandler GameStateChanged = delegate {};
+
     public static StageManager Instance
     {
         get;
@@ -50,4 +53,30 @@ public class StageManager : MonoBehaviour
         // TODO : Load main menu
         Application.Quit();
     }
+
+    #region Pause and resume
+    private float previousTimeScale = 1f;
+    private bool paused = false;
+
+    public void Pause()
+    {
+        if (!paused)
+        {
+            paused = true;
+            previousTimeScale = Time.timeScale;
+            Time.timeScale = 0f;
+            GameStateChanged(true);
+        }
+    }
+
+    public void Resume()
+    {
+        if (paused)
+        {
+            paused = false;
+            Time.timeScale = previousTimeScale;
+            GameStateChanged(false);
+        }
+    }
+    #endregion
 }
