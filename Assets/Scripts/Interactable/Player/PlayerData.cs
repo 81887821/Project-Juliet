@@ -31,9 +31,7 @@ public class PlayerData : MonoBehaviour
     public float KnockbackTime = .3f;
 
     [Space]
-    public float TotalSpecialActionAvailableTime = .5f;
-    public float CancelableSpecialActionAvailableTime = .3f;
-    public float TransformationDelayTime = .2f;
+    public float SpecialActionAvailableTime = .5f;
     public float DamageIgnoreDurationAfterHit = 1f;
 
     [Header("Julia Actions")]
@@ -109,10 +107,6 @@ public class PlayerData : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-#if DEBUG
-        Debug.Assert(CancelableSpecialActionAvailableTime <= TotalSpecialActionAvailableTime, "Cancelable special action available time cannot be larger than total special action available time.");
-#endif
 
         julia = GetComponentInChildren<Julia>();
         juliett = GetComponentInChildren<Juliett>();

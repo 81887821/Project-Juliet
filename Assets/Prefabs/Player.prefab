@@ -1867,9 +1867,7 @@ MonoBehaviour:
   MaxHealth: 6
   Knockback: {x: 50, y: 15}
   KnockbackTime: 0.3
-  TotalSpecialActionAvailableTime: 0.5
-  CancelableSpecialActionAvailableTime: 0.3
-  TransformationDelayTime: 0.2
+  SpecialActionAvailableTime: 0.5
   DamageIgnoreDurationAfterHit: 1
   MaxJumpHeight: 15
   MinJumpHeight: 4

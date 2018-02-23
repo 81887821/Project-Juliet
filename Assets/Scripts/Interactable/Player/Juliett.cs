@@ -42,10 +42,6 @@ public class Juliett : PlayerBase
             case PlayerState.Attack3:
                 attackContinue = true;
                 break;
-            case PlayerState.SpecialActionReady:
-            case PlayerState.CancelableSpecialActionReady:
-                nextState = PlayerState.Uppercut;
-                break;
         }
     }
 
@@ -59,11 +55,9 @@ public class Juliett : PlayerBase
         switch (state)
         {
             case PlayerState.Idle:
-            case PlayerState.PostTransformationDelay:
                 animator.Play("JuliettIdle");
                 break;
             case PlayerState.JumpingDown:
-            case PlayerState.SpecialJumpingDown:
                 animator.Play("JuliettJumpDown");
                 break;
             case PlayerState.Walking:
@@ -80,10 +74,6 @@ public class Juliett : PlayerBase
                 break;
             case PlayerState.Attack4:
                 animator.Play("JuliettAttack4");
-                break;
-            case PlayerState.SpecialActionReady:
-            case PlayerState.CancelableSpecialActionReady:
-                animator.Play("JuliettUppercutPrepare");
                 break;
             case PlayerState.Uppercut:
                 animator.Play("JuliettUppercut");
@@ -201,6 +191,21 @@ public class Juliett : PlayerBase
             default:
                 Debug.LogWarning("Attack detected on non-attacking state : " + state);
                 break;
+        }
+    }
+
+    protected override bool IsAllowedState(PlayerState state)
+    {
+        switch (state)
+        {
+            case PlayerState.Attack1:
+            case PlayerState.Attack2:
+            case PlayerState.Attack3:
+            case PlayerState.Attack4:
+            case PlayerState.Uppercut:
+                return true;
+            default:
+                return base.IsAllowedState(state);
         }
     }
 }

@@ -31,10 +31,6 @@ public class Julia : PlayerBase
             case PlayerState.WallStick:
                 nextState = PlayerState.JumpingUp;
                 break;
-            case PlayerState.SpecialActionReady:
-            case PlayerState.CancelableSpecialActionReady:
-                nextState = PlayerState.SuperJump;
-                break;
         }
     }
 
@@ -48,22 +44,16 @@ public class Julia : PlayerBase
         switch (state)
         {
             case PlayerState.Idle:
-            case PlayerState.PostTransformationDelay:
                 animator.Play("JuliaIdle");
                 break;
             case PlayerState.JumpingUp:
                 animator.Play("JuliaJumpUp");
                 break;
             case PlayerState.JumpingDown:
-            case PlayerState.SpecialJumpingDown:
                 animator.Play("JuliaJumpDownPrepare");
                 break;
             case PlayerState.Walking:
                 animator.Play("JuliaWalk");
-                break;
-            case PlayerState.SpecialActionReady:
-            case PlayerState.CancelableSpecialActionReady:
-                animator.Play("JuliaSuperJumpPrepare");
                 break;
             case PlayerState.SuperJump:
                 animator.Play("JuliaSuperJump");
@@ -92,7 +82,6 @@ public class Julia : PlayerBase
         switch (state)
         {
             case PlayerState.JumpingDown:
-            case PlayerState.SpecialJumpingDown:
                 if (!controller.Collisions.below && controller.Collisions.front.Contains("Obstacle"))
                     return PlayerState.WallStick;
                 else
@@ -203,6 +192,20 @@ public class Julia : PlayerBase
             default:
                 Debug.LogWarning("Attack detected on non-attacking state : " + state);
                 break;
+        }
+    }
+
+    protected override bool IsAllowedState(PlayerState state)
+    {
+        switch (state)
+        {
+            case PlayerState.WallStick:
+            case PlayerState.Rolling:
+            case PlayerState.SuperJump:
+            case PlayerState.JumpingUp:
+                return true;
+            default:
+                return base.IsAllowedState(state);
         }
     }
 }

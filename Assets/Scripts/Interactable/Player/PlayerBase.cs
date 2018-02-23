@@ -17,18 +17,12 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         /// Special state to represent a method doesn't want to change state.
         /// </summary>
         None,
-        Idle, SpecialActionReady, CancelableSpecialActionReady, Walking, // For both
+        Idle, Walking, // For both
         Attack1, Attack2, Attack3, Attack4, // For Juliett
         JumpingDown, // For both
-        /// <summary>
-        /// Jumping down state right after transformation.
-        /// Next action can be special action.
-        /// State for both Julia and Juliett.
-        /// </summary>
-        SpecialJumpingDown,
         Uppercut, // For Juliett
         WallStick, Rolling, SuperJump, JumpingUp, // For Julia
-        PostTransformationDelay, Hit, GameOver // For both
+        Hit, GameOver // For both
     }
     protected const float EPSILON = 0.1f;
 
@@ -209,7 +203,6 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         switch (state)
         {
             case PlayerState.Idle:
-            case PlayerState.CancelableSpecialActionReady:
                 if (input.HorizontalInput != 0.0f)
                     return PlayerState.Walking;
                 else
@@ -240,28 +233,6 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
                     return PlayerState.JumpingDown;
                 else
                     return PlayerState.Idle;
-            case PlayerState.SpecialJumpingDown:
-                if (!controller.Collisions.below)
-                    return PlayerState.SpecialJumpingDown;
-                else
-                    return PlayerState.SpecialActionReady;
-            case PlayerState.SpecialActionReady:
-                if (stateEndTime > Time.time)
-                    return PlayerState.SpecialActionReady;
-                else
-                    return PlayerState.CancelableSpecialActionReady;
-            case PlayerState.CancelableSpecialActionReady:
-                if (stateEndTime > Time.time)
-                    return PlayerState.CancelableSpecialActionReady;
-                else
-                    return PlayerState.Idle;
-            case PlayerState.PostTransformationDelay:
-                if (stateEndTime > Time.time)
-                    return PlayerState.PostTransformationDelay;
-                else if (controller.Collisions.below)
-                    return PlayerState.SpecialActionReady;
-                else
-                    return PlayerState.SpecialJumpingDown;
             case PlayerState.Hit:
                 if (stateEndTime > Time.time)
                     return PlayerState.Hit;
@@ -283,18 +254,6 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     {
         switch (oldState)
         {
-            case PlayerState.SpecialActionReady:
-                horizontalMovementEnabled = true;
-                if (newState != PlayerState.CancelableSpecialActionReady)
-                    playerData.OnSpecialActionDisabled();
-                break;
-            case PlayerState.CancelableSpecialActionReady:
-                playerData.OnSpecialActionDisabled();
-                break;
-            case PlayerState.PostTransformationDelay:
-                movementEnable = true;
-                transformationEnabled = true;
-                break;
             case PlayerState.Hit:
                 horizontalMovementEnabled = true;
                 break;
@@ -302,18 +261,6 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
 
         switch (newState)
         {
-            case PlayerState.SpecialActionReady:
-                stateEndTime = Time.time + playerData.TotalSpecialActionAvailableTime - playerData.CancelableSpecialActionAvailableTime;
-                horizontalMovementEnabled = false;
-                break;
-            case PlayerState.CancelableSpecialActionReady:
-                stateEndTime = Time.time + playerData.TotalSpecialActionAvailableTime;
-                break;
-            case PlayerState.PostTransformationDelay:
-                stateEndTime = Time.time + playerData.TransformationDelayTime;
-                transformationEnabled = false;
-                movementEnable = false;
-                break;
             case PlayerState.Hit:
                 ignoreDamage = true;
                 StartCoroutine(DamageIgnoreEffect(playerData.DamageIgnoreDurationAfterHit));
@@ -390,10 +337,12 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     /// <param name="priorCharacter">Player character before transformation.</param>
     public void OnTransformation(PlayerBase priorCharacter)
     {
+        PlayerState priorState = priorCharacter.state;
+
         horizontalMovementEnabled = true;
         HeadingRight = priorCharacter.headingRight;
 
-        priorCharacter.HandleStateTransitionSideEffect(priorCharacter.state, PlayerState.None);
+        priorCharacter.HandleStateTransitionSideEffect(priorState, PlayerState.None);
         horizontalMovementEnabled = priorCharacter.horizontalMovementEnabled;
         ignoreDamage = priorCharacter.ignoreDamage;
 
@@ -403,7 +352,10 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         timeToWallUnstick = priorCharacter.timeToWallUnstick;
 
         state = PlayerState.None;
-        nextState = PlayerState.PostTransformationDelay;
+        if (IsAllowedState(priorState))
+            nextState = priorState;
+        else
+            nextState = PlayerState.Idle;
 
         UpdateDirection();
 
@@ -412,6 +364,26 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         UpdateAnimationState(state);
 
         nextState = PlayerState.None;
+    }
+
+    /// <summary>
+    /// Check if given state is allowed to current character form.
+    /// </summary>
+    /// <param name="state">State to check.</param>
+    /// <returns>True if the state is allowed, false otherwise.</returns>
+    protected virtual bool IsAllowedState(PlayerState state)
+    {
+        switch (state)
+        {
+            case PlayerState.Idle:
+            case PlayerState.Walking:
+            case PlayerState.JumpingDown:
+            case PlayerState.Hit:
+            case PlayerState.GameOver:
+                return true;
+            default:
+                return false;
+        }
     }
 
     public void OnDamaged(IInteractable attacker, int damage)
