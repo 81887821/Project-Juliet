@@ -6,7 +6,7 @@ public class CameraMovement : MonoBehaviour
 {
     public Transform TraceTarget;
 
-    private void Update()
+    private void LateUpdate()
     {
         transform.position = new Vector3(TraceTarget.position.x, TraceTarget.position.y + 9f, -10f);
     }
