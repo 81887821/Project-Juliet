@@ -20,6 +20,7 @@ public class DialogueManager : MonoBehaviour
     public Text DialogueText;
     public float TextInterval = 0.1f;
     public float DelayAfterSentence = 1f;
+    public bool UseScaledTime = true;
     [Header("Image")]
     public GameObject Profile;
     public Image CharacterImage;
@@ -156,10 +157,16 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in sentence)
         {
             DialogueText.text += letter;
-            yield return new WaitForSecondsRealtime(TextInterval);
+            if (UseScaledTime)
+                yield return new WaitForSeconds(TextInterval);
+            else
+                yield return new WaitForSecondsRealtime(TextInterval);
         }
 
-        yield return new WaitForSecondsRealtime(DelayAfterSentence);
+        if (UseScaledTime)
+            yield return new WaitForSeconds(DelayAfterSentence);
+        else
+            yield return new WaitForSecondsRealtime(DelayAfterSentence);
         SentenceFinished();
     }
 }
