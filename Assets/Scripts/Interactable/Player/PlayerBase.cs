@@ -117,7 +117,6 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     /// Time variable for states which last fixed amount of time.
     /// </summary>
     protected float stateEndTime;
-    protected float specialActionAvailableTime;
     #endregion
 
     protected virtual void Awake()

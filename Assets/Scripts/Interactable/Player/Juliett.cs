@@ -35,7 +35,10 @@ public class Juliett : PlayerBase
         {
             case PlayerState.Idle:
             case PlayerState.Walking:
-                nextState = PlayerState.Attack1;
+                if (playerData.CanDoSpecialAction)
+                    nextState = PlayerState.Uppercut;
+                else
+                    nextState = PlayerState.Attack1;
                 break;
             case PlayerState.Attack1:
             case PlayerState.Attack2:
@@ -156,6 +159,7 @@ public class Juliett : PlayerBase
                 horizontalMovementEnabled = false;
                 uppercutDetector.SetActive(true);
                 effects.PlayUppercutEffect(HeadingRight);
+                playerData.CanDoSpecialAction = false;
                 break;
         }
     }

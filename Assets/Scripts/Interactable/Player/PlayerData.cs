@@ -89,6 +89,24 @@ public class PlayerData : MonoBehaviour
                 PlayerDead();
         }
     }
+    public bool CanDoSpecialAction
+    {
+        get
+        {
+            return specialActionAvailable;
+        }
+
+        set
+        {
+            specialActionAvailable = value;
+            AvailableActionChanged(value);
+
+            if (specialActionAvailable)
+                specialActionTimer = StartCoroutine(SpecialActionTimer());
+            else if (specialActionTimer != null)
+                StopCoroutine(specialActionTimer);
+        }
+    }
 
     private int currentHealth;
 
@@ -96,6 +114,8 @@ public class PlayerData : MonoBehaviour
     private Juliett juliett;
     private BoxCollider2D physicalCollider;
     private Controller2D controller;
+    private bool specialActionAvailable = false;
+    private Coroutine specialActionTimer = null;
 
     private void Awake()
     {
@@ -140,15 +160,14 @@ public class PlayerData : MonoBehaviour
             CurrentPlayerCharacter.OnTransformation(WaitingPlayerCharacter);
 
             PlayerTransformed(IsSmallForm);
-            AvailableActionChanged(true);
+            CanDoSpecialAction = true;
         }
     }
 
-    /// <summary>
-    /// Method to be called by Julia and Juliett, when speical action is disabled.
-    /// </summary>
-    public void OnSpecialActionDisabled()
+    private IEnumerator SpecialActionTimer()
     {
-        AvailableActionChanged(false);
+        yield return new WaitForSeconds(SpecialActionAvailableTime);
+        specialActionTimer = null;
+        CanDoSpecialAction = false;
     }
 }

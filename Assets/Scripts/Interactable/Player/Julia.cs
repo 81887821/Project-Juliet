@@ -29,7 +29,10 @@ public class Julia : PlayerBase
             case PlayerState.Idle:
             case PlayerState.Walking:
             case PlayerState.WallStick:
-                nextState = PlayerState.JumpingUp;
+                if (playerData.CanDoSpecialAction)
+                    nextState = PlayerState.SuperJump;
+                else
+                    nextState = PlayerState.JumpingUp;
                 break;
         }
     }
@@ -156,6 +159,7 @@ public class Julia : PlayerBase
                 break;
             case PlayerState.SuperJump:
                 SuperJump();
+                playerData.CanDoSpecialAction = false;
                 break;
         }
     }
