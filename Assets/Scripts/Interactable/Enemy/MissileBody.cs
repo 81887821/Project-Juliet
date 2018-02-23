@@ -46,16 +46,11 @@ public class MissileBody : Enemy
 
     public override void Die()
     {
-        Die(true);
-    }
-
-    private void Die(bool destroyHead)
-    {
         hitStateEndTime = float.MaxValue;
         attackEnabled = false;
         nextHeadLaunch = float.MaxValue;
-        if (destroyHead && currentHead != null)
-            currentHead.Die();
+        if (currentHead != null)
+            currentHead.OnBodyDestroyed();
         base.Die();
     }
 
@@ -67,19 +62,14 @@ public class MissileBody : Enemy
 
     public override void OnDamaged(IInteractable attacker, int damage, Vector2 knockback)
     {
-        bool attackerOnRight = attacker.transform.position.x > transform.position.x;
-
-        HeadingRight = attackerOnRight;
-        velocity.x -= knockback.x;
-        velocity.y += knockback.y;
+        if (attacker.Equals(currentHead))
+            currentHead = null;
 
         hitStateEndTime = Time.time + 1f;
         attackEnabled = false;
         spriteRenderer.sprite = HitBodySprite;
 
-        CurrentHealth -= damage;
-        if (CurrentHealth <= 0)
-            Die(!(attacker is MissileHead));
+        base.OnDamaged(attacker, damage, knockback);
     }
 
     protected override void UpdateVelocity()

@@ -16,6 +16,7 @@ public class MissileHead : Enemy
     private HeadState nextState = HeadState.VerticalLoading;
     private Vector2 launchVelocity;
     private int[] obstacles;
+    private bool bodyDestroyed = false;
 
     protected override void Awake()
     {
@@ -106,7 +107,7 @@ public class MissileHead : Enemy
         ExplosionEffect.transform.parent = transform.parent.parent;
         ExplosionEffect.SetActive(true);
 
-        if (state <= HeadState.Waiting)
+        if (!bodyDestroyed && state <= HeadState.Waiting)
             GetComponentInParent<MissileBody>().OnDamaged(this, ExplosionDamageToBody);
 
         Destroy(gameObject);
@@ -142,5 +143,12 @@ public class MissileHead : Enemy
             default:
                 throw new Exception("Forbidden state for MissileHead : " + state);
         }
+    }
+
+    public void OnBodyDestroyed()
+    {
+        bodyDestroyed = true;
+        if (state <= HeadState.Waiting)
+            Die();
     }
 }
