@@ -10,7 +10,7 @@ using UnityEngine.UI;
 //Singleton Class
 public class InGameUIManager : MonoBehaviour
 {
-    public enum Mode { None, Normal, Hidden, GameOver, Option }
+    public enum Mode { None, Normal, Hidden, GameOver }
 
     public static InGameUIManager Instance
     {
@@ -49,6 +49,7 @@ public class InGameUIManager : MonoBehaviour
     public GameObject HeartParentObject; //Object Which Contains heart Objects
     public GameObject ReportParentObject; //Object Which Contains diary Objects
     public GameObject GameOverMenu;
+    public GameObject OptionMenu;
 
     public Mode UIMode
     {
@@ -87,6 +88,7 @@ public class InGameUIManager : MonoBehaviour
     private bool playerIsSmallForm = true;
     private bool playerCanDoSpecialAction = false;
     private bool playerCanTransform = true;
+    private bool optionOpened = false;
 
     private bool PlayerIsSmallForm
     {
@@ -123,6 +125,26 @@ public class InGameUIManager : MonoBehaviour
         {
             playerCanTransform = value;
             UpdateButtonImages();
+        }
+    }
+    public bool OptionOpened
+    {
+        get
+        {
+            return optionOpened;
+        }
+
+        set
+        {
+            if (optionOpened != value)
+            {
+                optionOpened = value;
+                OptionMenu.SetActive(value);
+                if (optionOpened)
+                    StageManager.Instance.Pause();
+                else
+                    StageManager.Instance.Resume();
+            }
         }
     }
 
