@@ -94,12 +94,12 @@ TextureImporter:
       name: joystick_0
       rect:
         serializedVersion: 2
-        x: 1034
+        x: 835
         y: 131
         width: 727
         height: 727
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
