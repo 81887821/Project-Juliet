@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0352e7c00c2c38478d4dd4bbf5c490c, type: 3}
+  m_Name: 5 walljump
+  m_EditorClassIdentifier: 
+  Dialogues:
+  - Speaker: 5
+    Sentence: "\uBCBD\uC5D0\uBD99\uC5B4 \uC810\uD504\uBC84\uD2BC\uC744 \uC5F0\uD0C0\uD558\uBA74
+      \uBCBD\uC744 \uCC28\uACE0 \uC62C\uB77C\uAC08\uC218 \uC788\uC5B4"

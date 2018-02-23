@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0352e7c00c2c38478d4dd4bbf5c490c, type: 3}
+  m_Name: 2jump
+  m_EditorClassIdentifier: 
+  Dialogues:
+  - Speaker: 5
+    Sentence: "\uC5B4\uC9C8\uB9AC\uD2F0 \uBAA8\uB4DC\uC77C\uB550 \uC624\uB978\uCABD
+      \uC544\uB798\uC758 \uC561\uC158\uBC84\uD2BC\uC73C\uB85C \uC810\uD504\uD560 \uC218
+      \uC788\uC5B4!"
