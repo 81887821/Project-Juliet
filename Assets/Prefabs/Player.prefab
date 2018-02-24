@@ -1869,6 +1869,7 @@ MonoBehaviour:
   KnockbackTime: 0.3
   SpecialActionAvailableTime: 0.5
   DamageIgnoreDurationAfterHit: 1
+  TransformationCoolTime: 0.5
   MaxJumpHeight: 15
   MinJumpHeight: 4
   FloatingTime: 0.8
@@ -1890,7 +1891,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 50, y: 0, z: 0}
   - {x: 90, y: 0, z: 0}
-  EnemyKnockbackOnUppercut: {x: 20, y: 100}
+  EnemyKnockbackOnUppercut: {x: 40, y: 100}
   EnemyKnockbackOnAttack:
   - {x: 15, y: 12}
   - {x: 20, y: 12}
