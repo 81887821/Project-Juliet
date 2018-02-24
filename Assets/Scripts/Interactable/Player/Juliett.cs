@@ -137,6 +137,7 @@ public class Juliett : PlayerBase
             case PlayerState.Uppercut:
                 horizontalMovementEnabled = true;
                 uppercutDetector.SetActive(false);
+                superArmor = false;
                 break;
         }
 
@@ -160,6 +161,7 @@ public class Juliett : PlayerBase
                 uppercutDetector.SetActive(true);
                 effects.PlayUppercutEffect(HeadingRight);
                 playerData.CanDoSpecialAction = false;
+                superArmor = true;
                 break;
         }
     }

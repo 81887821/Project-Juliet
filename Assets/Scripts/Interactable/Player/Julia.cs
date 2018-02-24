@@ -132,6 +132,10 @@ public class Julia : PlayerBase
             case PlayerState.Rolling:
                 rollingAttackDetector.SetActive(false);
                 effects.SetRollingEffects(false);
+                superArmor = false;
+                break;
+            case PlayerState.SuperJump:
+                superArmor = false;
                 break;
         }
 
@@ -156,10 +160,12 @@ public class Julia : PlayerBase
             case PlayerState.Rolling:
                 rollingAttackDetector.SetActive(true);
                 effects.SetRollingEffects(true);
+                superArmor = true;
                 break;
             case PlayerState.SuperJump:
                 SuperJump();
                 playerData.CanDoSpecialAction = false;
+                superArmor = true;
                 break;
         }
     }

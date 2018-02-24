@@ -58,6 +58,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     protected bool horizontalMovementEnabled = true;
     protected bool ignoreDamage = false;
     protected bool transformationEnabled = true;
+    protected bool superArmor = false;
 
     private bool isActive = true;
     private bool headingRight = true;
@@ -275,10 +276,8 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         switch (newState)
         {
             case PlayerState.Hit:
-                ignoreDamage = true;
                 StartCoroutine(DamageIgnoreEffect(playerData.DamageIgnoreDurationAfterHit));
                 horizontalMovementEnabled = false;
-                transformationEnabled = false;
                 stateEndTime = Time.time + playerData.KnockbackTime;
                 break;
             case PlayerState.GameOver:
@@ -297,6 +296,9 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         Color halfVisible = spriteRenderer.color;
         Color original = spriteRenderer.color;
         halfVisible.a = 0.5f;
+
+        ignoreDamage = true;
+        transformationEnabled = false;
 
         while (duration >= 0f)
         {
@@ -418,12 +420,19 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
                 return;
             }
 
-            HeadingRight = attackerOnRight;
-            velocity.x -= knockback.x;
-            velocity.y += knockback.y;
+            if (superArmor)
+            {
+                StartCoroutine(DamageIgnoreEffect(playerData.DamageIgnoreDurationAfterHit));
+            }
+            else
+            {
+                HeadingRight = attackerOnRight;
+                velocity.x -= knockback.x;
+                velocity.y += knockback.y;
 
-            nextState = PlayerState.Hit;
-            UpdateState();
+                nextState = PlayerState.Hit;
+                UpdateState();
+            }
         }
     }
 
