@@ -50,6 +50,9 @@ public class ReportWindow : PopupWindow
 
         foreach (var stage in reportCollection)
         {
+            if (stage.Value == 0)
+                continue;
+
             RectTransform stageNameText = Instantiate(ReportListStageNameTextPrefab, ReportListViewContent);
             stageNameText.GetComponent<Text>().text = stage.Key;
             stageNameText.anchoredPosition = new Vector3(0f, -totalListHeight);
