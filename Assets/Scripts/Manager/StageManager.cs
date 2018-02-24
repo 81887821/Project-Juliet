@@ -50,8 +50,7 @@ public class StageManager : MonoBehaviour
     /// </summary>
     public void LoadMainMenu()
     {
-        // TODO : Load main menu
-        Application.Quit();
+        SceneManager.LoadScene("Scenes/Main");
     }
 
     #region Pause and resume
