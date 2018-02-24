@@ -2181,12 +2181,12 @@ Prefab:
     - target: {fileID: 224556146690571840, guid: d2eddcfed7f0cb54581e16e2ee607bf7,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 224556146690571840, guid: d2eddcfed7f0cb54581e16e2ee607bf7,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 15.005862
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224428586672573442, guid: d2eddcfed7f0cb54581e16e2ee607bf7,
         type: 2}
