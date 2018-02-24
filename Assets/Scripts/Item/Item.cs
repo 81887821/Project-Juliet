@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -8,6 +9,7 @@ public abstract class Item : MonoBehaviour
 {
     public float MovingPeriod = 1f;
     public float MovingLength = 1f;
+    public UnityEvent OnItemGet;
 
     private Vector3 originalPosition;
     private float movingProgress = 0f;
@@ -46,9 +48,7 @@ public abstract class Item : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            OnItemGet();
+            OnItemGet.Invoke();
         }
     }
-
-    public abstract void OnItemGet();
 }

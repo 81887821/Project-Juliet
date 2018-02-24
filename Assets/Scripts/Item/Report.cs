@@ -5,13 +5,14 @@ using UnityEngine;
 public class Report : Item
 {
     [Range(1, 3)]
-    public int ReportNumberInScene;
+    public int ReportNumberInScene = 1;
 
     private string stageName;
 
     protected override void Awake()
     {
         base.Awake();
+        OnItemGet.AddListener(CollectReport);
     }
 
     protected void Start()
@@ -22,7 +23,7 @@ public class Report : Item
             Destroy(gameObject);
     }
 
-    public override void OnItemGet()
+    public void CollectReport()
     {
         ReportManager.MarkCollected(stageName, ReportNumberInScene);
         Destroy(gameObject);

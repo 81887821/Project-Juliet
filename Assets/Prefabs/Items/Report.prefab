@@ -101,6 +101,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovingPeriod: 2
   MovingLength: 1
+  OnItemGet:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  ReportNumberInScene: 1
 --- !u!212 &212999222359766994
 SpriteRenderer:
   m_ObjectHideFlags: 1
