@@ -46,6 +46,16 @@ public class DummyPlayerController : MonoBehaviour {
         animator = GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        StageManager.Instance.GameStateChanged += OnGameStateChanged;
+    }
+
+    private void OnDestroy()
+    {
+        StageManager.Instance.GameStateChanged -= OnGameStateChanged;
+    }
+
     private IEnumerator Move(Transform target)
     {
         float displacement = target.position.x - transform.position.x;
@@ -75,5 +85,10 @@ public class DummyPlayerController : MonoBehaviour {
 
         animator.Play("JuliaIdle");
         movingCoroutine = null;
+    }
+
+    private void OnGameStateChanged(bool gamePaused)
+    {
+        enabled = !gamePaused;
     }
 }

@@ -19,16 +19,29 @@ public class StageEntry : MonoBehaviour
 
     private void Start()
     {
-        
+        StageManager.Instance.GameStateChanged += OnGameStateChanged;
+    }
+
+    private void OnDestroy()
+    {
+        StageManager.Instance.GameStateChanged -= OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(bool gamePaused)
+    {
+        enabled = !gamePaused;
     }
 
     private void OnMouseDown()
     {
-        var player = DummyPlayerController.Instance;
+        if (enabled)
+        {
+            var player = DummyPlayerController.Instance;
 
-        if (player.TargetLocation != transform)
-            player.TargetLocation = transform;
-        else
-            SceneManager.LoadScene("Scenes/" + SceneName);
+            if (player.TargetLocation != transform)
+                player.TargetLocation = transform;
+            else
+                SceneManager.LoadScene("Scenes/" + SceneName);
+        }
     }
 }

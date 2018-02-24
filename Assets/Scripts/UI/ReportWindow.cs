@@ -16,6 +16,8 @@ public class ReportWindow : MonoBehaviour
     public RectTransform ReportListReportButtonPrefab;
     public Text ReportContentViewContent;
 
+    private bool showing = false;
+
     private void Awake()
     {
         if (Instance != null)
@@ -26,6 +28,8 @@ public class ReportWindow : MonoBehaviour
         }
 
         Instance = this;
+        if (showing)
+            StageManager.Instance.Pause();
     }
 
     private void Start()
@@ -39,6 +43,7 @@ public class ReportWindow : MonoBehaviour
     private void OnDestroy()
     {
         ReportManager.ReportCollected -= ListInitialize;
+        Close();
     }
 
     private void ListInitialize()
@@ -79,5 +84,25 @@ public class ReportWindow : MonoBehaviour
     private void CloseContent()
     {
         ReportContentViewContent.text = "Closed.";
+    }
+
+    public void Show()
+    {
+        if (!showing)
+        {
+            gameObject.SetActive(true);
+            StageManager.Instance.Pause();
+            showing = true;
+        }
+    }
+
+    public void Close()
+    {
+        if (showing)
+        {
+            gameObject.SetActive(false);
+            StageManager.Instance.Resume();
+            showing = false;
+        }
     }
 }
