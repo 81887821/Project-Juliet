@@ -2171,7 +2171,7 @@ GameObject:
   - component: {fileID: 687039489}
   - component: {fileID: 687039491}
   - component: {fileID: 687039490}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Elevator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
