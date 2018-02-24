@@ -56,27 +56,34 @@ public class StageManager : MonoBehaviour
 
     #region Pause and resume
     private float previousTimeScale = 1f;
-    private bool paused = false;
+    private int pauseRequests = 0;
 
     public void Pause()
     {
-        if (!paused)
+        if (pauseRequests <= 0)
         {
-            paused = true;
+            pauseRequests = 1;
             previousTimeScale = Time.timeScale;
             Time.timeScale = 0f;
             GameStateChanged(true);
         }
+        else
+            pauseRequests++;
     }
 
     public void Resume()
     {
-        if (paused)
+        if (pauseRequests > 0)
         {
-            paused = false;
-            Time.timeScale = previousTimeScale;
-            GameStateChanged(false);
+            pauseRequests--;
+            if (pauseRequests == 0)
+            {
+                Time.timeScale = previousTimeScale;
+                GameStateChanged(false);
+            }
         }
+        else
+            pauseRequests = 0;
     }
     #endregion
 }
