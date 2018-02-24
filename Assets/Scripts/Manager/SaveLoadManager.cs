@@ -23,6 +23,7 @@ public static class SaveLoadManager
     public static void Save()
     {
         PlayerPrefs.SetInt(SAVE_FORMAT_VERSION_KEY, SAVE_FORMAT_VERSION);
+        StageManager.SavePlayerPrefs();
         PlayerPrefs.Save();
     }
 
@@ -30,7 +31,7 @@ public static class SaveLoadManager
     {
         if (PlayerPrefs.GetInt(SAVE_FORMAT_VERSION_KEY) == SAVE_FORMAT_VERSION)
         {
-            ReportManager.LoadPlayerPrefs();
+            StageManager.LoadPlayerPrefs();
         }
         else
         {

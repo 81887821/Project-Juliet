@@ -26,4 +26,14 @@ public class SettingWindow : PopupWindow
     {
         Close();
     }
+
+    public void ExitGame()
+    {
+        StageManager.Instance.ExitGame();
+    }
+
+    public void LoadMainMenu()
+    {
+        StageManager.Instance.LoadMainMenu();
+    }
 }

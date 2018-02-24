@@ -9,8 +9,10 @@ public class StageEntry : MonoBehaviour
     public string SceneName;
     public Sprite SpriteOnStageAvailable;
     public Sprite SpriteOnStageUnavailable;
+    public bool AlwaysAvailable = false;
 
     private SpriteRenderer spriteRenderer;
+    private bool visited;
 
     private void Awake()
     {
@@ -20,6 +22,12 @@ public class StageEntry : MonoBehaviour
     private void Start()
     {
         StageManager.Instance.GameStateChanged += OnGameStateChanged;
+        visited = StageManager.Visited(SceneName);
+
+        if (AlwaysAvailable || visited)
+            spriteRenderer.sprite = SpriteOnStageAvailable;
+        else
+            spriteRenderer.sprite = SpriteOnStageUnavailable;
     }
 
     private void OnDestroy()
@@ -40,7 +48,7 @@ public class StageEntry : MonoBehaviour
 
             if (player.TargetLocation != transform)
                 player.TargetLocation = transform;
-            else
+            else if (AlwaysAvailable || visited)
                 SceneManager.LoadScene("Scenes/" + SceneName);
         }
     }

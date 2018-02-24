@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,13 @@ public class StageManager : MonoBehaviour
         get;
         private set;
     }
+    public static string[] VisitedStages
+    {
+        get
+        {
+            return sceneList.ToArray();
+        }
+    }
     public string StageName
     {
         get;
@@ -23,6 +31,8 @@ public class StageManager : MonoBehaviour
         get;
         private set;
     }
+
+    private static List<string> sceneList = new List<string>();
 
     private void Awake()
     {
@@ -38,6 +48,42 @@ public class StageManager : MonoBehaviour
         StageName = currentScene.name;
         StageBuildIndex = currentScene.buildIndex;
         SaveLoadManager.Load();
+
+        if (!sceneList.Contains(StageName))
+        {
+            sceneList.Add(StageName);
+            SaveLoadManager.Save();
+        }
+    }
+
+    public static void SavePlayerPrefs()
+    {
+        StringBuilder scenes = new StringBuilder();
+        foreach (string scene in sceneList)
+        {
+            scenes.Append(scene);
+            scenes.Append('\n');
+        }
+        PlayerPrefs.SetString(SaveLoadManager.SCENE_LIST_KEY, scenes.ToString());
+    }
+
+    public static void LoadPlayerPrefs()
+    {
+        string savedSceneList = PlayerPrefs.GetString(SaveLoadManager.SCENE_LIST_KEY, string.Empty);
+
+        sceneList.Clear();
+        if (savedSceneList != string.Empty)
+        {
+            foreach (string stageName in savedSceneList.Split('\n'))
+            {
+                sceneList.Add(stageName);
+            }
+        }
+    }
+
+    public static bool Visited(string stageName)
+    {
+        return sceneList.Contains(stageName);
     }
 
     public void RestartCurrentStage()
@@ -51,6 +97,11 @@ public class StageManager : MonoBehaviour
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("Scenes/Main");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 
     #region Pause and resume
