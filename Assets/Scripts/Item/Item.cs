@@ -46,7 +46,7 @@ public abstract class Item : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (collision.name == "Player")
         {
             OnItemGet.Invoke();
         }
