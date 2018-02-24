@@ -210,6 +210,9 @@ GameObject:
   - component: {fileID: 224324611829119760}
   - component: {fileID: 222192188974055358}
   - component: {fileID: 114246445010852346}
+  - component: {fileID: 95278776383155282}
+  - component: {fileID: 114775479442505574}
+  - component: {fileID: 114120390571547456}
   m_Layer: 5
   m_Name: DialogueBox
   m_TagString: Untagged
@@ -526,6 +529,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &95278776383155282
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1349973859126978}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 661b2358a4667fa4fa5b59c54605e178, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114003169141391938
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -632,6 +652,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114120390571547456
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1349973859126978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b21907ac91c8245b3e69bbbe3d894e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114153748696596824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1371,6 +1402,29 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114775479442505574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1349973859126978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe75eee5fc9681441868ace94b85e863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameText: {fileID: 114221669377600072}
+  DialogueText: {fileID: 114155486103556038}
+  TextInterval: 0.03
+  DelayAfterSentence: 1.5
+  UseScaledTime: 1
+  Profile: {fileID: 1493412761479156}
+  CharacterImage: {fileID: 114634160208368362}
+  JuliaSprite: {fileID: 21300000, guid: 6824b73ac8c83294487a44ba44b35945, type: 3}
+  JuliettSprite: {fileID: 21300000, guid: 47387718563c379488dcbf3d72ad93cc, type: 3}
+  RomeoSprite: {fileID: 21300000, guid: 15d5bcadec2627e4d87b889e599ea97f, type: 3}
+  ResearcherSprite: {fileID: 21300000, guid: c7424a2ff143493419bf2a777c4c5fd4, type: 3}
+  GuardSprite: {fileID: 21300000, guid: e99cc25cf14ad7f48b3d5fc3e9fef845, type: 3}
 --- !u!114 &114777601948838320
 MonoBehaviour:
   m_ObjectHideFlags: 1
