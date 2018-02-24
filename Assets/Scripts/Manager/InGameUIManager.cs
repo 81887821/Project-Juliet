@@ -88,7 +88,6 @@ public class InGameUIManager : MonoBehaviour
     private bool playerIsSmallForm = true;
     private bool playerCanDoSpecialAction = false;
     private bool playerCanTransform = true;
-    private bool optionOpened = false;
 
     private bool PlayerIsSmallForm
     {
@@ -125,26 +124,6 @@ public class InGameUIManager : MonoBehaviour
         {
             playerCanTransform = value;
             UpdateButtonImages();
-        }
-    }
-    public bool OptionOpened
-    {
-        get
-        {
-            return optionOpened;
-        }
-
-        set
-        {
-            if (optionOpened != value)
-            {
-                optionOpened = value;
-                OptionMenu.SetActive(value);
-                if (optionOpened)
-                    StageManager.Instance.Pause();
-                else
-                    StageManager.Instance.Resume();
-            }
         }
     }
 
@@ -276,5 +255,15 @@ public class InGameUIManager : MonoBehaviour
         TransformationButton.gameObject.SetActive(visible);
         HeartParentObject.SetActive(visible);
         ReportParentObject.SetActive(visible);
+    }
+
+    public void OpenReportCollections()
+    {
+        ReportWindow.Instance.Open();
+    }
+
+    public void OpenSettings()
+    {
+        SettingWindow.Instance.Open();
     }
 }

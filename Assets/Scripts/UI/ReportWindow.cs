@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ReportWindow : MonoBehaviour
+public class ReportWindow : PopupWindow
 {
     public static ReportWindow Instance
     {
@@ -15,9 +15,7 @@ public class ReportWindow : MonoBehaviour
     public RectTransform ReportListStageNameTextPrefab;
     public RectTransform ReportListReportButtonPrefab;
     public Text ReportContentViewContent;
-
-    private bool showing = false;
-
+    
     private void Awake()
     {
         if (Instance != null)
@@ -28,12 +26,11 @@ public class ReportWindow : MonoBehaviour
         }
 
         Instance = this;
-        if (showing)
-            StageManager.Instance.Pause();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         ListInitialize();
         CloseContent();
 
@@ -84,25 +81,5 @@ public class ReportWindow : MonoBehaviour
     private void CloseContent()
     {
         ReportContentViewContent.text = "Closed.";
-    }
-
-    public void Show()
-    {
-        if (!showing)
-        {
-            gameObject.SetActive(true);
-            StageManager.Instance.Pause();
-            showing = true;
-        }
-    }
-
-    public void Close()
-    {
-        if (showing)
-        {
-            gameObject.SetActive(false);
-            StageManager.Instance.Resume();
-            showing = false;
-        }
     }
 }
