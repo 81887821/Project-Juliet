@@ -9,10 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0352e7c00c2c38478d4dd4bbf5c490c, type: 3}
-  m_Name: end 1-2
+  m_Name: 1-3 start
   m_EditorClassIdentifier: 
   Dialogues:
+  - Speaker: 7
+    Sentence: "\uC2E4\uD5D8\uCCB4 10\uD638 \uC904\uB9AC\uC5E3 \uBC1C\uACAC\uD588\uC2B5\uB2C8\uB2E4.
+      \uC751\uC6D0\uC694\uCCAD \uC751\uC6D0\uC694\uCCE5. \uC81C\uC555\uC2DC\uB3C4\uD558\uACA0\uC2B5\uB2C8\uB2E4."
   - Speaker: 5
-    Sentence: "\uC88B\uC544. \uC774\uC81C \uC870\uAE08\uC774\uC57C. \uAC70\uC758 \uB2E4\uC654\uC5B4!"
-  - Speaker: 0
-    Sentence: scene load Scenes/1-3
+    Sentence: "\uAC00\uB4DC \uC796\uC544? \uC800\uB4E4\uC758 \uCD1D\uC744 \uC870\uC2EC\uD574!"
