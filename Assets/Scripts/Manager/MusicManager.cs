@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,7 +56,9 @@ public class MusicManager : MonoBehaviour
         if (instance.currentClipName == audioClipName)
         {
             if (restartCurrentClip)
-                instance.audioSource.time = 0f;
+                instance.audioSource.Play();
+            else if (!instance.audioSource.isPlaying)
+                instance.audioSource.Play();
         }
         else
         {
@@ -63,7 +66,10 @@ public class MusicManager : MonoBehaviour
                 Resources.UnloadAsset(instance.currentAudioClip);
             instance.currentClipName = audioClipName;
             instance.currentAudioClip = Resources.Load<AudioClip>(audioClipName);
+            if (instance.currentAudioClip == null)
+                throw new Exception("Cannot load audio clip : " + audioClipName);
             instance.audioSource.clip = instance.currentAudioClip;
+            instance.audioSource.Play();
         }
     }
 }

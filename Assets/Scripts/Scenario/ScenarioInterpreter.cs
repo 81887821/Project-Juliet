@@ -45,7 +45,14 @@ public class ScenarioInterpreter : MonoBehaviour
     private void Start()
     {
         dialogueManager = DialogueManager.Instance;
-        dialogueManager.SentenceFinished += ExecuteNextLine;
+        if (dialogueManager != null)
+            dialogueManager.SentenceFinished += ExecuteNextLine;
+    }
+
+    private void OnDestroy()
+    {
+        if (dialogueManager != null)
+            dialogueManager.SentenceFinished -= ExecuteNextLine;
     }
 
     public void EnqueueScript(ScenarioScript script)
@@ -67,7 +74,8 @@ public class ScenarioInterpreter : MonoBehaviour
         else
         {
             currentScript = null;
-            dialogueManager.IsOpen = false;
+            if (dialogueManager != null)
+                dialogueManager.IsOpen = false;
         }
     }
 
@@ -75,11 +83,13 @@ public class ScenarioInterpreter : MonoBehaviour
     {
         if (currentScript.MoveNext())
         {
-            var script = (ScenarioScript.Dialogue) currentScript.Current;
+            var script = (ScenarioScript.Dialogue)currentScript.Current;
             if (script.Speaker == ScenarioScript.Character.ScenarioDirective)
                 RunScenarioDirective(script.Sentence);
-            else
+            else if (dialogueManager != null)
                 dialogueManager.ShowSentence(script.Speaker, script.Sentence);
+            else
+                Debug.LogError("Dialogue manager doesn't exists.");
         }
         else
             ScriptFinished();
@@ -96,6 +106,10 @@ public class ScenarioInterpreter : MonoBehaviour
             {
                 case "scene":
                     if (HandleSceneDirective(parsedDirective))
+                        return;
+                    break;
+                case "music":
+                    if (HandleMusicDirective(parsedDirective))
                         return;
                     break;
             }
@@ -120,6 +134,21 @@ public class ScenarioInterpreter : MonoBehaviour
         {
             case "load":
                 SceneManager.LoadScene(parsedDirective[2]);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private bool HandleMusicDirective(string[] parsedDirective)
+    {
+        switch (parsedDirective[1])
+        {
+            case "play":
+                if (parsedDirective[2] == "--restart-current")
+                    MusicManager.Play(parsedDirective[3], true);
+                else
+                    MusicManager.Play(parsedDirective[2]);
                 return true;
             default:
                 return false;

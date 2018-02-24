@@ -9,11 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0352e7c00c2c38478d4dd4bbf5c490c, type: 3}
-  m_Name: 1 missile
+  m_Name: Music
   m_EditorClassIdentifier: 
   Dialogues:
   - Speaker: 0
-    Sentence: music play bensound-scifi
-  - Speaker: 5
-    Sentence: "\uC774\uC81C \uC2E4\uC804\uC774\uC57C!!! \uC77C\uB2E8 \uC800 \uC774\uC0C1\uD55C
-      \uBA38\uB9AC\uBD80\uD130 \uD53C\uD574\uC57C\uD574. \uC5C4\uCCAD \uC544\uD504\uAC70\uB4E0."
+    Sentence: music play --restart-current bensound-scifi
