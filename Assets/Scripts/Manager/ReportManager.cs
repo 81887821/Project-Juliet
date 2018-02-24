@@ -40,6 +40,7 @@ public static class ReportManager
     {
         string savedSceneList = PlayerPrefs.GetString(SaveLoadManager.SCENE_LIST_KEY, string.Empty);
 
+        sceneList.Clear();
         if (savedSceneList != string.Empty)
         {
             foreach (string stageName in savedSceneList.Split('\n'))
