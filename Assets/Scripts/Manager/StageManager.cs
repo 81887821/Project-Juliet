@@ -72,12 +72,10 @@ public class StageManager : MonoBehaviour
         string savedSceneList = PlayerPrefs.GetString(SaveLoadManager.SCENE_LIST_KEY, string.Empty);
 
         sceneList.Clear();
-        if (savedSceneList != string.Empty)
+        foreach (string stageName in savedSceneList.Split('\n'))
         {
-            foreach (string stageName in savedSceneList.Split('\n'))
-            {
+            if (stageName != string.Empty)
                 sceneList.Add(stageName);
-            }
         }
     }
 
