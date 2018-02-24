@@ -50,7 +50,7 @@ public class ReportWindow : MonoBehaviour
         {
             RectTransform stageNameText = Instantiate(ReportListStageNameTextPrefab, ReportListViewContent);
             stageNameText.GetComponent<Text>().text = stage.Key;
-            stageNameText.localPosition = new Vector3(0f, -totalListHeight);
+            stageNameText.anchoredPosition = new Vector3(0f, -totalListHeight);
             totalListHeight += stageNameText.sizeDelta.y;
 
             for (int i = 0; i < sizeof(int) * 8; i++)
@@ -62,7 +62,7 @@ public class ReportWindow : MonoBehaviour
                     reportButton.GetComponentInChildren<Text>().text = i.ToString();
                     // Since i changes, do not use i directly on lambda function.
                     reportButton.GetComponent<Button>().onClick.AddListener(() => OpenContent(stage.Key, reportNumber));
-                    reportButton.localPosition = new Vector3(0f, -totalListHeight);
+                    reportButton.anchoredPosition = new Vector3(0f, -totalListHeight);
                     totalListHeight += reportButton.sizeDelta.y;
                 }
             }
