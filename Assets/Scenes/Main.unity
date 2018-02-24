@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 103635113}
   - component: {fileID: 103635112}
   m_Layer: 5
-  m_Name: Option button
+  m_Name: Settings button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,7 +187,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 103635113}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2052939944}
+        m_MethodName: Open
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &103635113
@@ -477,7 +488,7 @@ Prefab:
     - target: {fileID: 224556146690571840, guid: d2eddcfed7f0cb54581e16e2ee607bf7,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000014305115
+      value: -0.000012874603
       objectReference: {fileID: 0}
     - target: {fileID: 224556146690571840, guid: d2eddcfed7f0cb54581e16e2ee607bf7,
         type: 2}
@@ -497,12 +508,12 @@ Prefab:
     - target: {fileID: 224149473983802078, guid: d2eddcfed7f0cb54581e16e2ee607bf7,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000076293945
+      value: -0.000022888184
       objectReference: {fileID: 0}
     - target: {fileID: 224667541292394652, guid: d2eddcfed7f0cb54581e16e2ee607bf7,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.00000011920929
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224655305400499882, guid: d2eddcfed7f0cb54581e16e2ee607bf7,
         type: 2}
@@ -1175,7 +1186,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1308142131}
-        m_MethodName: Show
+        m_MethodName: Open
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1388,6 +1399,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1820987791}
+--- !u!114 &2052939944 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114918896579145084, guid: d2eddcfed7f0cb54581e16e2ee607bf7,
+    type: 2}
+  m_PrefabInternal: {fileID: 246763785}
+  m_Script: {fileID: 11500000, guid: 74c47ef08799ee747b39162280a0cfbc, type: 3}
 --- !u!20 &2053538055 stripped
 Camera:
   m_PrefabParentObject: {fileID: 20973496827229838, guid: 6a9126ad52156f94592b5b67ccd40110,
