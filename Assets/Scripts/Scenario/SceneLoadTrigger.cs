@@ -15,7 +15,7 @@ public class SceneLoadTrigger : MonoBehaviour, IScenarioTrigger
         }
     }
 
-    private void Start()
+    private void Update()
     {
         switch (Mode)
         {
