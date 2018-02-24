@@ -81,11 +81,15 @@ public class ScenarioInterpreter : MonoBehaviour
 
     private void ExecuteNextLine()
     {
+        EXECUTE_NEXT_LINE:
         if (currentScript.MoveNext())
         {
             var script = (ScenarioScript.Dialogue)currentScript.Current;
             if (script.Speaker == ScenarioScript.Character.ScenarioDirective)
+            {
                 RunScenarioDirective(script.Sentence);
+                goto EXECUTE_NEXT_LINE;
+            }
             else if (dialogueManager != null)
                 dialogueManager.ShowSentence(script.Speaker, script.Sentence);
             else
