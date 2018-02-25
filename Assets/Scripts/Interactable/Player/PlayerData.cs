@@ -30,6 +30,7 @@ public class PlayerData : MonoBehaviour
     [Header("Common Actions")]
     public Vector2 Knockback = new Vector2(50f, 15f);
     public float KnockbackTime = .3f;
+    public GameObject TransformationEffects;
 
     [Space]
     public float SpecialActionAvailableTime = .5f;
@@ -185,6 +186,7 @@ public class PlayerData : MonoBehaviour
             PlayerTransformed(IsSmallForm);
             CanDoSpecialAction = true;
             IsTransformationCoolTime = true;
+            PlayTransformationEffects();
         }
     }
 
@@ -200,5 +202,11 @@ public class PlayerData : MonoBehaviour
         yield return new WaitForSeconds(TransformationCoolTime);
         transformationCoolTimeTimer = null;
         IsTransformationCoolTime = false;
+    }
+
+    private void PlayTransformationEffects()
+    {
+        GameObject effect = Instantiate(TransformationEffects, transform);
+        effect.SetActive(true);
     }
 }
