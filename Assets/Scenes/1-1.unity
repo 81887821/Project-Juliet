@@ -10655,6 +10655,12 @@ MonoBehaviour:
   ClosingSound: {fileID: 8300000, guid: 633f44cca3bd5764ab0963a5478f518d, type: 3}
   MessageBoxPrefab: {fileID: 114189004480030584, guid: 46ba1053a62754f44b9c03ba7c713ea9,
     type: 2}
+  UseJoystickYesButtonImage: {fileID: 0}
+  UseJoystickNoButtonImage: {fileID: 0}
+  YesSelectedSprite: {fileID: 0}
+  YesDeselectedSprite: {fileID: 0}
+  NoSelectedSprite: {fileID: 0}
+  NoDeselectedSprite: {fileID: 0}
 --- !u!114 &1983789296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10815,7 +10821,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1926933821}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
