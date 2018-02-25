@@ -43,6 +43,6 @@ public static class SaveLoadManager
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-        Application.Quit();
+        StageManager.Instance.ExitGame();
     }
 }
