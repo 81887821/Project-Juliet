@@ -56,6 +56,11 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        SceneManager.sceneLoaded -= FadeInAfterSceneLoad;
+    }
+
     public static void SavePlayerPrefs()
     {
         StringBuilder scenes = new StringBuilder();
@@ -87,6 +92,25 @@ public class StageManager : MonoBehaviour
     public void RestartCurrentStage()
     {
         SceneManager.LoadScene(StageBuildIndex);
+    }
+
+    public static void LoadStage(string stageName)
+    {
+        const float FADE_OUT_DURATION = 1f;
+        Fader.Instance.FadeOut(FADE_OUT_DURATION);
+        Instance.StartCoroutine(LoadSceneWithDelay(stageName, FADE_OUT_DURATION));
+        SceneManager.sceneLoaded += FadeInAfterSceneLoad;
+    }
+
+    private static IEnumerator LoadSceneWithDelay(string stageName, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(stageName);
+    }
+
+    private static void FadeInAfterSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        Fader.Instance.FadeIn();
     }
 
     /// <summary>

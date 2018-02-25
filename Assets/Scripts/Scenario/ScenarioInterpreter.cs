@@ -137,7 +137,7 @@ public class ScenarioInterpreter : MonoBehaviour
         switch (parsedDirective[1])
         {
             case "load":
-                SceneManager.LoadScene(parsedDirective[2]);
+                StageManager.LoadStage(parsedDirective[2]);
                 return true;
             default:
                 return false;

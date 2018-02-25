@@ -25,7 +25,7 @@ public class Fader : MonoBehaviour
         Instance = this;
         foreach (Image image in GetComponentsInChildren<Image>())
         {
-            if (image.name == "Fade image")
+            if (image.name == "Fader image")
                 this.image = image;
         }
 
@@ -69,7 +69,7 @@ public class Fader : MonoBehaviour
         {
             while (alpha < 1f)
             {
-                image.color = new Color(1f, 1f, 1f, alpha);
+                image.color = new Color(0f, 0f, 0f, alpha);
                 yield return new WaitForEndOfFrame();
                 alpha += Time.deltaTime / duration;
             }
@@ -79,14 +79,14 @@ public class Fader : MonoBehaviour
         {
             while (alpha > 0f)
             {
-                image.color = new Color(1f, 1f, 1f, alpha);
+                image.color = new Color(0f, 0f, 0f, alpha);
                 yield return new WaitForEndOfFrame();
                 alpha -= Time.deltaTime / duration;
             }
             alpha = 0f;
         }
 
-        image.color = new Color(1f, 1f, 1f, alpha);
+        image.color = new Color(0f, 0f, 0f, alpha);
         fading = null;
     }
 }

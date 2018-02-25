@@ -49,7 +49,7 @@ public class StageEntry : MonoBehaviour
             if (player.TargetLocation != transform)
                 player.TargetLocation = transform;
             else if (AlwaysAvailable || visited)
-                SceneManager.LoadScene("Scenes/" + SceneName);
+                StageManager.LoadStage("Scenes/" + SceneName);
         }
     }
 }
