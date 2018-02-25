@@ -13,6 +13,7 @@ public class Particle : MonoBehaviour, IInteractable
     public float RemainingDuration = 2f;
     public float AttackableDuration = 1.5f;
     public GameObject ExplosionEffect;
+    public AudioClip ExplosionSound;
 
     private Controller2D controller;
     private Vector2 initialVelocity;
@@ -59,6 +60,7 @@ public class Particle : MonoBehaviour, IInteractable
             ExplosionEffect.transform.parent = null;
             ExplosionEffect.transform.localScale = new Vector3(2f, 2f, 2f);
             ExplosionEffect.SetActive(true);
+            SoundEffectManager.Instance.Play(ExplosionSound);
             Destroy(gameObject);
         }
     }

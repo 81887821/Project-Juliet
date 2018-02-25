@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
 public class PlayerSoundEffects : MonoBehaviour
 {
     public static PlayerSoundEffects Instance
@@ -17,7 +16,7 @@ public class PlayerSoundEffects : MonoBehaviour
     public AudioClip TransformationDeniedSound;
     public AudioClip TransformationSound;
 
-    private AudioSource audioSource;
+    private SoundEffectManager soundEffectManager;
 
     private void Awake()
     {
@@ -27,32 +26,35 @@ public class PlayerSoundEffects : MonoBehaviour
             Destroy(this);
             return;
         }
+    }
 
-        audioSource = GetComponent<AudioSource>();
+    private void Start()
+    {
+        soundEffectManager = SoundEffectManager.Instance;
     }
 
     public void PlayAttackSound()
     {
-        audioSource.PlayOneShot(AttackSound);
+        soundEffectManager.Play(AttackSound);
     }
 
     public void PlayUppercutSound()
     {
-        audioSource.PlayOneShot(UppercutSound);
+        soundEffectManager.Play(UppercutSound);
     }
 
     public void PlayPressSound()
     {
-        audioSource.PlayOneShot(PressSound);
+        soundEffectManager.Play(PressSound);
     }
 
     public void PlayTransformationSound()
     {
-        audioSource.PlayOneShot(TransformationSound);
+        soundEffectManager.Play(TransformationSound);
     }
 
     public void PlayTransformationDeniedSound()
     {
-        audioSource.PlayOneShot(TransformationDeniedSound);
+        soundEffectManager.Play(TransformationDeniedSound);
     }
 }

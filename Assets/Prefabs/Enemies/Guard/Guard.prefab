@@ -285,6 +285,8 @@ MonoBehaviour:
     type: 2}
   AimingLinePrefab: {fileID: 114951830258184532, guid: 29c9ce29b8c5d0a4cb12eb68158aa707,
     type: 2}
+  NearShootSound: {fileID: 8300000, guid: 46c1a8926d371104282ecb24ffb8f76c, type: 3}
+  FarShootSound: {fileID: 8300000, guid: ce42b682c1f20dd4aae5bc94a3c4e3a1, type: 3}
 --- !u!114 &114947370303128948
 MonoBehaviour:
   m_ObjectHideFlags: 1

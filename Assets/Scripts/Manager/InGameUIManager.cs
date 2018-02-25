@@ -158,6 +158,7 @@ public class InGameUIManager : MonoBehaviour
     private void Start()
     {
         InitUIElements();
+        GameOverMenu.SetActive(false);
 
         PlayerData player = PlayerData.Instance;
         player.SpecialActionAvailbilityChanged += (canDoSpecialAction) => PlayerCanDoSpecialAction = canDoSpecialAction;

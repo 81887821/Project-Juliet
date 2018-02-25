@@ -335,6 +335,7 @@ MonoBehaviour:
   RemainingDuration: 2
   AttackableDuration: 1.5
   ExplosionEffect: {fileID: 1874738219544058}
+  ExplosionSound: {fileID: 8300000, guid: 4ce74575a9c1a9145ad5aebc07874feb, type: 3}
 --- !u!114 &114892181517076546
 MonoBehaviour:
   m_ObjectHideFlags: 1

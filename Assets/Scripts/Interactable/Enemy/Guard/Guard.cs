@@ -20,6 +20,9 @@ public class Guard : Enemy
     public Laser LaserPrefab;
     public Particle ParticlePrefab;
     public AimingLine AimingLinePrefab;
+    [Header("Sounds")]
+    public AudioClip NearShootSound;
+    public AudioClip FarShootSound;
 
     #region Unity components
     private Animator animator;
@@ -188,11 +191,13 @@ public class Guard : Enemy
             case GuardState.FarShoot:
                 stateEndTime = Time.time + FarShootDelay;
                 laser = Instantiate(LaserPrefab, transform);
+                SoundEffectManager.Instance.Play(FarShootSound);
                 break;
             case GuardState.NearShoot:
                 stateEndTime = Time.time + NearShootDelay;
                 for (int i = 0; i < NearShootParticles; i++)
                     Instantiate(ParticlePrefab, transform);
+                SoundEffectManager.Instance.Play(NearShootSound);
                 break;
             case GuardState.BackJumping:
                 BackJump();
