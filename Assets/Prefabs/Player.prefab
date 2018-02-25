@@ -2614,7 +2614,7 @@ MonoBehaviour:
   PressSound: {fileID: 8300000, guid: 16426b9c2afac444d84a5c12ad45fbc2, type: 3}
   TransformationDeniedSound: {fileID: 8300000, guid: a84a3c60fd314fb4ca1ab4e4dc29f50b,
     type: 3}
-  TransformationSound: {fileID: 8300000, guid: bc6e9b04c5826fa44a92994f896d0316, type: 3}
+  TransformationSound: {fileID: 8300000, guid: 6683debb6b37e5d4e85d1fdef26bc56a, type: 3}
 --- !u!114 &114511235422705488
 MonoBehaviour:
   m_ObjectHideFlags: 1
