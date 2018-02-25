@@ -13,5 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Dialogues:
   - Speaker: 5
-    Sentence: "\uC790\uC728\uD615 \uCCAD\uC18C\uAE30 D-002\uB124. \uBC29\uD574\uB420\uB54C
-      \uBC1F\uC73C\uBA74 \uBD80\uC2E4 \uC218 \uC788\uC5B4."
+    Sentence: "\uC790\uC728\uD615 \uCCAD\uC18C\uAE30 D-002\uB124. \uBC29\uD574\uB420
+      \uB54C \uBC1F\uC73C\uBA74 \uBD80\uC220 \uC218 \uC788\uC5B4."

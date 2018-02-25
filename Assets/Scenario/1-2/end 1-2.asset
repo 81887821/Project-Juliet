@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Dialogues:
   - Speaker: 5
-    Sentence: "\uC88B\uC544. \uC774\uC81C \uC870\uAE08\uC774\uC57C. \uAC70\uC758 \uB2E4\uC654\uC5B4!"
+    Sentence: "\uC88B\uC544. \uC774\uC81C \uC870\uAE08\uC774\uC57C. \uAC70\uC758 \uB2E4
+      \uC654\uC5B4!"
   - Speaker: 0
     Sentence: scene load Scenes/1-3
