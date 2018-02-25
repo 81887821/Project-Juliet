@@ -52,21 +52,13 @@ public class PlayerInput : MonoBehaviour
         }
 
 #if DEBUG
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             HorizontalInput -= 1f;
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             HorizontalInput += 1f;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            HorizontalInput += 1f;
-        }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            HorizontalInput -= 1f;
         }
 
         if (Input.GetKeyDown(KeyCode.A))
