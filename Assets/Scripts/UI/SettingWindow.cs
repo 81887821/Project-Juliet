@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingWindow : PopupWindow
 {
@@ -11,6 +12,13 @@ public class SettingWindow : PopupWindow
     }
 
     public MessageBox MessageBoxPrefab;
+    public Image UseJoystickYesButtonImage;
+    public Image UseJoystickNoButtonImage;
+
+    public Sprite YesSelectedSprite;
+    public Sprite YesDeselectedSprite;
+    public Sprite NoSelectedSprite;
+    public Sprite NoDeselectedSprite;
 
     private void Awake()
     {
@@ -22,6 +30,12 @@ public class SettingWindow : PopupWindow
         }
 
         Instance = this;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        OnUseJoystickChanged(SettingManager.UsingScrollbar);
     }
 
     private void OnDestroy()
@@ -54,5 +68,20 @@ public class SettingWindow : PopupWindow
         messageBox.OnLeftButtonClick.AddListener(messageBox.Close);
         messageBox.RightButton = "Yes";
         messageBox.OnRightButtonClick.AddListener(SaveLoadManager.DeleteSaveData);
+    }
+
+    public void OnUseJoystickChanged(bool useJoystick)
+    {
+        if (useJoystick)
+        {
+            UseJoystickYesButtonImage.sprite = YesSelectedSprite;
+            UseJoystickNoButtonImage.sprite = NoDeselectedSprite;
+        }
+        else
+        {
+            UseJoystickYesButtonImage.sprite = YesDeselectedSprite;
+            UseJoystickNoButtonImage.sprite = NoSelectedSprite;
+        }
+        SettingManager.UsingScrollbar = useJoystick;
     }
 }

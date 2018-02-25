@@ -51,7 +51,6 @@ public class InGameUIManager : MonoBehaviour
     public GameObject HeartParentObject; //Object Which Contains heart Objects
     public GameObject ReportParentObject; //Object Which Contains diary Objects
     public GameObject GameOverMenu;
-    public GameObject OptionMenu;
 
     public Mode UIMode
     {

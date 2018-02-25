@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 222289609951444880}
   - component: {fileID: 114886894195704134}
   - component: {fileID: 114398299940111660}
+  - component: {fileID: 114698995753925010}
   m_Layer: 5
   m_Name: RightButton
   m_TagString: Untagged
@@ -318,6 +319,7 @@ GameObject:
   - component: {fileID: 222490666281948060}
   - component: {fileID: 114781623529401492}
   - component: {fileID: 114575921114208716}
+  - component: {fileID: 114397462215136204}
   m_Layer: 5
   m_Name: LeftButton
   m_TagString: Untagged
@@ -781,7 +783,6 @@ MonoBehaviour:
   HeartParentObject: {fileID: 1187082215633460}
   ReportParentObject: {fileID: 1769937907060592}
   GameOverMenu: {fileID: 1710764089155798}
-  OptionMenu: {fileID: 0}
 --- !u!114 &114155486103556038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1148,6 +1149,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114397462215136204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1580840975117402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434902d6976a8ac46a63c0aced824646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114398299940111660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1480,6 +1492,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114698995753925010
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1038681805671076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434902d6976a8ac46a63c0aced824646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114706879224481990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1602,7 +1625,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 0d85a2567f5b1b9498cc0881200bc2e3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1796,7 +1819,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: a7156efed3a462b459a3802c6d3868ed, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ButtonPresseHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class ButtonPressHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public bool Pressing
     {

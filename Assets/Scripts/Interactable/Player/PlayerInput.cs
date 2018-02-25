@@ -20,8 +20,8 @@ public class PlayerInput : MonoBehaviour
     
     private PlayerData player;
     private InGameUIManager ui;
-    private ButtonPresseHandler leftButton;
-    private ButtonPresseHandler rightButton;
+    private ButtonPressHandler leftButton;
+    private ButtonPressHandler rightButton;
 
     private void Awake()
     {
@@ -33,8 +33,8 @@ public class PlayerInput : MonoBehaviour
         ui = InGameUIManager.Instance;
         ui.ActionButton.onClick.AddListener(player.OnActionButtonClicked);
         ui.TransformationButton.onClick.AddListener(player.OnTransformationButtonClicked);
-        leftButton = ui.LeftButton.GetComponent<ButtonPresseHandler>();
-        rightButton = ui.RightButton.GetComponent<ButtonPresseHandler>();
+        leftButton = ui.LeftButton.GetComponent<ButtonPressHandler>();
+        rightButton = ui.RightButton.GetComponent<ButtonPressHandler>();
     }
     
     private void Update()
@@ -43,30 +43,30 @@ public class PlayerInput : MonoBehaviour
             HorizontalInput = ui.MovementScrollbar.value * 2 - 1;
         else
         {
-            float horizontalInput = 0.5f;
+            float horizontalInput = 0f;
             if (leftButton.Pressing)
-                horizontalInput -= 0.5f;
+                horizontalInput -= 1f;
             if (rightButton.Pressing)
-                horizontalInput += 0.5f;
+                horizontalInput += 1f;
             HorizontalInput = horizontalInput;
         }
 
 #if DEBUG
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            HorizontalInput -= 0.5f;
+            HorizontalInput -= 1f;
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            HorizontalInput += 0.5f;
+            HorizontalInput += 1f;
         }
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            HorizontalInput += 0.5f;
+            HorizontalInput += 1f;
         }
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            HorizontalInput -= 0.5f;
+            HorizontalInput -= 1f;
         }
 
         if (Input.GetKeyDown(KeyCode.A))
