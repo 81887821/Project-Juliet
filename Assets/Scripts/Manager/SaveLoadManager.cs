@@ -38,4 +38,11 @@ public static class SaveLoadManager
             Debug.LogError("Unsupported save format version : " + PlayerPrefs.GetInt(SAVE_FORMAT_VERSION_KEY));
         }
     }
+
+    public static void DeleteSaveData()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        Application.Quit();
+    }
 }

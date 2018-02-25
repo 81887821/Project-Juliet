@@ -10,6 +10,8 @@ public class SettingWindow : PopupWindow
         private set;
     }
 
+    public MessageBox MessageBoxPrefab;
+
     private void Awake()
     {
         if (Instance != null)
@@ -29,11 +31,28 @@ public class SettingWindow : PopupWindow
 
     public void ExitGame()
     {
-        StageManager.Instance.ExitGame();
+        MessageBox messageBox = Instantiate(MessageBoxPrefab, transform);
+        messageBox.Title = "Exit";
+        messageBox.Content = "정말로 게임을 종료하시겠습니까?";
+        messageBox.LeftButton = "No";
+        messageBox.OnLeftButtonClick.AddListener(messageBox.Close);
+        messageBox.RightButton = "Yes";
+        messageBox.OnRightButtonClick.AddListener(StageManager.Instance.ExitGame);
     }
 
     public void LoadMainMenu()
     {
         StageManager.Instance.LoadMainMenu();
+    }
+
+    public void DeleteSaveData()
+    {
+        MessageBox messageBox = Instantiate(MessageBoxPrefab, transform);
+        messageBox.Title = "Delete Save Data";
+        messageBox.Content = "모든 세이브 데이터를 삭제하고 게임을 종료합니다.\n이 작업은 취소할 수 없습니다.\n실행하겠습니까?";
+        messageBox.LeftButton = "No";
+        messageBox.OnLeftButtonClick.AddListener(messageBox.Close);
+        messageBox.RightButton = "Yes";
+        messageBox.OnRightButtonClick.AddListener(SaveLoadManager.DeleteSaveData);
     }
 }
