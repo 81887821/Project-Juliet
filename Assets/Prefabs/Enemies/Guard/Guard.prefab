@@ -276,7 +276,7 @@ MonoBehaviour:
   NearReadyDelay: 0.8
   NearShootDelay: 0.1
   FarReadyDelay: 2
-  FarShootDelay: 0.3
+  FarShootDelay: 0.2
   HitDelay: 0.5
   NearShootParticles: 10
   LaserPrefab: {fileID: 114692081395424562, guid: cd86fe7983c1fb94cb9eb4b1c555fa78,
