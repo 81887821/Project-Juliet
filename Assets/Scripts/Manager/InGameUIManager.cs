@@ -21,6 +21,8 @@ public class InGameUIManager : MonoBehaviour
     //Movement Variables
     [Header("Movement")]
     public Scrollbar MovementScrollbar; //joystick for movement
+    public Button LeftButton;
+    public Button RightButton;
 
     [Header("Buttons")]
     public Button ActionButton;
@@ -168,11 +170,13 @@ public class InGameUIManager : MonoBehaviour
         player.PlayerDead += () => UIMode = Mode.GameOver;
 
         ReportManager.ReportCollected += SetReportSprites;
+        SettingManager.UseScrollbarChanged += ChangeMovementMethod;
     }
 
     private void OnDestroy()
     {
         ReportManager.ReportCollected -= SetReportSprites;
+        SettingManager.UseScrollbarChanged -= ChangeMovementMethod;
     }
 
     public void InitUIElements()
@@ -185,6 +189,7 @@ public class InGameUIManager : MonoBehaviour
         }
 
         SetReportSprites();
+        ChangeMovementMethod(SettingManager.UsingScrollbar);
     }
 
     //amount: current number of heart
@@ -266,5 +271,12 @@ public class InGameUIManager : MonoBehaviour
     public void OpenSettings()
     {
         SettingWindow.Instance.Open();
+    }
+
+    public void ChangeMovementMethod(bool useScrollbar)
+    {
+        MovementScrollbar.gameObject.SetActive(useScrollbar);
+        LeftButton.gameObject.SetActive(!useScrollbar);
+        RightButton.gameObject.SetActive(!useScrollbar);
     }
 }

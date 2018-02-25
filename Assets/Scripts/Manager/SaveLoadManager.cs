@@ -32,6 +32,7 @@ public static class SaveLoadManager
         if (PlayerPrefs.GetInt(SAVE_FORMAT_VERSION_KEY) == SAVE_FORMAT_VERSION)
         {
             StageManager.LoadPlayerPrefs();
+            SettingManager.LoadPlayerPrefs();
         }
         else
         {

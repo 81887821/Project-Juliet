@@ -20,6 +20,8 @@ public class PlayerInput : MonoBehaviour
     
     private PlayerData player;
     private InGameUIManager ui;
+    private ButtonPresseHandler leftButton;
+    private ButtonPresseHandler rightButton;
 
     private void Awake()
     {
@@ -31,28 +33,40 @@ public class PlayerInput : MonoBehaviour
         ui = InGameUIManager.Instance;
         ui.ActionButton.onClick.AddListener(player.OnActionButtonClicked);
         ui.TransformationButton.onClick.AddListener(player.OnTransformationButtonClicked);
+        leftButton = ui.LeftButton.GetComponent<ButtonPresseHandler>();
+        rightButton = ui.RightButton.GetComponent<ButtonPresseHandler>();
     }
     
     private void Update()
     {
-        HorizontalInput = ui.MovementScrollbar.value * 2 - 1;
+        if (SettingManager.UsingScrollbar)
+            HorizontalInput = ui.MovementScrollbar.value * 2 - 1;
+        else
+        {
+            float horizontalInput = 0.5f;
+            if (leftButton.Pressing)
+                horizontalInput -= 0.5f;
+            if (rightButton.Pressing)
+                horizontalInput += 0.5f;
+            HorizontalInput = horizontalInput;
+        }
 
 #if DEBUG
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            ui.MovementScrollbar.value -= 0.5f;
+            HorizontalInput -= 0.5f;
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            ui.MovementScrollbar.value += 0.5f;
+            HorizontalInput += 0.5f;
         }
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            ui.MovementScrollbar.value += 0.5f;
+            HorizontalInput += 0.5f;
         }
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            ui.MovementScrollbar.value -= 0.5f;
+            HorizontalInput -= 0.5f;
         }
 
         if (Input.GetKeyDown(KeyCode.A))
