@@ -142,7 +142,7 @@ public class Guard : Enemy
                 else
                     return GuardState.BackJumping;
             case GuardState.Hit:
-                if (stateEndTime > Time.time)
+                if (stateEndTime > Time.time || !controller.Collisions.below)
                     return GuardState.Hit;
                 else
                     return GuardState.Idle;

@@ -96,7 +96,7 @@ public class Patrol : Enemy
                 else
                     return PatrolState.Alert;
             case PatrolState.Hit:
-                if (stateEndTime > Time.time)
+                if (stateEndTime > Time.time || !controller.Collisions.below)
                     return PatrolState.Hit;
                 else
                     return PatrolState.Alert;
