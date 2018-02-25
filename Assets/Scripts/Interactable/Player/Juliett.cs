@@ -190,9 +190,11 @@ public class Juliett : PlayerBase
             case PlayerState.Attack3:
             case PlayerState.Attack4:
                 target.OnDamaged(this, 1, playerData.EnemyKnockbackOnAttack[state - PlayerState.Attack1]);
+                soundEffects.PlayAttackSound();
                 break;
             case PlayerState.Uppercut:
                 target.OnDamaged(this, 1, playerData.EnemyKnockbackOnUppercut);
+                soundEffects.PlayUppercutSound();
                 break;
             default:
                 Debug.LogWarning("Attack detected on non-attacking state : " + state);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[RequireComponent(typeof(PlayerSoundEffects))]
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Controller2D))]
 public class PlayerData : MonoBehaviour
@@ -136,6 +137,7 @@ public class PlayerData : MonoBehaviour
     private Juliett juliett;
     private BoxCollider2D physicalCollider;
     private Controller2D controller;
+    private PlayerSoundEffects soundEffects;
     private bool specialActionAvailable = false;
     private Coroutine specialActionTimer = null;
     private bool isTransformationCoolTime = false;
@@ -156,6 +158,7 @@ public class PlayerData : MonoBehaviour
         juliett = GetComponentInChildren<Juliett>();
         physicalCollider = GetComponent<BoxCollider2D>();
         controller = GetComponent<Controller2D>();
+        soundEffects = GetComponent<PlayerSoundEffects>();
 
         currentHealth = MaxHealth;
     }
@@ -187,7 +190,10 @@ public class PlayerData : MonoBehaviour
             CanDoSpecialAction = true;
             IsTransformationCoolTime = true;
             PlayTransformationEffects();
+            soundEffects.PlayTransformationSound();
         }
+        else
+            soundEffects.PlayTransformationDeniedSound();
     }
 
     private IEnumerator SpecialActionTimer()

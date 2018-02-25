@@ -36,6 +36,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
     protected PlayerInput input;
     protected Controller2D controller;
     protected Transform playerTransform;
+    protected PlayerSoundEffects soundEffects;
     #endregion
 
     #region Unity components
@@ -125,6 +126,7 @@ public abstract class PlayerBase : MonoBehaviour, IInteractable
         playerData = GetComponentInParent<PlayerData>();
         input = GetComponentInParent<PlayerInput>();
         controller = GetComponentInParent<Controller2D>();
+        soundEffects = GetComponentInParent<PlayerSoundEffects>();
         playerTransform = transform.parent;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();

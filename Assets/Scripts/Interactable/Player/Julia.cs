@@ -194,10 +194,12 @@ public class Julia : PlayerBase
             case PlayerState.JumpingDown:
                 target.OnDamaged(this, 1, Vector2.zero);
                 nextState = PlayerState.JumpingUp;
+                soundEffects.PlayPressSound();
                 break;
             case PlayerState.Rolling:
                 target.OnDamaged(this, 1, Vector2.zero);
                 nextState = PlayerState.JumpingUp;
+                soundEffects.PlayPressSound();
                 break;
             default:
                 Debug.LogWarning("Attack detected on non-attacking state : " + state);
