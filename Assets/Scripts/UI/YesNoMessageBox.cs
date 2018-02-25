@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class MessageBox : MonoBehaviour
+public class YesNoMessageBox : MonoBehaviour
 {
     #region Child components
     [SerializeField]
@@ -12,13 +12,9 @@ public class MessageBox : MonoBehaviour
     [SerializeField]
     private Text content;
     [SerializeField]
-    private Text leftButtonText;
+    private Button noButton;
     [SerializeField]
-    private Text rightButtonText;
-    [SerializeField]
-    private Button leftButton;
-    [SerializeField]
-    private Button rightButton;
+    private Button yesButton;
     #endregion
 
     public string Title
@@ -47,45 +43,19 @@ public class MessageBox : MonoBehaviour
         }
     }
 
-    public string LeftButton
+    public UnityEvent OnNoButtonClick
     {
         get
         {
-            return leftButtonText.text;
-        }
-
-        set
-        {
-            leftButtonText.text = value;
+            return noButton.onClick;
         }
     }
 
-    public string RightButton
+    public UnityEvent OnYesButtonClick
     {
         get
         {
-            return rightButtonText.text;
-        }
-
-        set
-        {
-            rightButtonText.text = value;
-        }
-    }
-
-    public UnityEvent OnLeftButtonClick
-    {
-        get
-        {
-            return leftButton.onClick;
-        }
-    }
-
-    public UnityEvent OnRightButtonClick
-    {
-        get
-        {
-            return rightButton.onClick;
+            return yesButton.onClick;
         }
     }
 
