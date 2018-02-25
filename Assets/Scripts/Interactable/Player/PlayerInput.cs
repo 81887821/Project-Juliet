@@ -51,7 +51,7 @@ public class PlayerInput : MonoBehaviour
             HorizontalInput = horizontalInput;
         }
 
-#if DEBUG
+#if UNITY_STANDALONE || UNITY_EDITOR
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             HorizontalInput -= 1f;
