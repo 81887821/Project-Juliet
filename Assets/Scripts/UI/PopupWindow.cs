@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public abstract class PopupWindow : MonoBehaviour
 {
+    public AudioClip OpeningSound;
+    public AudioClip ClosingSound;
+
     protected bool showing = false;
 
     protected virtual void Start()
@@ -19,6 +22,8 @@ public abstract class PopupWindow : MonoBehaviour
             gameObject.SetActive(true);
             StageManager.Instance.Pause();
             showing = true;
+            if (OpeningSound != null)
+                SoundEffectManager.Instance.Play(OpeningSound);
         }
     }
 
@@ -29,6 +34,8 @@ public abstract class PopupWindow : MonoBehaviour
             gameObject.SetActive(false);
             StageManager.Instance.Resume();
             showing = false;
+            if (ClosingSound != null)
+                SoundEffectManager.Instance.Play(ClosingSound);
         }
     }
 }

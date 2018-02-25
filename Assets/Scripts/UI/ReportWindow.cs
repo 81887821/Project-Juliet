@@ -79,6 +79,7 @@ public class ReportWindow : PopupWindow
     private void OpenContent(string stage, int reportNumber)
     {
         ReportContentViewContent.text = string.Format("Stage : {0}\nReport number : {1}\n\n{2}", stage, reportNumber, ReportManager.GetReportContent(stage, reportNumber));
+        SoundEffectManager.Instance.Play(OpeningSound);
     }
 
     private void CloseContent()
