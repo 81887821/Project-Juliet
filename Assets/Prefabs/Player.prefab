@@ -292,6 +292,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4719363588650110}
+  - component: {fileID: 114876614052633178}
   m_Layer: 0
   m_Name: Transformation effects
   m_TagString: Untagged
@@ -2640,6 +2641,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selfdestruct_in: 1.11
+--- !u!114 &114876614052633178
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1275171590567690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a92ec89de1aec4281ea738f0693ff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfdestruct_in: 1.1
 --- !u!114 &114892176822277270
 MonoBehaviour:
   m_ObjectHideFlags: 1
