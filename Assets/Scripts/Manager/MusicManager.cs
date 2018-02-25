@@ -15,6 +15,7 @@ public class MusicManager : MonoBehaviour
     private AudioSource audioSource;
     private AudioClip currentAudioClip;
     private string currentClipName;
+    private ResourceRequest resourceLoading;
 
     private void Awake()
     {
@@ -55,21 +56,44 @@ public class MusicManager : MonoBehaviour
         MusicManager instance = Instance;
         if (instance.currentClipName == audioClipName)
         {
-            if (restartCurrentClip)
-                instance.audioSource.Play();
-            else if (!instance.audioSource.isPlaying)
-                instance.audioSource.Play();
+            if (instance.resourceLoading == null)
+            {
+                if (restartCurrentClip)
+                    instance.audioSource.Play();
+                else if (!instance.audioSource.isPlaying)
+                    instance.audioSource.Play();
+            }
         }
         else
         {
+            if (instance.resourceLoading != null)
+            {
+                instance.resourceLoading.completed -= OnAudioClipLoaded;
+                instance.resourceLoading.completed += UnloadImmediately;
+                Debug.LogWarning("Requested to play another audio clip before previous one is loaded.");
+            }
+
             if (instance.currentAudioClip != null)
                 Resources.UnloadAsset(instance.currentAudioClip);
             instance.currentClipName = audioClipName;
-            instance.currentAudioClip = Resources.Load<AudioClip>(audioClipName);
-            if (instance.currentAudioClip == null)
-                throw new Exception("Cannot load audio clip : " + audioClipName);
-            instance.audioSource.clip = instance.currentAudioClip;
-            instance.audioSource.Play();
+            instance.resourceLoading = Resources.LoadAsync<AudioClip>(audioClipName);
+            instance.resourceLoading.completed += OnAudioClipLoaded;
         }
+    }
+
+    private static void OnAudioClipLoaded(AsyncOperation resourceRequest)
+    {
+        MusicManager instance = Instance;
+        instance.currentAudioClip = (resourceRequest as ResourceRequest).asset as AudioClip;
+        if (instance.currentAudioClip == null)
+            throw new Exception("Cannot load audio clip : " + instance.currentClipName);
+        instance.audioSource.clip = instance.currentAudioClip;
+        instance.audioSource.Play();
+        instance.resourceLoading = null;
+    }
+
+    private static void UnloadImmediately(AsyncOperation resourceRequest)
+    {
+        Resources.UnloadAsset((resourceRequest as ResourceRequest).asset);
     }
 }
